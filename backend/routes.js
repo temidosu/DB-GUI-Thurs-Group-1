@@ -1,4 +1,6 @@
 const pool = require('./db')
+const path = require('path')
+const fs = require('fs')
 
 module.exports = function routes(app, logger) {
   // GET /
@@ -42,6 +44,44 @@ module.exports = function routes(app, logger) {
       }
     });
   });
+  //POST /init_dummies
+  //Resets the database only to dummy database
+  app.post('/init_dummies',(req,res) => {
+    pool.getConnection((err,connection) => {
+      if(err) {
+        console.log(connection);
+        logger.error('Problem obtaining connection',err)
+        res.status(400).send('Problem obtaining connection');
+      }else{
+        var dummies = fs.readFileSync(path.join(__dirname,'./dummies.sql')).toString()
+        connection.query(dummies,(err,result) => {
+          if(err){
+            connection.release()
+            logger.error('Problem initializing dummy data: ', err);
+            res.status(400).send('Problem initializing dummy data:', err);
+          }else{
+            connection.release()
+            res.status(200).send('Successfully initialized dummy data')
+          }
+        })
+      
+      }
+    })
+  })
+  // app.post('/signup',(req,res) => {
+  //   pool.getConnection((err,connection) => {
+  //     if(err) {
+  //       logger.error('Problem obtaining MySQL connection', err)
+  //       res.status(400).send('Problem obtaining MySQL connection'); 
+  //     }else{
+  //       const type = req.body.type+'s'
+  //       const name = "'"+req.body.name+"',"
+  //       const password = "'" + req.body.password + "',"
+  //       const email = "'" + req.body.email + "',"
+  //       connection.query('INSERT INTO `db`.+type+' (name,password,email)')
+  //     }
+  //   })
+  // })
 
   // POST /multplynumber
   app.post('/multplynumber', (req, res) => {
