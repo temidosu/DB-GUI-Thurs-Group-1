@@ -30,6 +30,24 @@ app.use(ExpressAPILogMiddleware(logger, { request: true }));
 //include routes
 routes(app, logger);
 
+//get list of users
+app.get('/getUser', (req, res) => {
+  connection.query('SELECT * FROM user', function (err, rows, fields) {
+    if (err) {
+      logger.error("Error while executing Query");
+      res.status(400).json({
+        "data": [],
+        "error": "MySQL error"
+      })
+    }
+    else{
+      res.status(200).json({
+        "data": rows
+      });
+    }
+  });
+});
+
 // connecting the express object to listen on a particular port as defined in the config object.
 app.listen(config.port, config.host, (e) => {
   if (e) {
