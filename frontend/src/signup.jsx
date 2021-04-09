@@ -8,8 +8,10 @@ export class Signup extends React.Component {
         lastName: "", 
         userName: "", 
         email: "",
+        phone: "", 
         password: "", 
         confirmPassword: "", 
+        
     };
 
     errors = () => {
@@ -36,7 +38,8 @@ export class Signup extends React.Component {
             firstName: '',
             lastName: '', 
             userName: '',
-            email: '', 
+            email: '',
+            phone: '',  
             password: '',
             role: ''
         });   
@@ -90,6 +93,17 @@ export class Signup extends React.Component {
                                     onChange = { e => this.setState({ email: e.target.value })}
                                     className = "form-control" />
                         </div> 
+                    </div>
+                    <div className = "row"> 
+                        <div className = "col"> 
+                        <label htmlFor="name"> Phone  </label> 
+                                <input text = "text"
+                                    id = "name"
+                                    name = "name"
+                                    value = {this.state.phone}
+                                    onChange = { e => this.setState({ phone: e.target.value })}
+                                    className = "form-control" />
+                        </div> 
                     </div> 
                     <div className = "row"> 
                         <div className = "col"> 
@@ -97,7 +111,7 @@ export class Signup extends React.Component {
                                 <input text = "text"
                                     id = "name"
                                     name = "name"
-                                    value = {this.state.email}
+                                    value = {this.state.password}
                                     onChange = { e => this.setState({ password: e.target.value })}
                                     className = "form-control" />
                         </div> 
@@ -108,7 +122,7 @@ export class Signup extends React.Component {
                                 <input text = "text"
                                     id = "name"
                                     name = "name"
-                                    value = {this.state.email}
+                                    value = {this.state.password}
                                     onChange = { e => this.setState({ confirmPassword: e.target.value })}
                                     className = "form-control" />
                         </div> 
@@ -120,7 +134,7 @@ export class Signup extends React.Component {
                                     name="role"
                                     className="form-control"
                                     value={this.state.role}
-                                    onChange={ event => this.setState({ role: event.target.value }) }>
+                                    onChange={ e => this.setState({ role: e.target.value }) }>
                                     <option></option>
                                     {
                                         ["client", "contractor", "worker"].map(x => <option key={ x.index } value={ x }>{ x }</option>)
