@@ -70,13 +70,13 @@ module.exports = function routes(app, logger) {
 			}
 		})
 	})
-	app.post('/signup', async (req,res) => {
+	app.post('/signup', (req,res) => {
 		var userName = req.body.userName;
 		var firstName = req.body.firstName;
 		var lastName = req.body.lastName;
 		var email = req.body.email;
 		var password = req.body.password;
-		con.query("INSERT INTO Users (userName, userPassword, userEmail, firstName, lastName) VALUES (?)", [userName, password, email, firstName, lastName], function (err, result, fields) {
+		connection.query("INSERT INTO Users (userName, userPassword, userEmail, firstName, lastName) VALUES (?,?,?,?,?)", [userName, password, email, firstName, lastName], function (err, result, fields) {
 			if (err) throw err;
 			res.end(JSON.stringify(result)); // Result in JSON format
 		});
@@ -96,14 +96,14 @@ module.exports = function routes(app, logger) {
 	//   })
 	})
 
-	// api post body
-	router.post('/postitbody', async (req, res) => {
-		var productLine = req.body.productLine
-		con.query("INSERT INTO productlines (productLine) VALUES (?)", productLine,function (err, result, fields) {
-			if (err) throw err;
-			res.end(JSON.stringify(result)); // Result in JSON format
-		});
-	});
+	// // api post body
+	// router.post('/postitbody', async (req, res) => {
+	// 	var productLine = req.body.productLine
+	// 	con.query("INSERT INTO productlines (productLine) VALUES (?)", productLine,function (err, result, fields) {
+	// 		if (err) throw err;
+	// 		res.end(JSON.stringify(result)); // Result in JSON format
+	// 	});
+	// });
 
 	// POST /multplynumber
 	app.post('/multplynumber', (req, res) => {
