@@ -136,69 +136,38 @@ module.exports = function routes(app, logger) {
     });
   });
 
-  //POST /login
-  app.get('/login',(req,res) => {
-    pool.getConnection((err,connection) => {
-      if(err){
+  // GET /login
+  app.post('/login', (req, res) => {
+    pool.getConnection((err, connection) => {
+      if (err) {
         console.log(connection);
         logger.error('Problem obtaining MySQL connection', err)
         res.status(400).send('Problem obtaining MySQL connection');
-      } else{
+      } else {
         const email = "'" + req.body.email + "'"
-        // const firstName = "'" + req.body.firstName + "'";
-        // const lastName = "'" + req.body.lastName + "'";
-        const password = "'" + req.body.password;
-        connection.query('SELECT userPassword from `db`.`Users` WHERE userEmail = ' + email, (err, result) => {
-      if (err) {
-        connection.release()
-        logger.error("Login failed", err);
-        res.status(400).send('Login failed:', err);
-      }
-      else {
-        connection.release()
-        if(result.length <= 0){
-          res.status(400).json({
-            "data" : {
-              "status" : 'failed',
-              "info" : 'no user found',
-              // "name" : req.body.name,
-              // "firstName" : req.body.firstName,
-              // "lastName" : req.body.lastName,
-              "email" : req.body.email,
+        const password = req.body.password;
+        connection.query('SELECT * from `db`.`Users` WHERE userEmail = ' + email, (err, result) => {
+          if (err) {
+            logger.error("Login failed", err);
+            res.status(400).send('Login failedd:', err);
+          }
+          else {
+            if (result.length <= 0) {
+              res.status(400).end('no user found')
             }
-          })
-        }
-        else{
-          if(password == result[0].password){
-            res.status(200).json({
-              "data" : {
-                "status" : 'success',
-                "info" : 'success',
-                // "name" : req.body.name,
-                // "firstName" : req.body.firstName,
-                // "lastName" : req.body.lastName,
-                "email" : req.body.email,
+            else {
+              if (password == result[0].userPassword) {
+                res.status(200).end(JSON.stringify(result[0].user_id))
               }
-            })
-          }
-          else{
-            res.status(400).json({
-              "data" : {
-                "status" : 'failed',
-                "info" : 'incorrect password',
-                // "name" : req.body.name,
-                // "firstName" : req.body.firstName,
-                // "lastName" : req.body.lastName,
-                "email" : req.body.email,
+              else {
+                res.status(400).end('incorrect password')
               }
-            })
+            }
           }
-        }
+        })
       }
     })
-  }
-})
-})
+  })
 
   // GET /userinfo
   app.get('/users', (req, res) => {
