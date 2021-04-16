@@ -1,6 +1,7 @@
 const pool = require('./db')
 const path = require('path')
-const fs = require('fs')
+const fs = require('fs');
+const { setupMaster } = require('cluster');
 
 module.exports = function routes(app, logger) {
 	// GET /
@@ -136,7 +137,7 @@ module.exports = function routes(app, logger) {
 		});
 	});
 
-	// GET /login
+	// POST /login
 	app.post('/login', (req, res) => {
 		pool.getConnection((err, connection) => {
 			if (err) {
@@ -144,27 +145,42 @@ module.exports = function routes(app, logger) {
 				logger.error('Problem obtaining MySQL connection', err);
 				res.status(400).send('Problem obtaining MySQL connection');
 			} else {
-				const email = "'" + req.body.email + "'"
+				const email = new String("'" + req.body.email + "'");
 				const password = req.body.password;
-				connection.query('SELECT * from `db`.`Users` WHERE userEmail = ' + email, (err, result) => {
+				// connection.query('SELECT * from `db`.`Users` WHERE userEmail = ' + email, (err, result) => {
+				// 	if (err) {
+				// 		logger.error("Login failed", err);
+				// 		res.status(400).send('Login failed:', err);
+				// 	}
+				// 	else {
+				// 		if (result.length <= 0) {
+				// 			debugger;
+				// 			res.status(400).end('no user found');
+				// 		}
+				// 		else {
+				// 			if (password == result[0].userPassword) {
+				// 				res.status(200).end(JSON.stringify(result[0].user_id));
+				// 			}
+				// 			else {
+				// 				res.status(400).end('incorrect password');
+				// 			}
+				// 		}
+				// 	}
+				// });
+				connection.query("SELECT userPassword from `db`.`Users` WHERE userEmail = " + email, function (err, rows, fields) {
+					connection.release();
 					if (err) {
-						logger.error("Login failed", err);
-						res.status(400).send('Login failed:', err);
+						logger.error("Error while fetching values: \n", err);
+						res.status(400).json({
+							"data": [],
+							"error": "Error obtaining values"
+						})
+					} else {
+						res.status(200).json({
+							"data": rows
+						});
 					}
-					else {
-						if (result.length <= 0) {
-							res.status(400).end('no user found');
-						}
-						else {
-							if (password == result[0].userPassword) {
-								res.status(200).end(JSON.stringify(result[0].user_id));
-							}
-							else {
-								res.status(400).end('incorrect password');
-							}
-						}
-					}
-				})
+				});
 			}
 		})
 	})
