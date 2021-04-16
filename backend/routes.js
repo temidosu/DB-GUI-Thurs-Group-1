@@ -2,6 +2,7 @@ const pool = require('./db')
 const path = require('path')
 const fs = require('fs');
 const { setupMaster } = require('cluster');
+const express = require('express');
 
 module.exports = function routes(app, logger) {
 	// GET /
@@ -69,20 +70,40 @@ module.exports = function routes(app, logger) {
 			}
 		})
 	})
-	// app.post('/signup',(req,res) => {
+	app.post('/signup', async (req,res) => {
+		var userName = req.body.userName;
+		var firstName = req.body.firstName;
+		var lastName = req.body.lastName;
+		var email = req.body.email;
+		var password = req.body.password;
+		con.query("INSERT INTO Users (userName, userPassword, userEmail, firstName, lastName) VALUES (?)", [userName, password, email, firstName, lastName],function (err, result, fields) {
+			if (err) throw err;
+			res.end(JSON.stringify(result)); // Result in JSON format
+		});
 	//   pool.getConnection((err,connection) => {
 	//     if(err) {
 	//       logger.error('Problem obtaining MySQL connection', err)
 	//       res.status(400).send('Problem obtaining MySQL connection'); 
 	//     }else{
 	//       const type = req.body.type+'s'
-	//       const name = "'"+req.body.name+"',"
+	//     //   const name = "'"+req.body.name+"',"
+	// 	  const firstName = "'"+req.body.firstName+"',"
+	// 	  const lastName = "'"+req.body.lastName+"',"
 	//       const password = "'" + req.body.password + "',"
 	//       const email = "'" + req.body.email + "',"
-	//       connection.query('INSERT INTO `db`.+type+' (name,password,email)')
+	//       connection.query('INSERT INTO `db`.+type+' (firstName,lastName,password,email));
 	//     }
 	//   })
-	// })
+	})
+
+	// api post body
+	router.post('/postitbody', async (req, res) => {
+		var productLine = req.body.productLine
+		con.query("INSERT INTO productlines (productLine) VALUES (?)", productLine,function (err, result, fields) {
+			if (err) throw err;
+			res.end(JSON.stringify(result)); // Result in JSON format
+		});
+	});
 
 	// POST /multplynumber
 	app.post('/multplynumber', (req, res) => {
@@ -145,7 +166,7 @@ module.exports = function routes(app, logger) {
 				logger.error('Problem obtaining MySQL connection', err);
 				res.status(400).send('Problem obtaining MySQL connection');
 			} else {
-				const email = new String("'" + req.body.email + "'");
+				const email = req.body.email;
 				const password = req.body.password;
 				// connection.query('SELECT * from `db`.`Users` WHERE userEmail = ' + email, (err, result) => {
 				// 	if (err) {
@@ -182,10 +203,10 @@ module.exports = function routes(app, logger) {
 					}
 				});
 			}
-		})
-	})
+		});
+	});
 
-	// GET /userinfo
+	// GET /users
 	app.get('/users', (req, res) => {
 		// obtain a connection from our pool of connections
 		pool.getConnection(function (err, connection) {
