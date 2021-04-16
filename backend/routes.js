@@ -76,7 +76,7 @@ module.exports = function routes(app, logger) {
 		var lastName = req.body.lastName;
 		var email = req.body.email;
 		var password = req.body.password;
-		con.query("INSERT INTO Users (userName, userPassword, userEmail, firstName, lastName) VALUES (?)", [userName, password, email, firstName, lastName],function (err, result, fields) {
+		con.query("INSERT INTO Users (userName, userPassword, userEmail, firstName, lastName) VALUES (?)", [userName, password, email, firstName, lastName], function (err, result, fields) {
 			if (err) throw err;
 			res.end(JSON.stringify(result)); // Result in JSON format
 		});
