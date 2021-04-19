@@ -27,6 +27,8 @@ app.post('/init_dummies',(req,res) => {
       }
     })
   })
+
+
   app.post('/reset', (req, res) => {
     // obtain a connection from our pool of connections
     pool.getConnection(function (err, connection){

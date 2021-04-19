@@ -10,11 +10,11 @@ const reviewsRoutes = require('./routes/reviewsRoutes');
 const typeRoutes = require('./routes/typeRoutes');
 
 module.exports = function routes(app, logger) {
-  app.use("/",accountRoutes);
-  app.use("/",initRoutes);
-  app.use("/",projectsRoutes);
-  app.use("/",reviewsRoutes);
-  app.use("/",typeRoutes);
+  app.use("/api/",accountRoutes);
+  app.use("/api/",initRoutes);
+  app.use("/api/",projectsRoutes);
+  //app.use("/api/",reviewsRoutes);
+  //app.use("/api/",typeRoutes);
 
   // GET /
   app.get('/', (req, res) => {

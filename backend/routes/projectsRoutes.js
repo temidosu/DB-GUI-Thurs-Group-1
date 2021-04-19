@@ -34,7 +34,7 @@ app.get('/projectRequests', (req, res) => {
             res.status(400).send('Problem obtaining MySQL connection');
         } else {
             ProjectID = req.body.ProjectID
-            connection.query("SELECT * FROM Projects WHERE ProjectID = " + ProjectID, function (err, result, fields) {
+            connection.query("SELECT * FROM Project_Requests WHERE ProjectID = ?",ProjectID, function (err, result, fields) {
                 if (err) {
                     logger.error('', err);
                     res.status(400).send('failed');
