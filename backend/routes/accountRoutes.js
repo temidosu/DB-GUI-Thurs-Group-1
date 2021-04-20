@@ -6,35 +6,7 @@ const fs = require('fs');
 const { json } = require('body-parser');
 
 // POST /signup
-app.post('/register', (req, res) => {
-  pool.getConnection((err, connection) => {
-    if (err) {
-      console.log(connection);
-      logger.error('Problem obtaining MySQL connection', err)
-      res.status(400).send('Problem obtaining MySQL connection');
-    } else {
-      
-      const role = req.body.role
-      const firstName = "'"+ req.body.firstName
-      const lastName = "'"+req.body.lastname
-      const userName =  "'"+req.body.userName
-      const location =  "'"+req.body.location
-      const userPassword =   "'"+req.body.userPassword
-      const userEmail =  "'"+req.body.userEmail
-      const phoneNumber =  "'"+req.body.phoneNumber;
 
-      connection.query("INSERT INTO `db`.`Users` (role_id,location_id,userName,userPassword,userEmail,firstName,lastName,phoneNumber) VALUES (?,?,?,?,?,?,?,?)",[role, location, userName, userPassword, userEmail, firstName, lastName, phoneNumber], (err, result) => {
-          if (err) {
-            logger.error("Problem registering:", err);
-            res.status(400).send('Registration failed'+req.body["userName"]);
-          }
-          else {
-            res.status(200).end('Successfully Registered'+req.body["userName"])
-          }
-        })
-    }
-  })
-})
 app.post('/signup', (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) {
@@ -42,10 +14,10 @@ app.post('/signup', (req, res) => {
       logger.error('Problem obtaining MySQL connection', err)
       res.status(400).send('Problem obtaining MySQL connection');
     } else {
-      data = {}
-      for(const [key, value] of Object.entries(req.body)){
-        data[key] = value
-      }
+      data = req.body
+      // for(const [key, value] of Object.entries(req.body)){
+      //   data[key] = value
+      // }
       connection.query('INSERT INTO Users SET ?', data, (err, result) => {
           if (err) {
             logger.error("Problem signing up: ", err);
