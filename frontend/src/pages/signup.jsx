@@ -3,20 +3,22 @@ import axios from 'axios';
 import { Repository } from '../api/repository';
 import {Link, Redirect} from 'react-router-dom';
 
+
 export class Signup extends React.Component {
     
     repo = new Repository(); 
-    
+
     state = { 
-        firstName: "", 
-        lastName: "", 
-        userName: "", 
-        email: "",
-        phone: "", 
-        password: "", 
-        confirmPassword: "", 
-        
-    };
+    firstName: "", 
+    lastName: "", 
+    userName: "", 
+    email: "",
+    phone: "", 
+    password: "", 
+    confirmPassword: "", 
+    role: "", 
+    location: ""
+    }
 
     errors = () => {
         if(this.state.firstName = "")
@@ -37,7 +39,25 @@ export class Signup extends React.Component {
     }
 
     onAddClick() {
-        //api calls 
+
+        var roleID = 0; 
+        if(this.state.role == "client")
+            roleID = 1; 
+        if(this.state.role == "worker")
+            roleID = 2; 
+        if(this.state.role == "contractor")
+            roleID = 3;     
+        
+        let json = {
+            firstname: this.state.firstName,
+            lastname: this.state.lastName,
+            username: this.state.userName,
+            useremail: this.state.email,
+            role_id: roleID, 
+            userpassword: this.state.password,
+            phonenumber: this.state.phone,
+        };
+        this.repo.signup(json);
         this.setState({
             firstName: '',
             lastName: '', 
@@ -45,6 +65,7 @@ export class Signup extends React.Component {
             email: '',
             phone: '',  
             password: '',
+            confirmPassword: '', 
             role: ''
         });   
     }
