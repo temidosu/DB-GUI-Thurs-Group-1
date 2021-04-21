@@ -20,10 +20,7 @@ export class Homepage extends React.Component {
                         {
                             <div className="row">
                                 <div className="col-md-12">
-                                    <button
-                                        to="/login"
-                                        className="btn btn-secondary m-2"
-                                    >Log In</button>
+                                    <Link to = { '/login' } className = "btn btn-secondary m-2"> Log In</Link> 
                                     <Link to = { '/signup' } className = "btn btn-secondary m-2"> Register</Link> 
                                 </div>
 
@@ -32,10 +29,7 @@ export class Homepage extends React.Component {
                         
                         <div className="row">
                             <div className="col-md-12">
-                                <button
-                                    to="/classList"
-                                    className="btn btn-warning m-2"
-                                >View Jobs</button>
+                                <Link to = { '/viewjobs' } className = "btn btn-warning m-2"> View Jobs</Link> 
                             </div>
 
                         </div>

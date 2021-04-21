@@ -3,6 +3,8 @@ import './App.css';
 import axios from 'axios';
 import { Homepage } from './pages/Homepage.jsx'
 import { Signup } from './pages/signup.jsx'
+import { Login } from './pages/login.jsx'
+import { ViewJobs } from './pages/viewJobs.jsx'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 // React functional component
@@ -72,6 +74,8 @@ function App () {
   return (
     <Router>
         <Switch>
+           <Route path = "/login" component = {Login}/>
+           <Route path = "/viewjobs" component = {ViewJobs}/>
            <Route path = "/signup" component = {Signup}/>
            <Route path = "/" component = {Homepage}/>
         </Switch>

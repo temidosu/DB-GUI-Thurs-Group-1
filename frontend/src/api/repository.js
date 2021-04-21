@@ -13,5 +13,9 @@ export class Repository {
                 });
         });
     }
+
+    getjobs() {
+        
+    }
     
 }
