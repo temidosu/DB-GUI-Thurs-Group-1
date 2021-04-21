@@ -6,25 +6,20 @@ export class Login extends React.Component {
     state = { 
         userName: "", 
         password: "", 
-        
+        loggedIn
     };
 
     errors = () => {
         if(this.state.userName = "")
             return "This field cannot be empty" 
-        if(this.state.email = "")
+        if(this.state.password = "")
             return "This field cannot be empty"
-        if(this.state.password.length < 8 || this.state.password.length > 20)
-            return "Password must be between 8 and 20 characters"
         return ""; 
     }
 
-    onAddClick() {
-        //api calls 
-        this.setState({
-            userName: '', 
-            password: '',
-        });   
+    login() {
+        //check against stored usernames and passwords 
+           
     }
 
     render() {
@@ -41,7 +36,7 @@ export class Login extends React.Component {
                                     id = "name"
                                     name = "name"
                                     value = {this.state.userName}
-                                    onChange = { e => this.setState({ userName: e.target.value })}
+                                    onChange = {e => this.setState({ userName: e.target.value})}
                                     className = "form-control" />
                         </div>
                     </div> 
@@ -52,7 +47,7 @@ export class Login extends React.Component {
                                     id = "name"
                                     name = "name"
                                     value = {this.state.password}
-                                    onChange = { e => this.setState({ password: e.target.value })}
+                                    onChange = { e => this.setState({password: e.target.value})}
                                     className = "form-control" />
                         </div> 
                     </div> 
@@ -62,7 +57,7 @@ export class Login extends React.Component {
                             <button
                                 type="button"
                                 className="btn btn-primary"
-                                onClick={ () => this.onAddClick() }>
+                                onClick={ () => this.login() }>
                                 Login
                             </button>
                             </div>
