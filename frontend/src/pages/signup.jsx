@@ -80,7 +80,7 @@ export class Signup extends React.Component {
                     <div className = "row"> 
                     <div className = "col">
                         <label htmlFor="firstName"> First Name </label> 
-                                <input text = "text"
+                                <input type = "text"
                                     id = "firstName"
                                     name = "firstName"
                                     value = {this.state.firstName}
@@ -89,7 +89,7 @@ export class Signup extends React.Component {
                     </div> 
                     <div className = "col">
                         <label htmlFor="lastName"> Last Name </label> 
-                                <input text = "text"
+                                <input type = "text"
                                     id = "lastName"
                                     name = "lastName"
                                     value = {this.state.lastName}
@@ -100,7 +100,7 @@ export class Signup extends React.Component {
                     <div className = "row"> 
                         <div className = "col">
                         <label htmlFor="name"> Username </label> 
-                                <input text = "text"
+                                <input type = "text"
                                     id = "name"
                                     name = "name"
                                     value = {this.state.userName}
@@ -111,7 +111,7 @@ export class Signup extends React.Component {
                     <div className = "row"> 
                         <div className = "col"> 
                         <label htmlFor="name"> Email  </label> 
-                                <input text = "text"
+                                <input type = "text"
                                     id = "name"
                                     name = "name"
                                     value = {this.state.email}
@@ -122,7 +122,7 @@ export class Signup extends React.Component {
                     <div className = "row"> 
                         <div className = "col"> 
                         <label htmlFor="name"> Phone  </label> 
-                                <input text = "text"
+                                <input type = "text"
                                     id = "name"
                                     name = "name"
                                     value = {this.state.phone}
@@ -133,7 +133,7 @@ export class Signup extends React.Component {
                     <div className = "row"> 
                         <div className = "col"> 
                         <label htmlFor="name"> Password </label> 
-                                <input text = "text"
+                                <input type = "password"
                                     id = "name"
                                     name = "name"
                                     value = {this.state.password}
@@ -144,10 +144,10 @@ export class Signup extends React.Component {
                     <div className = "row"> 
                         <div className = "col"> 
                         <label htmlFor="name"> Confirm Password </label> 
-                                <input text = "text"
+                                <input type = "password"
                                     id = "name"
                                     name = "name"
-                                    value = {this.state.password}
+                                    value = {this.state.confirmPassword}
                                     onChange = { e => this.setState({ confirmPassword: e.target.value })}
                                     className = "form-control" />
                         </div> 

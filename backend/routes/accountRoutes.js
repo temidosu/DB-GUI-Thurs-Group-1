@@ -31,29 +31,29 @@ app.post('/signup', (req, res) => {
 })
 // POST /login
 app.post('/login', (req, res) => {
-  getConnection((err, connection) => {
+  pool.getConnection((err, connection) => {
     if (err) {
       console.log(connection);
       logger.error('Problem obtaining MySQL connection', err)
       res.status(400).send('Problem obtaining MySQL connection');
     } else {
-      const email = "'" + req.body.email + "'"
+      const email = req.body.email; 
       const password = req.body.password;
-      connection.query('SELECT * from `db`.`Users` WHERE email = ' + email, (err, result) => {
+      connection.query('SELECT * from `db`.`Users` WHERE userEmail = ? AND userPassword = ?', [email, password], (err, result) => {
         if (err) {
           logger.error("Login failed", err);
-          res.status(400).send('Login failed:', err);
+          res.status(501).send('Login failed:', err);
         }
         else {
           if (result.length <= 0) {
-            res.status(400).end('No user with given email')
+            res.status(502).end('No user with given email')
           }
           else {
-            if (password == result[0].password) {
+            if (password == result[0].userPassword) {
               res.status(200).end(JSON.stringify(result[0].user_id))
             }
             else {
-              res.status(400).end('Password incorrect')
+              res.status(503).end('Password incorrect')
             }
           }
         }
