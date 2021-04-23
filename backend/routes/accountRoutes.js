@@ -83,4 +83,26 @@ app.get('/users', (req, res) => {
 	})
 });
 
+//GET SPECIFIC user ifno
+app.get('/userinfo', (req, res) => {
+    getConnection((err, connection) => {
+        if (err) {
+            console.log(connection);
+            logger.error('Problem obtaining MySQL connection', err)
+            res.status(400).send('Problem obtaining MySQL connection');
+        } else {
+            UserID = req.body.UserID
+            connection.query("SELECT * FROM Users WHERE user_id = ?",UserID, function (err, result, fields) {
+                if (err) {
+                    logger.error('', err);
+                    res.status(400).send('failed');
+                }
+                else {
+                    res.status(200).json(JSON.parse(JSON.stringify(result)))
+                }
+            });
+        }
+    })
+});
+
 module.exports = app;
