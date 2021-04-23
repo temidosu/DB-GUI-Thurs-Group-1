@@ -14,7 +14,7 @@ export class Navbar extends React.Component {
     
     render() {
         return <>
-            <nav className="navbar navbar-dark bg-nav">
+            <nav className="navbar sticky-top navbar-dark bg-nav">
                 <a className="navbar-brand" href="/"><span className="h1">CONSTRUCT WORK</span></a>
                 <input type="image" className="float-left w-2" src="hamburger_button.png" name="side" alt="side" onClick={() => this.open_close()}></input>
             </nav>
