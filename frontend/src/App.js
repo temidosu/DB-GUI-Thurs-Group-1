@@ -7,6 +7,7 @@ import { Login } from './pages/login.jsx'
 import { ViewJobs } from './pages/viewJobs.jsx'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
+//test
 // React functional component
 function App () {
   // state for storage of the information on the webpage of forms and list, uses hooks
