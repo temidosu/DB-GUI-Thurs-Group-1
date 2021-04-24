@@ -1,6 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import axios from 'axios';
+import { Homepage } from './pages/Homepage.jsx'
+import { Signup } from './pages/signup.jsx'
+import { Login } from './pages/login.jsx'
+import { Logout } from './pages/logout.jsx'
+import { ViewProjects } from './pages/viewProjects.jsx'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Dashboard } from './pages/Dashboard.jsx'
+import { Profile } from './pages/profile.jsx'
+import { MyProjects } from './pages/myProjects.jsx'
+import { ViewWorkers } from './pages/viewWorkers.jsx'
+import { ViewContractors } from './pages/viewContractors.jsx'
 
 // React functional component
 function App () {
@@ -67,20 +78,21 @@ function App () {
   }, [])
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <button onClick={fetchBase} style={{marginBottom: '1rem'}}> {`GET: http://${url}:8000/`} </button>
-        <button onClick={reset}> Reset DB </button>
-        <form onSubmit={handleSubmit}>
-          <input type="text" value={number} onChange={handleChange}/>
-          <br/>
-          <input type="submit" value="Submit" />
-        </form>
-        <ul>
-          { values.map((value, i) => <li key={i}>{value.value}</li>) }
-        </ul>
-      </header>
-    </div>
+    <Router>
+        <Switch>
+
+           <Route path = "/view contractors" component = { ViewContractors } />  
+           <Route path = "/view workers" component = {ViewWorkers} /> 
+           <Route path = "/my projects" component = {MyProjects} /> 
+           <Route path = "/profile" component = {Profile} />
+           {/* <Route path = "/dashboard" component = {Dashboard}/> */}
+           <Route path = "/login" component = {Login}/>
+           <Route path = "/logout" component = {Login}/>
+           <Route path = "/view projects" component = {ViewProjects}/>
+           <Route path = "/signup" component = {Signup}/>
+           <Route path = "/" component = {Homepage}/>
+        </Switch>
+    </Router> 
   );
 }
 

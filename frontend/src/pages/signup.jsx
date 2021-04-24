@@ -3,20 +3,23 @@ import axios from 'axios';
 import { Repository } from '../api/repository';
 import {Link, Redirect} from 'react-router-dom';
 
+
 export class Signup extends React.Component {
     
     repo = new Repository(); 
-    
+
     state = { 
-        firstName: "", 
-        lastName: "", 
-        userName: "", 
-        email: "",
-        phone: "", 
-        password: "", 
-        confirmPassword: "", 
-        
-    };
+    firstName: "", 
+    lastName: "", 
+    userName: "", 
+    email: "",
+    phone: "", 
+    password: "", 
+    confirmPassword: "", 
+    role: "", 
+    location: "",
+    signedUp: false
+    }
 
     errors = () => {
         if(this.state.firstName = "")
@@ -37,7 +40,25 @@ export class Signup extends React.Component {
     }
 
     onAddClick() {
-        //api calls 
+
+        var roleID = 0; 
+        if(this.state.role == "client")
+            roleID = 1; 
+        if(this.state.role == "worker")
+            roleID = 2; 
+        if(this.state.role == "contractor")
+            roleID = 3;     
+        
+        let json = {
+            firstname: this.state.firstName,
+            lastname: this.state.lastName,
+            username: this.state.userName,
+            useremail: this.state.email,
+            role_id: roleID, 
+            userpassword: this.state.password,
+            phonenumber: this.state.phone,
+        };
+        this.repo.signup(json); 
         this.setState({
             firstName: '',
             lastName: '', 
@@ -45,7 +66,9 @@ export class Signup extends React.Component {
             email: '',
             phone: '',  
             password: '',
-            role: ''
+            confirmPassword: '', 
+            role: '',
+            signedUp: false
         });   
     }
 
@@ -59,7 +82,7 @@ export class Signup extends React.Component {
                     <div className = "row"> 
                     <div className = "col">
                         <label htmlFor="firstName"> First Name </label> 
-                                <input text = "text"
+                                <input type = "text"
                                     id = "firstName"
                                     name = "firstName"
                                     value = {this.state.firstName}
@@ -68,7 +91,7 @@ export class Signup extends React.Component {
                     </div> 
                     <div className = "col">
                         <label htmlFor="lastName"> Last Name </label> 
-                                <input text = "text"
+                                <input type = "text"
                                     id = "lastName"
                                     name = "lastName"
                                     value = {this.state.lastName}
@@ -79,7 +102,7 @@ export class Signup extends React.Component {
                     <div className = "row"> 
                         <div className = "col">
                         <label htmlFor="name"> Username </label> 
-                                <input text = "text"
+                                <input type = "text"
                                     id = "name"
                                     name = "name"
                                     value = {this.state.userName}
@@ -90,7 +113,7 @@ export class Signup extends React.Component {
                     <div className = "row"> 
                         <div className = "col"> 
                         <label htmlFor="name"> Email  </label> 
-                                <input text = "text"
+                                <input type = "text"
                                     id = "name"
                                     name = "name"
                                     value = {this.state.email}
@@ -101,7 +124,7 @@ export class Signup extends React.Component {
                     <div className = "row"> 
                         <div className = "col"> 
                         <label htmlFor="name"> Phone  </label> 
-                                <input text = "text"
+                                <input type = "text"
                                     id = "name"
                                     name = "name"
                                     value = {this.state.phone}
@@ -112,7 +135,7 @@ export class Signup extends React.Component {
                     <div className = "row"> 
                         <div className = "col"> 
                         <label htmlFor="name"> Password </label> 
-                                <input text = "text"
+                                <input type = "password"
                                     id = "name"
                                     name = "name"
                                     value = {this.state.password}
@@ -123,10 +146,10 @@ export class Signup extends React.Component {
                     <div className = "row"> 
                         <div className = "col"> 
                         <label htmlFor="name"> Confirm Password </label> 
-                                <input text = "text"
+                                <input type = "password"
                                     id = "name"
                                     name = "name"
-                                    value = {this.state.password}
+                                    value = {this.state.confirmPassword}
                                     onChange = { e => this.setState({ confirmPassword: e.target.value })}
                                     className = "form-control" />
                         </div> 
@@ -141,7 +164,7 @@ export class Signup extends React.Component {
                                     onChange={ e => this.setState({ role: e.target.value }) }>
                                     <option></option>
                                     {
-                                        ["client", "contractor", "worker"].map(x => <option key={ x.index } value={ x }>{ x }</option>)
+                                        ["client", "worker", "contractor"].map(x => <option key={ x.index } value={ x }>{ x }</option>)
                                     }
                                     </select>
                         </div>
