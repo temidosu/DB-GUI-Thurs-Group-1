@@ -17,7 +17,8 @@ export class Signup extends React.Component {
     password: "", 
     confirmPassword: "", 
     role: "", 
-    location: ""
+    location: "",
+    signedUp: false
     }
 
     errors = () => {
@@ -57,7 +58,7 @@ export class Signup extends React.Component {
             userpassword: this.state.password,
             phonenumber: this.state.phone,
         };
-        this.repo.signup(json);
+        this.repo.signup(json); 
         this.setState({
             firstName: '',
             lastName: '', 
@@ -66,7 +67,8 @@ export class Signup extends React.Component {
             phone: '',  
             password: '',
             confirmPassword: '', 
-            role: ''
+            role: '',
+            signedUp: false
         });   
     }
 
@@ -162,7 +164,7 @@ export class Signup extends React.Component {
                                     onChange={ e => this.setState({ role: e.target.value }) }>
                                     <option></option>
                                     {
-                                        ["client", "contractor", "worker"].map(x => <option key={ x.index } value={ x }>{ x }</option>)
+                                        ["client", "worker", "contractor"].map(x => <option key={ x.index } value={ x }>{ x }</option>)
                                     }
                                     </select>
                         </div>

@@ -11,6 +11,7 @@ export class Login extends React.Component {
         email: "", 
         password: "", 
         loggedIn: false,
+        userID: "", 
         errors: false
     };
 
@@ -34,17 +35,22 @@ export class Login extends React.Component {
             if (data) {
                 console.log("Login was successful")
                 console.log("userID:", data)
-                this.setState({loggedIn: true })
+                this.setState({loggedIn: true, userID: data})
             }
             else {
                 console.log("Login failed")
                 this.setState({error: true, loggedIn: false})
             }
+
+            localStorage.setItem("userID", data); 
         });
         //check if login failed
     }
 
     render() {
+        if (this.state.loggedIn) {
+            return <Redirect to = "/" /> 
+        }
         return <>
             <div class = "card w-25 mx-auto mt-5 p-3 pb-5"> 
                 <h2 class="font-weight-bold"> Login </h2> 

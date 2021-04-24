@@ -24,6 +24,18 @@ export class Repository {
                 });
         });
     }
+
+    getUserInfo(id) {
+        return new Promise((resolve, reject) => {
+            axios.get(`${this.url}/userInfo/${id}`)
+                .then(x => resolve(x.data))
+                .catch(error => {
+                    alert(error);
+                    reject(error);
+                });
+        });
+    }
+
     getjobs() {
 
     }

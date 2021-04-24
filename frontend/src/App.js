@@ -4,8 +4,14 @@ import axios from 'axios';
 import { Homepage } from './pages/Homepage.jsx'
 import { Signup } from './pages/signup.jsx'
 import { Login } from './pages/login.jsx'
+import { Logout } from './pages/logout.jsx'
 import { ViewJobs } from './pages/viewJobs.jsx'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Dashboard } from './pages/Dashboard.jsx'
+import { Profile } from './pages/profile.jsx'
+import { MyProjects } from './pages/myProjects.jsx'
+import { ViewWorkers } from './pages/viewWorkers.jsx'
+import { ViewContractors } from './pages/viewContractors.jsx'
 
 // React functional component
 function App () {
@@ -74,8 +80,15 @@ function App () {
   return (
     <Router>
         <Switch>
+
+           <Route path = "/view contractors" component = { ViewContractors } />  
+           <Route path = "/view workers" component = {ViewWorkers} /> 
+           <Route path = "/my projects" component = {MyProjects} /> 
+           <Route path = "/profile" component = {Profile} />
+           {/* <Route path = "/dashboard" component = {Dashboard}/> */}
            <Route path = "/login" component = {Login}/>
-           <Route path = "/viewjobs" component = {ViewJobs}/>
+           <Route path = "/logout" component = {Login}/>
+           <Route path = "/view jobs" component = {ViewJobs}/>
            <Route path = "/signup" component = {Signup}/>
            <Route path = "/" component = {Homepage}/>
         </Switch>
