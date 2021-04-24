@@ -3,7 +3,7 @@ import reactDom from 'react-dom';
 import { Repository } from '../api/repository';
 import {Link, Redirect} from 'react-router-dom';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { Job } from '../models/jobs'; 
+import { Job } from '../models/job'; 
 import './viewJobs.css';
 
 export class ViewJobs extends React.Component {
