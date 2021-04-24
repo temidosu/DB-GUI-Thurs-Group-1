@@ -3,25 +3,62 @@ import reactDom from 'react-dom';
 import { Repository } from '../api/repository';
 import {Link, Redirect} from 'react-router-dom';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { Job } from '../models/jobs'; 
-import './viewJobs.css';
+import { Project } from '../models/project'; 
+import './viewProjects.css';
 
-export class ViewJobs extends React.Component {
+
+export class ViewProjects extends React.Component {
 
     state = {
-        jobs: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
+        projects: []
     }
+
     repo = new Repository(); 
-    //repo.getJobs().then(x => { setState(x));
+    
+    addProject(project) {
+        var projects = this.state.projects; 
+        projects.push(project); 
+        this.setState( { projects }); 
+    }
+
+    // addClient(projectClient) {
+    //     var projectClients = this.state.projectClients; 
+    //     projectClients.push(projectClient); 
+    //     this.setState( { projectClients }); 
+    // }
+
+    componentDidMount(){
+        this.repo.getProjects().then(data => (
+            data.map(x => {
+                this.addProject(new Project(x.job_id, x.ContractorID, x.ClientID, x.firstName, x.lastName, x.phoneNumber, x.userEmail, x.Status, x.ProjectName, x.Description, x.Deadline))
+            })
+        )); 
+    }
+
+    // getClientInfo(id)
+    // {
+    //     let info = { 
+    //         firstName: "",
+    //         lastName: "",
+    //         phone: ""
+    //     }
+
+    //     this.repo.getUserInfo(id).then(data => {
+    //        info.firstName = data.firstName; 
+    //     }
+    //     ); 
+    //     return info; 
+    // }
 
 
-    render() {
+    render() { 
+
         return <>  
             <div class = "container">
-                <h1 class = 'display-1'> Job List </h1> 
+                <h1 class = 'display-1'> Discover new Projects </h1> 
                 <div class = "row">
                     {
-                    this.state.jobs.map((x,i) => 
+                    this.state.projects.map((x,i) => 
                     <div class = "col-4">
                         <div class="card">
                             <div class="card-body">
@@ -34,7 +71,8 @@ export class ViewJobs extends React.Component {
                                         <h4>Job Title</h4>
                                         </div>
                                         <div class = "row">
-                                            <p class = ".text-muted"> Contact: Bob Hirer bob@hirer.com 123-123-1234</p> 
+                                            <p class = ".text-muted"> Contact: {x.ClientFirstName} {x.ClientLastName} {x.ClientEmail} {x.ClientPhoneNumber}</p> 
+                                            <p> </p>
                                         </div>
                                     </div> 
                                 </div> 

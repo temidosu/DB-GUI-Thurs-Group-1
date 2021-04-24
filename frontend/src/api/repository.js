@@ -36,8 +36,15 @@ export class Repository {
         });
     }
 
-    getjobs() {
-
+    getProjects() {
+        return new Promise((resolve, reject) => {
+            axios.get(`${this.url}/projects`)
+                .then(x => resolve(x.data))
+                .catch(error => {
+                    alert(error);
+                    reject(error);
+                });
+        });
     }
-    
+
 }

@@ -36,7 +36,7 @@ export class Homepage extends React.Component {
     }
 
     render () {
-    if(this.state.user_id)
+    if(this.isLoggedIn())
     {   
         return <Dashboard user = {this.state}/> 
     } 
@@ -44,8 +44,8 @@ export class Homepage extends React.Component {
     // {
     //     return <div> loading... </div>
     // }
-    else 
-    {
+    // else 
+    // {
         return (
         <div className="landing-container h-100">
             <div className="h-100 row text-center justify-content-center align-items-center">
@@ -69,7 +69,7 @@ export class Homepage extends React.Component {
                         
                         <div className="row">
                             <div className="col-md-12">
-                                <Link to = { '/viewjobs' } className = "btn btn-warning m-2"> View Jobs</Link> 
+                                <Link to = { '/view projects' } className = "btn btn-warning m-2"> View Projects</Link> 
                             </div>
 
                         </div>
@@ -82,7 +82,6 @@ export class Homepage extends React.Component {
 
         </div>
         );
-    }
     }
 
 }

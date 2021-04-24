@@ -5,7 +5,7 @@ import { Homepage } from './pages/Homepage.jsx'
 import { Signup } from './pages/signup.jsx'
 import { Login } from './pages/login.jsx'
 import { Logout } from './pages/logout.jsx'
-import { ViewJobs } from './pages/viewJobs.jsx'
+import { ViewProjects } from './pages/viewProjects.jsx'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Dashboard } from './pages/Dashboard.jsx'
 import { Profile } from './pages/profile.jsx'
@@ -88,7 +88,7 @@ function App () {
            {/* <Route path = "/dashboard" component = {Dashboard}/> */}
            <Route path = "/login" component = {Login}/>
            <Route path = "/logout" component = {Login}/>
-           <Route path = "/view jobs" component = {ViewJobs}/>
+           <Route path = "/view projects" component = {ViewProjects}/>
            <Route path = "/signup" component = {Signup}/>
            <Route path = "/" component = {Homepage}/>
         </Switch>

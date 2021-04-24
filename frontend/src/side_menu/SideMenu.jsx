@@ -8,7 +8,7 @@ export class SideMenu extends React.Component  {
         //assign role based on account
         role_id: 1,
         client: ["Profile", "My Projects", "View Workers", "View Contractors", "Logout"],
-        worker: ["Profile", "My Projects", "View Jobs", "Logout"],
+        worker: ["Profile", "My Projects", "View Projects", "Logout"],
         contractor: ["Profile", "My Projects", "View Workers", "View Projects", "Logout"]
     }
 
@@ -44,7 +44,7 @@ export class SideMenu extends React.Component  {
                         {
                         this.state.worker.map((x) => 
                             <div className="border-top border-bottom border-secondary">
-                            <p className="h3 text-right mb-5 mt-3"> {x} </p>
+                            <Link to = {x} className="text-decoration-none text-white h3 text-right mb-5 mt-3"> {x} </Link>
                             </div>
                         )
                         }   
@@ -64,7 +64,7 @@ export class SideMenu extends React.Component  {
                         {
                         this.state.contractor.map((x) => 
                             <div className="border-top border-bottom border-secondary">
-                            <p className="h3 text-right mb-5 mt-3"> {x} </p>
+                            <Link to = {x} className="text-decoration-none text-white h3 text-right mb-5 mt-3"> {x} </Link>
                             </div>
                         )
                         }   
