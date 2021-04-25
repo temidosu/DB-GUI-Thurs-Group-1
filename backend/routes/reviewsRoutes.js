@@ -8,7 +8,7 @@ const fs = require('fs');
 const { json } = require('body-parser');
 
 //GET reviews by ClientID
-app.get('/projects/reviewsby/:ClientID', (req, res) => {
+app.get('/reviewsby/:ClientID', (req, res) => {
     pool.getConnection((err, connection) => {
         if (err) {
             console.log(connection);
@@ -30,7 +30,7 @@ app.get('/projects/reviewsby/:ClientID', (req, res) => {
 });
 
 //GET reviews for ContractorID
-app.get('/projects/reviewsof/:ContractorID', (req, res) => {
+app.get('/reviewsof/:ContractorID', (req, res) => {
     pool.getConnection((err, connection) => {
         if (err) {
             console.log(connection);
