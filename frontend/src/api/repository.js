@@ -36,9 +36,42 @@ export class Repository {
         });
     }
 
+    getWorkers(){
+        return new Promise((resolve, reject) => {
+            axios.get(`${this.url}/workers`)
+                .then(x => resolve(x.data))
+                .catch(error => {
+                    alert(error);
+                    reject(error);
+                });
+        });
+    }
+
     getProjects() {
         return new Promise((resolve, reject) => {
             axios.get(`${this.url}/projects`)
+                .then(x => resolve(x.data))
+                .catch(error => {
+                    alert(error);
+                    reject(error);
+                });
+        });
+    }
+
+    getContractors() {
+        return new Promise((resolve, reject) => {
+            axios.get(`${this.url}/contractors`)
+                .then(x => resolve(x.data))
+                .catch(error => {
+                    alert(error);
+                    reject(error);
+                });
+        });
+    }
+
+    getProjectsByClient(id) { 
+        return new Promise((resolve, reject) => {
+            axios.get(`${this.url}/projects/${id}`)
                 .then(x => resolve(x.data))
                 .catch(error => {
                     alert(error);

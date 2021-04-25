@@ -5,15 +5,13 @@ import { Link } from "react-router-dom";
 export class SideMenu extends React.Component  {
 
     state = {
-        //assign role based on account
-        role_id: 1,
-        client: ["Profile", "My Projects", "View Workers", "View Contractors", "Logout"],
-        worker: ["Profile", "My Projects", "View Projects", "Logout"],
-        contractor: ["Profile", "My Projects", "View Workers", "View Projects", "Logout"]
+        role_id: localStorage.getItem("roleID"), 
+        client: ["Profile", "My Projects", "Logout"],
+        worker: ["Profile", "My Projects", "Logout"],
+        contractor: ["Profile", "My Projects", "Logout"]
     }
 
     render() {
-        
         if(this.state.role_id == 1)
         {
             return <> 

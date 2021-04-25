@@ -6,13 +6,27 @@ export class Navbar extends React.Component {
 
     state = {
         open: false,
+        loggedIn: false
+    }
+
+    isLoggedIn = () => {
+        let loggedIn = localStorage.getItem("userID") && localStorage.getItem("userID") != "null";
+        return loggedIn;
     }
 
     open_close() {
         this.setState({open: !this.state.open});
     }
+
+    componentDidMount()
+    {
+        if(this.isLoggedIn())
+            this.setState({loggedIn: true});
+    }
     
     render() {
+        if(this.state.loggedIn)
+        {
         return <>
             <nav className="navbar sticky-top navbar-dark bg-dark">
                 <a className="navbar-brand" href="/"><span className="h1">CONSTRUCT WORK</span></a>
@@ -22,5 +36,14 @@ export class Navbar extends React.Component {
                 (this.state.open && <SideMenu></SideMenu>)
             }
         </>; 
+        }
+        else 
+        {
+        return <>
+        <nav className="navbar sticky-top navbar-dark bg-dark">
+            <a className="navbar-brand" href="/"><span className="h1">CONSTRUCT WORK</span></a>
+        </nav>
+        </>;
+        }
     }
 }

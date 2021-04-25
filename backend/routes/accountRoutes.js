@@ -50,7 +50,7 @@ app.post('/login', (req, res) => {
           }
           else {
             if (password == result[0].userPassword) {
-              res.status(200).end(JSON.stringify(result[0].user_id))
+              res.status(200).end(JSON.stringify(result[0]))
             }
             else {
               res.status(503).end('Password incorrect')
@@ -70,6 +70,50 @@ app.get('/users', (req, res) => {
       res.status(400).send('Problem obtaining MySQL connection');
     } else {
       connection.query("SELECT * FROM Users", function (err, result, fields) {
+        if (err) {
+          logger.error('', err);
+          res.status(400).send('failed');
+        }
+        else {
+          res.status(200).json(JSON.parse(JSON.stringify(result)))
+        }
+      });
+    }
+  })
+});
+
+//Get Workers 
+
+app.get('/workers', (req, res) => {
+  pool.getConnection((err, connection) => {
+    if (err) {
+      console.log(connection);
+      logger.error('Problem obtaining MySQL connection', err)
+      res.status(400).send('Problem obtaining MySQL connection');
+    } else {
+      connection.query("SELECT * FROM Users WHERE role_id = 2", function (err, result, fields) {
+        if (err) {
+          logger.error('', err);
+          res.status(400).send('failed');
+        }
+        else {
+          res.status(200).json(JSON.parse(JSON.stringify(result)))
+        }
+      });
+    }
+  })
+});
+
+//Get Contractors
+
+app.get('/contractors', (req, res) => {
+  pool.getConnection((err, connection) => {
+    if (err) {
+      console.log(connection);
+      logger.error('Problem obtaining MySQL connection', err)
+      res.status(400).send('Problem obtaining MySQL connection');
+    } else {
+      connection.query("SELECT * FROM Users WHERE role_id = 3", function (err, result, fields) {
         if (err) {
           logger.error('', err);
           res.status(400).send('failed');
