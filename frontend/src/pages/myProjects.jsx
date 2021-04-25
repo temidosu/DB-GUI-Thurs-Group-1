@@ -25,7 +25,7 @@ export class MyProjects extends React.Component {
         this.repo.getProjectsByClient(localStorage.getItem("userID")).then(
             data => (
                 data.map(x => {
-                    this.addProject(new Project(x.job_id, x.ContractorID, x.ClientID, x.firstName, x.lastName, x.phoneNumber, x.userEmail, x.Status, x.ProjectName, x.Description, x.Deadline))
+                    this.addProject(new Project(x.job_id, x.ContractorID, x.ClientID, x.firstName, x.lastName, x.phoneNumber, x.userEmail, x.ZipCode, x.Status, x.ProjectName, x.Description, x.Deadline))
                 })
         ));
     }

@@ -51,10 +51,8 @@ export class Login extends React.Component {
         //check if login failed
     }
 
-
-
     render() {
-        if(localStorage.getItem("userID") && localStorage.getItem("userID") != "null")
+        if(this.state.loggedIn)
         {
             return <Redirect to = "/dashboard"> </Redirect>
         }

@@ -6,9 +6,9 @@ export class SideMenu extends React.Component  {
 
     state = {
         role_id: localStorage.getItem("roleID"), 
-        client: ["Home", "Profile", "My Projects", "Logout"],
-        worker: ["Home", "Profile", "My Projects", "Logout"],
-        contractor: ["Home", "Profile", "My Projects", "Logout"]
+        client: ["Profile", "My Projects", "Logout"],
+        worker: ["Profile", "My Projects", "Logout"],
+        contractor: ["Profile", "My Projects", "Logout"]
     }
 
     render() {

@@ -17,7 +17,7 @@ export class Signup extends React.Component {
     password: "", 
     confirmPassword: "", 
     role: "", 
-    location: "",
+    zipCode: "",
     signedUp: false
     }
 
@@ -57,6 +57,7 @@ export class Signup extends React.Component {
             role_id: roleID, 
             userpassword: this.state.password,
             phonenumber: this.state.phone,
+            zipCode: this.state.zipCode
         };
         this.repo.signup(json); 
         this.setState({
@@ -68,6 +69,7 @@ export class Signup extends React.Component {
             password: '',
             confirmPassword: '', 
             role: '',
+            zipCode: '', 
             signedUp: false
         });   
     }
@@ -158,6 +160,17 @@ export class Signup extends React.Component {
                                     className = "form-control" />
                         </div> 
                     </div> 
+                    <div className = "row"> 
+                        <div className = "col"> 
+                        <label htmlFor="name"> Zip Code </label> 
+                                <input type = "text"
+                                    id = "name"
+                                    name = "name"
+                                    value = {this.state.zipCode}
+                                    onChange = { e => this.setState({ zipCode: e.target.value })}
+                                    className = "form-control" />
+                        </div> 
+                    </div>
                     <div className = "row"> 
                         <div className = "col">
                         <label htmlFor="role"> Role </label> 

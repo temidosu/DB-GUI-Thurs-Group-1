@@ -1,7 +1,9 @@
 import React from 'react';
 import "./dashboard.css";
 import { Search } from "./search"
+// import Popup from "../components/popup"
 import { Redirect } from "react-router-dom"
+import { Workers } from "./workers"
 
 
 export class Dashboard extends React.Component{
@@ -22,9 +24,18 @@ export class Dashboard extends React.Component{
         <br></br> 
         <div class = "container text-center">
             <h2> Welcome, {this.state.firstName} {this.state.lastName}</h2>
-            <Search /> 
+            <Search />
             <br></br>
         </div>
+
+        {/* <Popup
+        title="titleHere"
+        openPopup={openPopup}
+        popupIsOpen={true}
+    >
+        child form goes here
+
+        </Popup> */}
     </>; 
     }
 }
