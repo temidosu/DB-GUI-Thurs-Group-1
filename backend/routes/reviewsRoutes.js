@@ -50,3 +50,28 @@ app.get('/projects/reviewsof/:ContractorID', (req, res) => {
         }
     })
 });
+
+// POST /newreview
+app.post('/newreview', (req, res) => {
+    pool.getConnection((err, connection) => {
+      if (err) {
+        console.log(connection);
+        logger.error('Problem obtaining MySQL connection', err)
+        res.status(400).send('Problem obtaining MySQL connection');
+      } else {
+        var data = req.body
+        // for(const [key, value] of Object.entries(req.body)){
+        //   data[key] = value
+        // }
+        connection.query('INSERT INTO Reviews SET ?', data, (err, result) => {
+            if (err) {
+              logger.error("Problem creating review: ", err);
+              res.status(400).send('review failed');
+            }
+            else {
+              res.status(200).end('review posted')
+            }
+          })
+      }
+    })
+  })
