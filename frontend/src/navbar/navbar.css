@@ -1,0 +1,16 @@
+
+/* Element Selectors */
+
+nav {
+    font-family: 'Fjalla One', sans-serif;
+}
+
+/* Class Selectors */
+
+.bg-nav {
+    background-color: #353a40;
+}
+
+.w-2 {
+    width: 2em;
+}

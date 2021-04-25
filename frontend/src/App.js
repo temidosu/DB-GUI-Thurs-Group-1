@@ -1,6 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import axios from 'axios';
+import { Homepage } from './pages/Homepage.jsx'
+import { Signup } from './pages/signup.jsx'
+import { Login } from './pages/login.jsx'
+import { Logout } from './pages/logout.jsx'
+import { Projects } from './pages/Projects.jsx'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Dashboard } from './pages/Dashboard.jsx'
+import { Profile } from './pages/profile.jsx'
+import { MyProjects } from './pages/myProjects.jsx'
+import { Workers } from './pages/workers.jsx'
+import { Contractors } from './pages/contractors.jsx'
+import { Navbar } from './navbar/Navbar.jsx'
 
 // React functional component
 function App () {
@@ -67,20 +79,23 @@ function App () {
   }, [])
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <button onClick={fetchBase} style={{marginBottom: '1rem'}}> {`GET: http://${url}:8000/`} </button>
-        <button onClick={reset}> Reset DB </button>
-        <form onSubmit={handleSubmit}>
-          <input type="text" value={number} onChange={handleChange}/>
-          <br/>
-          <input type="submit" value="Submit" />
-        </form>
-        <ul>
-          { values.map((value, i) => <li key={i}>{value.value}</li>) }
-        </ul>
-      </header>
-    </div>
+    <Router>
+        <Navbar /> 
+        <Switch>
+           <Route path = "/home" component = { Dashboard } /> 
+           <Route path = "/contractors" component = { Contractors } />  
+           <Route path = "/workers" component = {Workers} /> 
+           <Route path = "/my projects" component = {MyProjects} /> 
+           <Route path = "/profile" component = {Profile} />
+           <Route path = "/dashboard" component = {Dashboard}/>
+           <Route path = "/login" component = {Login}/>
+           <Route path = "/logout" component = {Logout}/>
+           <Route path = "/logout" component = {Homepage}/>
+           <Route path = "/projects" component = {Projects}/>
+           <Route path = "/signup" component = {Signup}/>
+           <Route path = "/" component = {Homepage}/>
+        </Switch>
+    </Router> 
   );
 }
 
