@@ -1,10 +1,3 @@
-@temidosu
-temidosu Prototype client, Contractor, and worker
-Latest commit e355d99 4 days ago
- History
- 2 contributors
-@SeeMorton1@temidosu
-65 lines (60 sloc)  1.87 KB
   
 
 //ROUTES FOR creating either client, Contractor, or worker
