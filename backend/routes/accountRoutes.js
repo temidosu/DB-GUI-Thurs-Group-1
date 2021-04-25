@@ -50,7 +50,7 @@ app.post('/login', (req, res) => {
           }
           else {
             if (password == result[0].userPassword) {
-              res.status(200).end(JSON.stringify(result[0].user_id))
+              res.status(200).end(JSON.stringify(result[0]))
             }
             else {
               res.status(503).end('Password incorrect')

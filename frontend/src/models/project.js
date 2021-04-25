@@ -3,13 +3,13 @@ export class Project {
         this.job_id = job_id; 
         this.ContractorID = ContractorID; 
         this.ClientID = ClientID; 
+        this.ClientFirstName = ClientFirstName; 
+        this.ClientLastName = ClientLastName; 
+        this.ClientPhoneNumber = ClientPhoneNumber; 
+        this.ClientEmail = ClientEmail;
         this.Status = Status; 
         this.ProjectName = ProjectName; 
         this.ProjectDescription = ProjectDescription; 
         this.Deadline = Deadline; 
-        this.ClientFirstName = ClientFirstName; 
-        this.ClientLastName = ClientLastName; 
-        this.ClientPhoneNumber = ClientPhoneNumber; 
-        this.ClientEmail = ClientEmail; 
     }
 }

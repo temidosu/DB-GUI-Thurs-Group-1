@@ -10,7 +10,8 @@ import './viewProjects.css';
 export class ViewProjects extends React.Component {
 
     state = {
-        projects: []
+        projects: [], 
+        loggedIn: false
     }
 
     repo = new Repository(); 
@@ -52,13 +53,16 @@ export class ViewProjects extends React.Component {
 
 
     render() { 
-
+        if(!localStorage.getItem("userID") || localStorage.getItem("userID") == "null")
+        {
+            return <Redirect to = "/login"></Redirect> 
+        }
         return <>  
             <div class = "container">
                 <h1 class = 'display-1'> Discover new Projects </h1> 
                 <div class = "row">
                     {
-                    this.state.projects.map((x,i) => 
+                    this.state.projects.map((x) => 
                     <div class = "col-4">
                         <div class="card">
                             <div class="card-body">

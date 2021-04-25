@@ -12,6 +12,7 @@ import { Profile } from './pages/profile.jsx'
 import { MyProjects } from './pages/myProjects.jsx'
 import { ViewWorkers } from './pages/viewWorkers.jsx'
 import { ViewContractors } from './pages/viewContractors.jsx'
+import { Navbar } from './navbar/Navbar.jsx'
 
 // React functional component
 function App () {
@@ -79,15 +80,17 @@ function App () {
 
   return (
     <Router>
+        <Navbar /> 
         <Switch>
-
+           <Route path = "/home" component = { Dashboard } /> 
            <Route path = "/view contractors" component = { ViewContractors } />  
            <Route path = "/view workers" component = {ViewWorkers} /> 
            <Route path = "/my projects" component = {MyProjects} /> 
            <Route path = "/profile" component = {Profile} />
-           {/* <Route path = "/dashboard" component = {Dashboard}/> */}
+           <Route path = "/dashboard" component = {Dashboard}/>
            <Route path = "/login" component = {Login}/>
-           <Route path = "/logout" component = {Login}/>
+           <Route path = "/logout" component = {Logout}/>
+           <Route path = "/logout" component = {Homepage}/>
            <Route path = "/view projects" component = {ViewProjects}/>
            <Route path = "/signup" component = {Signup}/>
            <Route path = "/" component = {Homepage}/>

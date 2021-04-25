@@ -73,6 +73,10 @@ export class Signup extends React.Component {
     }
 
     render() {
+    if(localStorage.getItem("userID") && localStorage.getItem("userID") != "null")
+    {
+        return <Redirect to = "/dashboard"> </Redirect>
+    }
         return <>
             <div class = "card w-25 mx-auto mt-5 p-3 pb-5"> 
                 <h2 class="font-weight-bold"> Signup </h2> 

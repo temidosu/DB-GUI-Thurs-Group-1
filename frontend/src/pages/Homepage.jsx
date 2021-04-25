@@ -9,36 +9,35 @@ export class Homepage extends React.Component {
     repo = new Repository();
 
     state = {
-        firstName: "",
-        lastName: "", 
-        role_id: "", 
-        user_id: "",
-        isLoaded: false 
+        firstName: localStorage.getItem("firstName"), 
+        lastName: localStorage.getItem("lastName"),
+        role_id: localStorage.getItem("roleID"),
+        user_id: localStorage.getItem("userID"), 
     }
 
-    isLoggedIn = () => {
-        let loggedIn = localStorage.getItem("userID") && localStorage.getItem("userID") != "null";
-        return loggedIn;
-    }
+    // isLoggedIn = () => {
+    //     let loggedIn = localStorage.getItem("userID") && localStorage.getItem("userID") != "null";
+    //     return loggedIn;
+    // }
 
-    componentDidMount()
-    {   
-        if(this.isLoggedIn()) {
-            this.repo.getUserInfo(localStorage.getItem("userID"))
-            .then(data => {
-                console.log(data);
-                this.setState({firstName: data[0].firstName, lastName: data[0].lastName, role_id: data[0].role_id, user_id: data[0].user_id, isLoaded: true})
-            })
-            .catch(err => {
-                console.log("No user info found")
-            })
-        }
-    }
+    // componentDidMount()
+    // {   
+    //     if(this.isLoggedIn()) {
+    //         this.repo.getUserInfo(localStorage.getItem("userID"))
+    //         .then(data => {
+    //             console.log(data);
+    //             this.setState({firstName: data[0].firstName, lastName: data[0].lastName, role_id: data[0].role_id, user_id: data[0].user_id, isLoaded: true})
+    //         })
+    //         .catch(err => {
+    //             console.log("No user info found")
+    //         })
+    //     }
+    // }
 
     render () {
-    if(this.isLoggedIn())
+    if(localStorage.getItem("userID") && localStorage.getItem("userID") != "null")
     {   
-        return <Dashboard user = {this.state}/> 
+        return <Dashboard/> 
     } 
     // else if(!this.state.isLoaded)
     // {

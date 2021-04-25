@@ -47,4 +47,15 @@ export class Repository {
         });
     }
 
+    getProjectsByClient(id) { 
+        return new Promise((resolve, reject) => {
+            axios.get(`${this.url}/projects/${id}`)
+                .then(x => resolve(x.data))
+                .catch(error => {
+                    alert(error);
+                    reject(error);
+                });
+        });
+    }
+
 }
