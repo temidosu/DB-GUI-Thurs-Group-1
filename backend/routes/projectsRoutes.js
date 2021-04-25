@@ -6,7 +6,7 @@ const fs = require('fs');
 const { json } = require('body-parser');
 
 // GET all projects
-app.get('/projects', (req, res) => {
+app.get('/projects/all/', (req, res) => {
     pool.getConnection((err, connection) => {
         if (err) {
             console.log(connection);
@@ -27,7 +27,7 @@ app.get('/projects', (req, res) => {
 });
 
 //GET project by ClientID
-app.get('/projects/:ClientID', (req, res) => {
+app.get('/projects/clients/:ClientID', (req, res) => {
     pool.getConnection((err, connection) => {
         if (err) {
             console.log(connection);
@@ -47,25 +47,48 @@ app.get('/projects/:ClientID', (req, res) => {
         }
     })
 });
-//GET SPECIFIC PROJECT
-// app.get('/projectRequests/1', (req, res) => {
-//     getConnection((err, connection) => {
-//         if (err) {
-//             console.log(connection);
-//             logger.error('Problem obtaining MySQL connection', err)
-//             res.status(400).send('Problem obtaining MySQL connection');
-//         } else {
-//             ProjectID = req.body.ProjectID
-//             connection.query("SELECT * FROM Project_Requests WHERE ProjectID = ?",ProjectID, function (err, result, fields) {
-//                 if (err) {
-//                     logger.error('', err);
-//                     res.status(400).send('failed');
-//                 }
-//                 else {
-//                     res.status(200).json(JSON.parse(JSON.stringify(result)))
-//                 }
-//             });
-//         }
-//     })
-// });
+
+//GET project by ContractorID
+app.get('/projects/contractors/:ContractorID', (req, res) => {
+    pool.getConnection((err, connection) => {
+        if (err) {
+            console.log(connection);
+            logger.error('Problem obtaining MySQL connection', err)
+            res.status(400).send('Problem obtaining MySQL connection');
+        } else {
+            var ContractorID = req.params.ContractorID; 
+            connection.query("SELECT * FROM Projects JOIN Users ON Projects.contractorID = Users.user_id WHERE Projects.ContractorID = ? ",[ContractorID], function (err, result, fields) {
+                if (err) {
+                    logger.error('', err);
+                    res.status(400).send('failed');
+                }
+                else {
+                    res.status(200).json(JSON.parse(JSON.stringify(result))); 
+                }
+            });
+        }
+    })
+});
+
+//GET project by ProjectID
+app.get('/projects/:job_id', (req, res) => {
+    pool.getConnection((err, connection) => {
+        if (err) {
+            console.log(connection);
+            logger.error('Problem obtaining MySQL connection', err)
+            res.status(400).send('Problem obtaining MySQL connection');
+        } else {
+            var job_id = req.params.job_id; 
+            connection.query("SELECT * FROM Projects WHERE Projects.job_id = ? ",[job_id], function (err, result, fields) {
+                if (err) {
+                    logger.error('', err);
+                    res.status(400).send('failed');
+                }
+                else {
+                    res.status(200).json(JSON.parse(JSON.stringify(result))); 
+                }
+            });
+        }
+    })
+});
 module.exports = app;
