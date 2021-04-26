@@ -9,6 +9,7 @@ const { json } = require('body-parser');
 app.post('/signup', (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) {
+      connection.release(); 
       console.log(connection);
       logger.error('Problem obtaining MySQL connection', err)
       res.status(400).send('Problem obtaining MySQL connection');
@@ -33,6 +34,7 @@ app.post('/signup', (req, res) => {
 app.post('/login', (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) {
+      connection.release();
       console.log(connection);
       logger.error('Problem obtaining MySQL connection', err)
       res.status(400).send('Problem obtaining MySQL connection');
@@ -65,6 +67,7 @@ app.post('/login', (req, res) => {
 app.get('/users', (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) {
+      connection.release();
       console.log(connection);
       logger.error('Problem obtaining MySQL connection', err)
       res.status(400).send('Problem obtaining MySQL connection');
@@ -87,6 +90,7 @@ app.get('/users', (req, res) => {
 app.get('/workers', (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) {
+      connection.release();
       console.log(connection);
       logger.error('Problem obtaining MySQL connection', err)
       res.status(400).send('Problem obtaining MySQL connection');
@@ -109,6 +113,7 @@ app.get('/workers', (req, res) => {
 app.get('/contractors', (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) {
+      connection.release();
       console.log(connection);
       logger.error('Problem obtaining MySQL connection', err)
       res.status(400).send('Problem obtaining MySQL connection');
@@ -129,6 +134,7 @@ app.get('/contractors', (req, res) => {
 app.get('/userInfo/:userID', (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) {
+      connection.release();
       console.log(connection);
       logger.error('Problem obtaining MySQL connection', err)
       res.status(400).send('Problem obtaining MySQL connection');

@@ -9,6 +9,7 @@ const { json } = require('body-parser');
 app.get('/projects', (req, res) => {
     pool.getConnection((err, connection) => {
         if (err) {
+            connection.release();
             console.log(connection);
             logger.error('Problem obtaining MySQL connection', err)
             res.status(400).send('Problem obtaining MySQL connection');
@@ -30,6 +31,7 @@ app.get('/projects', (req, res) => {
 app.get('/projects/:ClientID', (req, res) => {
     pool.getConnection((err, connection) => {
         if (err) {
+            connection.release();
             console.log(connection);
             logger.error('Problem obtaining MySQL connection', err)
             res.status(400).send('Problem obtaining MySQL connection');
