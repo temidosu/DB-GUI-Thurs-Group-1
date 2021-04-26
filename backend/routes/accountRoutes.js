@@ -125,7 +125,7 @@ app.get('/workers/available', (req, res) => {
 });
 
 //Get All Workers For a Given Project
-app.get('/project/workers/:ProjectID', (req, res) => {
+app.get('/projects/workers/:ProjectID', (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) {
       console.log(connection);
