@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import axios from 'axios';
-<<<<<<< HEAD
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { ROUTES } from './routes';
-import { Navbar } from './navbar/Navbar';
-=======
 import { Homepage } from './pages/Homepage.jsx'
 import { Signup } from './pages/signup.jsx'
 import { Login } from './pages/login.jsx'
@@ -18,7 +13,6 @@ import { MyProjects } from './pages/myProjects.jsx'
 import { Workers } from './pages/workers.jsx'
 import { Contractors } from './pages/contractors.jsx'
 import { Navbar } from './navbar/Navbar.jsx'
->>>>>>> main
 
 // React functional component
 function App () {
@@ -85,16 +79,6 @@ function App () {
   }, [])
 
   return (
-<<<<<<< HEAD
-    <>
-    <Navbar></Navbar>
-      <Router>
-        <Switch>
-          { ROUTES.map((route, index) => <Route key={index} { ...route } />) }
-        </Switch>
-      </Router>
-    </>
-=======
     <Router>
         <Navbar /> 
         <Switch>
@@ -112,7 +96,6 @@ function App () {
            <Route path = "/" component = {Homepage}/>
         </Switch>
     </Router> 
->>>>>>> main
   );
 }
 
