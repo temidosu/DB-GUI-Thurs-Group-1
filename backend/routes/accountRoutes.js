@@ -83,7 +83,6 @@ app.get('/users', (req, res) => {
 });
 
 //Get Workers 
-
 app.get('/workers', (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) {
@@ -91,7 +90,7 @@ app.get('/workers', (req, res) => {
       logger.error('Problem obtaining MySQL connection', err)
       res.status(400).send('Problem obtaining MySQL connection');
     } else {
-      connection.query("SELECT * FROM Users WHERE role_id = 2", function (err, result, fields) {
+      connection.query("SELECT * FROM Users JOIN Workers ON Users.user_id = Workers.userID WHERE role_id = 2", function (err, result, fields) {
         if (err) {
           logger.error('', err);
           res.status(400).send('failed');
@@ -135,6 +134,28 @@ app.get('/userInfo/:userID', (req, res) => {
     } else {
       var userID = req.params.userID
       connection.query("SELECT * FROM Users WHERE user_ID = ?", userID, function (err, result, fields) {
+        if (err) {
+          logger.error('', err);
+          res.status(400).send('failed');
+        }
+        else {
+          res.status(200).json(JSON.parse(JSON.stringify(result)))
+        }
+      });
+    }
+  })
+});
+
+//get all users for a given zipcode
+app.get('/userInfo/location/:zipCode', (req, res) => {
+  pool.getConnection((err, connection) => {
+    if (err) {
+      console.log(connection);
+      logger.error('Problem obtaining MySQL connection', err)
+      res.status(400).send('Problem obtaining MySQL connection');
+    } else {
+      var zipCode = req.params.zipCode
+      connection.query("SELECT * FROM Users WHERE ZipCode = ?", zipCode, function (err, result, fields) {
         if (err) {
           logger.error('', err);
           res.status(400).send('failed');
