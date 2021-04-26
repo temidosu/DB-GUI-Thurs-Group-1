@@ -1,9 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import axios from 'axios';
+<<<<<<< HEAD
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { ROUTES } from './routes';
 import { Navbar } from './navbar/Navbar';
+=======
+import { Homepage } from './pages/Homepage.jsx'
+import { Signup } from './pages/signup.jsx'
+import { Login } from './pages/login.jsx'
+import { Logout } from './pages/logout.jsx'
+import { Projects } from './pages/Projects.jsx'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Dashboard } from './pages/Dashboard.jsx'
+import { Profile } from './pages/profile.jsx'
+import { MyProjects } from './pages/myProjects.jsx'
+import { Workers } from './pages/workers.jsx'
+import { Contractors } from './pages/contractors.jsx'
+import { Navbar } from './navbar/Navbar.jsx'
+>>>>>>> main
 
 // React functional component
 function App () {
@@ -70,6 +85,7 @@ function App () {
   }, [])
 
   return (
+<<<<<<< HEAD
     <>
     <Navbar></Navbar>
       <Router>
@@ -78,6 +94,25 @@ function App () {
         </Switch>
       </Router>
     </>
+=======
+    <Router>
+        <Navbar /> 
+        <Switch>
+           <Route path = "/home" component = { Dashboard } /> 
+           <Route path = "/contractors" component = { Contractors } />  
+           <Route path = "/workers" component = {Workers} /> 
+           <Route path = "/my projects" component = {MyProjects} /> 
+           <Route path = "/profile" component = {Profile} />
+           <Route path = "/dashboard" component = {Dashboard}/>
+           <Route path = "/login" component = {Login}/>
+           <Route path = "/logout" component = {Logout}/>
+           <Route path = "/logout" component = {Homepage}/>
+           <Route path = "/projects" component = {Projects}/>
+           <Route path = "/signup" component = {Signup}/>
+           <Route path = "/" component = {Homepage}/>
+        </Switch>
+    </Router> 
+>>>>>>> main
   );
 }
 

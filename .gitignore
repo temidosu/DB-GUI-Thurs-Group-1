@@ -1,2 +1,6 @@
 .DS_Store
+<<<<<<< HEAD
 frontend/node_modules
+=======
+backend/.env
+>>>>>>> main
