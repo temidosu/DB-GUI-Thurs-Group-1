@@ -13,7 +13,7 @@ module.exports = function routes(app, logger) {
   app.use("/api/",accountRoutes);
   app.use("/api/",initRoutes);
   app.use("/api/",projectsRoutes);
-  //app.use("/api/",reviewsRoutes);
+  app.use("/api/",reviewsRoutes);
   //app.use("/api/",typeRoutes);
 
   // GET /

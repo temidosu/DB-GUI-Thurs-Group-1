@@ -5,7 +5,6 @@ const path = require('path')
 const fs = require('fs');
 const { json } = require('body-parser');  
 
-
 //ROUTES FOR creating either client, Contractor, or worker
 
 app.post('/createcontractor', (req, res) => {
