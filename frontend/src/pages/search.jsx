@@ -6,6 +6,7 @@ import { Contractors } from './contractors.jsx';
 import { Contractor } from '../models/contractor'; 
 import { Projects } from './Projects.jsx'; 
 import { Project } from '../models/project'; 
+import './search.css'; 
 
 export class Search extends React.Component{
 
@@ -197,8 +198,10 @@ export class Search extends React.Component{
                  </button> 
                  </div>
             </div>
-            <Workers workers = {this.state.workers}/>
-            <Contractors contractors = {this.state.contractors}/>
+            <br></br>
+            <hr></hr>
+            <Workers workers = {this.state.workers} class = "background-image"/>
+            <Contractors contractors = {this.state.contractors} class = "background-image"/>
             </div>
             </>
         }
@@ -245,6 +248,8 @@ export class Search extends React.Component{
                  </button> 
                  </div>
             </div>
+            <br></br>
+            <hr></hr>
             <Contractors contractors = {this.state.contractors}/>
             <Projects projects = {this.state.projects}/>
             </div>
@@ -293,6 +298,8 @@ export class Search extends React.Component{
                  </button> 
                  </div>
             </div>
+            <br></br>
+            <hr></hr>
             <Workers workers = {this.state.workers}/>
             <Projects projects = {this.state.projects}/>
             </div>

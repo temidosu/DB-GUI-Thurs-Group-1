@@ -5,3 +5,12 @@
 .bg-card-header {
     background-color: #353a40 !important;
 }
+
+.cropped {
+    width: 200px; /* width of container */
+    height: 400px; /* height of container */
+    object-fit: cover;
+    object-position: 20% 90%;
+}
+
+

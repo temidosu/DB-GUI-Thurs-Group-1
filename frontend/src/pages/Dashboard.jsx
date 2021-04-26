@@ -27,7 +27,6 @@ export class Dashboard extends React.Component{
             <Search />
             <br></br>
         </div>
-
         {/* <Popup
         title="titleHere"
         openPopup={openPopup}

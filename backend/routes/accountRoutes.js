@@ -40,6 +40,7 @@ app.post('/login', (req, res) => {
       const email = req.body.email; 
       const password = req.body.password;
       connection.query('SELECT * from `db`.`Users` WHERE userEmail = ? AND userPassword = ?', [email, password], (err, result) => {
+        connection.release(); 
         if (err) {
           logger.error("Login failed", err);
           res.status(501).send('Login failed:', err);
@@ -70,6 +71,7 @@ app.get('/users', (req, res) => {
       res.status(400).send('Problem obtaining MySQL connection');
     } else {
       connection.query("SELECT * FROM Users", function (err, result, fields) {
+        connection.release();
         if (err) {
           logger.error('', err);
           res.status(400).send('failed');
@@ -92,6 +94,7 @@ app.get('/workers', (req, res) => {
       res.status(400).send('Problem obtaining MySQL connection');
     } else {
       connection.query("SELECT * FROM Users WHERE role_id = 2", function (err, result, fields) {
+        connection.release();
         if (err) {
           logger.error('', err);
           res.status(400).send('failed');
@@ -115,6 +118,7 @@ app.get('/workersZip/:zipcode', (req, res) => {
     } else {
       var zipcode = req.params.zipcode; 
       connection.query("SELECT * FROM Users WHERE role_id = 2 AND ZipCode = ?", [zipcode], function (err, result, fields) {
+        connection.release();
         if (err) {
           logger.error('', err);
           res.status(400).send('failed');
@@ -138,6 +142,7 @@ app.get('/workersQuery/:query', (req, res) => {
     } else {
       var query = req.params.query;  
       connection.query("SELECT * FROM Users WHERE role_id = 2 AND firstName like ? OR lastName like ?", [query,query], function (err, result, fields) {
+        connection.release();
         if (err) {
           logger.error('', err);
           res.status(400).send('failed');
@@ -162,6 +167,7 @@ app.get('/workersZipAndQuery/:zipcode/:query', (req, res) => {
       var zipcode = req.params.zipcode; 
       var query = req.params.query;  
       connection.query("SELECT * FROM Users WHERE role_id = 2 AND ZipCode = ? AND firstName like ? OR lastName like ?", [zipcode, query,query], function (err, result, fields) {
+        connection.release();
         if (err) {
           logger.error('', err);
           res.status(400).send('failed');
@@ -184,6 +190,7 @@ app.get('/contractors', (req, res) => {
       res.status(400).send('Problem obtaining MySQL connection');
     } else {
       connection.query("SELECT * FROM Users WHERE role_id = 3", function (err, result, fields) {
+        connection.release();
         if (err) {
           logger.error('', err);
           res.status(400).send('failed');
@@ -207,6 +214,7 @@ app.get('/contractorsZip/:zipcode', (req, res) => {
     } else {
       var zipcode = req.params.zipcode; 
       connection.query("SELECT * FROM Users WHERE role_id = 3 AND ZipCode = ?", [zipcode], function (err, result, fields) {
+        connection.release();
         if (err) {
           logger.error('', err);
           res.status(400).send('failed');
@@ -230,6 +238,7 @@ app.get('/contractorsQuery/:query', (req, res) => {
     } else {
       var query = req.params.query;  
       connection.query("SELECT * FROM Users WHERE role_id = 3 AND firstName like ? OR lastName like ?", [query,query], function (err, result, fields) {
+        connection.release();
         if (err) {
           logger.error('', err);
           res.status(400).send('failed');
@@ -254,6 +263,7 @@ app.get('/contractorsZipAndQuery/:zipcode/:query', (req, res) => {
       var zipcode = req.params.zipcode; 
       var query = req.params.query;  
       connection.query("SELECT * FROM Users WHERE role_id = 3 AND ZipCode = ? AND firstName like ? OR lastName like ?", [zipcode, query,query], function (err, result, fields) {
+        connection.release();
         if (err) {
           logger.error('', err);
           res.status(400).send('failed');
@@ -275,6 +285,7 @@ app.get('/userInfo/:userID', (req, res) => {
     } else {
       var userID = req.params.userID
       connection.query("SELECT * FROM Users WHERE user_ID = ?", userID, function (err, result, fields) {
+        connection.release();
         if (err) {
           logger.error('', err);
           res.status(400).send('failed');
