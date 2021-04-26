@@ -114,4 +114,26 @@ app.get('/projects/workers/:ProjectID', (req, res) => {
     })
   });
 
+  //GET projects by WorkerID
+app.get('/projects/workers/:WorkerID', (req, res) => {
+    pool.getConnection((err, connection) => {
+        if (err) {
+            console.log(connection);
+            logger.error('Problem obtaining MySQL connection', err)
+            res.status(400).send('Problem obtaining MySQL connection');
+        } else {
+            var WorkerID = req.params.WorkerID; 
+            connection.query("SELECT * FROM Projects JOIN Workers ON Projects.job_id = Workers.job_id WHERE Workers.userID = ? ",[WorkerID], function (err, result, fields) {
+                if (err) {
+                    logger.error('', err);
+                    res.status(400).send('failed');
+                }
+                else {
+                    res.status(200).json(JSON.parse(JSON.stringify(result))); 
+                }
+            });
+        }
+    })
+});
+
 module.exports = app;
