@@ -9,7 +9,6 @@ const { json } = require('body-parser');
 app.post('/signup', (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) {
-      connection.release(); 
       console.log(connection);
       logger.error('Problem obtaining MySQL connection', err)
       res.status(400).send('Problem obtaining MySQL connection');
@@ -34,7 +33,6 @@ app.post('/signup', (req, res) => {
 app.post('/login', (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) {
-      connection.release();
       console.log(connection);
       logger.error('Problem obtaining MySQL connection', err)
       res.status(400).send('Problem obtaining MySQL connection');
@@ -67,7 +65,6 @@ app.post('/login', (req, res) => {
 app.get('/users', (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) {
-      connection.release();
       console.log(connection);
       logger.error('Problem obtaining MySQL connection', err)
       res.status(400).send('Problem obtaining MySQL connection');
@@ -90,7 +87,6 @@ app.get('/users', (req, res) => {
 app.get('/workers', (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) {
-      connection.release();
       console.log(connection);
       logger.error('Problem obtaining MySQL connection', err)
       res.status(400).send('Problem obtaining MySQL connection');
@@ -108,12 +104,81 @@ app.get('/workers', (req, res) => {
   })
 });
 
+//Get Workers by ZipCode 
+
+app.get('/workersZip/:zipcode', (req, res) => {
+  pool.getConnection((err, connection) => {
+    if (err) {
+      console.log(connection);
+      logger.error('Problem obtaining MySQL connection', err)
+      res.status(400).send('Problem obtaining MySQL connection');
+    } else {
+      var zipcode = req.params.zipcode; 
+      connection.query("SELECT * FROM Users WHERE role_id = 2 AND ZipCode = ?", [zipcode], function (err, result, fields) {
+        if (err) {
+          logger.error('', err);
+          res.status(400).send('failed');
+        }
+        else {
+          res.status(200).json(JSON.parse(JSON.stringify(result)))
+        }
+      });
+    }
+  })
+});
+
+//Get Workers by Search Query  
+
+app.get('/workersQuery/:query', (req, res) => {
+  pool.getConnection((err, connection) => {
+    if (err) {
+      console.log(connection);
+      logger.error('Problem obtaining MySQL connection', err)
+      res.status(400).send('Problem obtaining MySQL connection');
+    } else {
+      var query = req.params.query;  
+      connection.query("SELECT * FROM Users WHERE role_id = 2 AND firstName like ? OR lastName like ?", [query,query], function (err, result, fields) {
+        if (err) {
+          logger.error('', err);
+          res.status(400).send('failed');
+        }
+        else {
+          res.status(200).json(JSON.parse(JSON.stringify(result)))
+        }
+      });
+    }
+  })
+});
+
+//Get Workers by Search Query AND ZipCode  
+
+app.get('/workersZipAndQuery/:zipcode/:query', (req, res) => {
+  pool.getConnection((err, connection) => {
+    if (err) {
+      console.log(connection);
+      logger.error('Problem obtaining MySQL connection', err)
+      res.status(400).send('Problem obtaining MySQL connection');
+    } else {
+      var zipcode = req.params.zipcode; 
+      var query = req.params.query;  
+      connection.query("SELECT * FROM Users WHERE role_id = 2 AND ZipCode = ? AND firstName like ? OR lastName like ?", [zipcode, query,query], function (err, result, fields) {
+        if (err) {
+          logger.error('', err);
+          res.status(400).send('failed');
+        }
+        else {
+          res.status(200).json(JSON.parse(JSON.stringify(result)))
+        }
+      });
+    }
+  })
+});
+
 //Get Contractors
 
 app.get('/contractors', (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) {
-      connection.release();
       console.log(connection);
       logger.error('Problem obtaining MySQL connection', err)
       res.status(400).send('Problem obtaining MySQL connection');
@@ -131,10 +196,79 @@ app.get('/contractors', (req, res) => {
   })
 });
 
+//Get Contractors by ZipCode 
+
+app.get('/contractorsZip/:zipcode', (req, res) => {
+  pool.getConnection((err, connection) => {
+    if (err) {
+      console.log(connection);
+      logger.error('Problem obtaining MySQL connection', err)
+      res.status(400).send('Problem obtaining MySQL connection');
+    } else {
+      var zipcode = req.params.zipcode; 
+      connection.query("SELECT * FROM Users WHERE role_id = 3 AND ZipCode = ?", [zipcode], function (err, result, fields) {
+        if (err) {
+          logger.error('', err);
+          res.status(400).send('failed');
+        }
+        else {
+          res.status(200).json(JSON.parse(JSON.stringify(result)))
+        }
+      });
+    }
+  })
+});
+
+//Get Contractors by Search Query  
+
+app.get('/contractorsQuery/:query', (req, res) => {
+  pool.getConnection((err, connection) => {
+    if (err) {
+      console.log(connection);
+      logger.error('Problem obtaining MySQL connection', err)
+      res.status(400).send('Problem obtaining MySQL connection');
+    } else {
+      var query = req.params.query;  
+      connection.query("SELECT * FROM Users WHERE role_id = 3 AND firstName like ? OR lastName like ?", [query,query], function (err, result, fields) {
+        if (err) {
+          logger.error('', err);
+          res.status(400).send('failed');
+        }
+        else {
+          res.status(200).json(JSON.parse(JSON.stringify(result)))
+        }
+      });
+    }
+  })
+});
+
+//Get Contractors by Search Query AND ZipCode  
+
+app.get('/contractorsZipAndQuery/:zipcode/:query', (req, res) => {
+  pool.getConnection((err, connection) => {
+    if (err) {
+      console.log(connection);
+      logger.error('Problem obtaining MySQL connection', err)
+      res.status(400).send('Problem obtaining MySQL connection');
+    } else {
+      var zipcode = req.params.zipcode; 
+      var query = req.params.query;  
+      connection.query("SELECT * FROM Users WHERE role_id = 3 AND ZipCode = ? AND firstName like ? OR lastName like ?", [zipcode, query,query], function (err, result, fields) {
+        if (err) {
+          logger.error('', err);
+          res.status(400).send('failed');
+        }
+        else {
+          res.status(200).json(JSON.parse(JSON.stringify(result)))
+        }
+      });
+    }
+  })
+});
+
 app.get('/userInfo/:userID', (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) {
-      connection.release();
       console.log(connection);
       logger.error('Problem obtaining MySQL connection', err)
       res.status(400).send('Problem obtaining MySQL connection');

@@ -47,9 +47,32 @@ export class Repository {
         });
     }
 
-    getProjects() {
+    getWorkersByZip(zipCode){
         return new Promise((resolve, reject) => {
-            axios.get(`${this.url}/projects`)
+            axios.get(`${this.url}/workersZip/${zipCode}`)
+                .then(x => resolve(x.data))
+                .catch(error => {
+                    alert(error);
+                    reject(error);
+                });
+        });
+    }
+
+    getWorkersByQuery(query){
+        return new Promise((resolve, reject) => {
+            axios.get(`${this.url}/workersQuery/${query}`)
+                .then(x => resolve(x.data))
+                .catch(error => {
+                    alert(error);
+                    reject(error);
+                });
+        });
+    }
+
+    getWorkersByZipAndQuery(zipCode, query)
+    {
+        return new Promise((resolve, reject) => {
+            axios.get(`${this.url}/workersZipAndQuery/${zipCode}/${query}`) 
                 .then(x => resolve(x.data))
                 .catch(error => {
                     alert(error);
@@ -61,6 +84,51 @@ export class Repository {
     getContractors() {
         return new Promise((resolve, reject) => {
             axios.get(`${this.url}/contractors`)
+                .then(x => resolve(x.data))
+                .catch(error => {
+                    alert(error);
+                    reject(error);
+                });
+        });
+    }
+
+    getContractorsByZip(zipCode){
+        return new Promise((resolve, reject) => {
+            axios.get(`${this.url}/contractorsZip/${zipCode}`)
+                .then(x => resolve(x.data))
+                .catch(error => {
+                    alert(error);
+                    reject(error);
+                });
+        });
+    }
+
+    getContractorsByQuery(query){
+        return new Promise((resolve, reject) => {
+            axios.get(`${this.url}/contractorsQuery/${query}`)
+                .then(x => resolve(x.data))
+                .catch(error => {
+                    alert(error);
+                    reject(error);
+                });
+        });
+    }
+
+    getContractorsByZipAndQuery(zipCode, query)
+    {
+        return new Promise((resolve, reject) => {
+            axios.get(`${this.url}/contractorsZipAndQuery/${zipCode}/${query}`) 
+                .then(x => resolve(x.data))
+                .catch(error => {
+                    alert(error);
+                    reject(error);
+                });
+        });
+    }
+
+    getProjects() {
+        return new Promise((resolve, reject) => {
+            axios.get(`${this.url}/projects`)
                 .then(x => resolve(x.data))
                 .catch(error => {
                     alert(error);

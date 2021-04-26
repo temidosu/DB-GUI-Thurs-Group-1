@@ -49,6 +49,8 @@ app.get('/projects/:ClientID', (req, res) => {
         }
     })
 });
+
+
 //GET SPECIFIC PROJECT
 // app.get('/projectRequests/1', (req, res) => {
 //     getConnection((err, connection) => {
