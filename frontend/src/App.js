@@ -89,7 +89,7 @@ function App () {
            <Route path = "/contractors" component = { Contractors } />  
            <Route path = "/workers" component = {Workers} /> 
            <Route path = "/my projects" component = {MyProjects} /> 
-           <Route path = "/profile" component = { Profile} />
+           <Route exact path = "/profile" component = { Profile} />
            <Route path = "/dashboard" component = {Dashboard}/>
            <Route path = "/login" component = {Login}/>
            <Route path = "/logout" component = {Logout}/>
