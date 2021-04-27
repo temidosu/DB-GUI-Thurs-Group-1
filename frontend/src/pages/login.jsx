@@ -11,6 +11,7 @@ export class Login extends React.Component {
         email: "", 
         password: "", 
         loggedIn: false,
+        userID: "", 
         errors: false
     };
 
@@ -34,60 +35,76 @@ export class Login extends React.Component {
             if (data) {
                 console.log("Login was successful")
                 console.log("userID:", data)
-                this.setState({loggedIn: true })
+                this.setState({loggedIn: true, userID: data})
             }
             else {
                 console.log("Login failed")
                 this.setState({error: true, loggedIn: false})
             }
+
+            localStorage.setItem("userID", data.user_id);
+            localStorage.setItem("roleID", data.role_id); 
+            localStorage.setItem("firstName", data.firstName); 
+            localStorage.setItem("lastName", data.lastName); 
         });
+        
         //check if login failed
     }
 
     render() {
+        if(this.state.loggedIn)
+        {
+            return <Redirect to = "/dashboard"> </Redirect>
+        }
         return <>
-            <div class = "card w-25 mx-auto mt-5 p-3 pb-5"> 
-                <h2 class="font-weight-bold"> Login </h2> 
-                <p class="text-muted">Login to an existing account </p> 
-                <hr></hr> 
-                <form className = "container"> 
-                    <div className = "row"> 
-                        <div className = "col">
-                            <label htmlFor="name"> Email </label> 
-                                <input type = "text"
-                                    id = "name"
-                                    name = "name"
-                                    value = {this.state.email}
-                                    onChange = {e => this.setState({ email: e.target.value})}
-                                    className = "form-control" />
-                        </div>
-                    </div> 
-                    <div className = "row"> 
-                        <div className = "col"> 
-                            <label htmlFor="name"> Password  </label> 
-                                <input type = "text"
-                                    id = "name"
-                                    name = "name"
-                                    value = {this.state.password}
-                                    onChange = { e => this.setState({password: e.target.value})}
-                                    className = "form-control" />
-                        </div> 
-                    </div> 
-                    <div class = "row"> 
-                            <div class = "col">
-                            <br></br>
-                            <button
-                                type="button"
-                                className="btn btn-primary"
-                                onClick={ () => this.login() }>
-                                Login
-                            </button>
-                            </div>
+        <div class = "card w-25 mx-auto mt-5 p-3 pb-5"> 
+            <h2 class="font-weight-bold"> Login </h2> 
+            <p class="text-muted">Login to an existing account </p> 
+            <hr></hr> 
+            <form className = "container"> 
+                <div className = "row"> 
+                    <div className = "col">
+                        <label htmlFor="name"> Email </label> 
+                            <input type = "text"
+                                id = "name"
+                                name = "name"
+                                value = {this.state.email}
+                                onChange = {e => this.setState({ email: e.target.value})}
+                                className = "form-control" />
                     </div>
+                </div> 
+                <div className = "row"> 
+                    <div className = "col"> 
+                        <label htmlFor="name"> Password  </label> 
+                            <input type = "password"
+                                id = "name"
+                                name = "name"
+                                value = {this.state.password}
+                                onChange = { e => this.setState({password: e.target.value})}
+                                className = "form-control" />
+                    </div> 
+                </div> 
+                <div class = "row"> 
+                        <div class = "col">
+                        <br></br>
+                        <button
+                            type="button"
+                            className="btn btn-primary"
+                            onClick={ () => this.login()}>
+                            Login
+                        </button>
+                        </div>
+                </div>
+                <div class = "row">
+                    <br></br>
+                    <div class = "col">
+                    <Link to = "/signup">Create an account</Link>
+                    </div>
+                </div>
 
-                </form> 
-            </div> 
-        </>
+            </form> 
+        </div> 
+        </>;
     }
 
 }

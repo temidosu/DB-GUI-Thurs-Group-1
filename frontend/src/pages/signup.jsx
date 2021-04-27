@@ -17,7 +17,8 @@ export class Signup extends React.Component {
     password: "", 
     confirmPassword: "", 
     role: "", 
-    location: ""
+    zipCode: "",
+    signedUp: false
     }
 
     errors = () => {
@@ -56,8 +57,9 @@ export class Signup extends React.Component {
             role_id: roleID, 
             userpassword: this.state.password,
             phonenumber: this.state.phone,
+            zipCode: this.state.zipCode
         };
-        this.repo.signup(json);
+        this.repo.signup(json); 
         this.setState({
             firstName: '',
             lastName: '', 
@@ -66,11 +68,17 @@ export class Signup extends React.Component {
             phone: '',  
             password: '',
             confirmPassword: '', 
-            role: ''
+            role: '',
+            zipCode: '', 
+            signedUp: false
         });   
     }
 
     render() {
+    if(localStorage.getItem("userID") && localStorage.getItem("userID") != "null")
+    {
+        return <Redirect to = "/dashboard"> </Redirect>
+    }
         return <>
             <div class = "card w-25 mx-auto mt-5 p-3 pb-5"> 
                 <h2 class="font-weight-bold"> Signup </h2> 
@@ -153,6 +161,17 @@ export class Signup extends React.Component {
                         </div> 
                     </div> 
                     <div className = "row"> 
+                        <div className = "col"> 
+                        <label htmlFor="name"> Zip Code </label> 
+                                <input type = "text"
+                                    id = "name"
+                                    name = "name"
+                                    value = {this.state.zipCode}
+                                    onChange = { e => this.setState({ zipCode: e.target.value })}
+                                    className = "form-control" />
+                        </div> 
+                    </div>
+                    <div className = "row"> 
                         <div className = "col">
                         <label htmlFor="role"> Role </label> 
                             <select id="role"
@@ -162,7 +181,7 @@ export class Signup extends React.Component {
                                     onChange={ e => this.setState({ role: e.target.value }) }>
                                     <option></option>
                                     {
-                                        ["client", "contractor", "worker"].map(x => <option key={ x.index } value={ x }>{ x }</option>)
+                                        ["client", "worker", "contractor"].map(x => <option key={ x.index } value={ x }>{ x }</option>)
                                     }
                                     </select>
                         </div>

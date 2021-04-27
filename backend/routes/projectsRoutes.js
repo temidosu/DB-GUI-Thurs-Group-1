@@ -6,44 +6,71 @@ const fs = require('fs');
 const { json } = require('body-parser');
 
 // GET all projects
-app.get('/projectRequests', (req, res) => {
-    getConnection((err, connection) => {
+app.get('/projects', (req, res) => {
+    pool.getConnection((err, connection) => {
         if (err) {
             console.log(connection);
             logger.error('Problem obtaining MySQL connection', err)
             res.status(400).send('Problem obtaining MySQL connection');
         } else {
-            connection.query("SELECT * FROM Project_Requests", function (err, result, fields) {
+            connection.query("SELECT * FROM Projects JOIN Users ON Projects.clientID = Users.user_id", function (err, result, fields) {
+                connection.release();
                 if (err) {
                     logger.error('', err);
                     res.status(400).send('failed');
                 }
                 else {
-                    res.status(200).json(JSON.parse(JSON.stringify(result)))
+                    res.status(200).json(JSON.parse(JSON.stringify(result))); 
                 }
             });
         }
     })
 });
+
+//GET project by ClientID
+app.get('/projects/:ClientID', (req, res) => {
+    pool.getConnection((err, connection) => {
+        if (err) {
+            console.log(connection);
+            logger.error('Problem obtaining MySQL connection', err)
+            res.status(400).send('Problem obtaining MySQL connection');
+        } else {
+            var ClientID = req.params.ClientID; 
+            connection.query("SELECT * FROM Projects JOIN Users ON Projects.clientID = Users.user_id WHERE Projects.ClientID = ? ",[ClientID], function (err, result, fields) {
+                connection.release();
+                if (err) {
+                    logger.error('', err);
+                    res.status(400).send('failed');
+                }
+                else {
+                    res.status(200).json(JSON.parse(JSON.stringify(result))); 
+                }
+            });
+        }
+    })
+});
+
+
 //GET SPECIFIC PROJECT
-app.get('/projectRequests', (req, res) => {
-    getConnection((err, connection) => {
-        if (err) {
-            console.log(connection);
-            logger.error('Problem obtaining MySQL connection', err)
-            res.status(400).send('Problem obtaining MySQL connection');
-        } else {
-            ProjectID = req.body.ProjectID
-            connection.query("SELECT * FROM Project_Requests WHERE ProjectID = ?",ProjectID, function (err, result, fields) {
-                if (err) {
-                    logger.error('', err);
-                    res.status(400).send('failed');
-                }
-                else {
-                    res.status(200).json(JSON.parse(JSON.stringify(result)))
-                }
-            });
-        }
-    })
-});
+// app.get('/projectRequests/1', (req, res) => {
+//     getConnection((err, connection) => {
+//         if (err) {
+//             console.log(connection);
+//             logger.error('Problem obtaining MySQL connection', err)
+//             res.status(400).send('Problem obtaining MySQL connection');
+//         } else {
+//             ProjectID = req.body.ProjectID
+//             connection.query("SELECT * FROM Project_Requests WHERE ProjectID = ?",ProjectID, function (err, result, fields) {
+//                 connection.release();
+//                 if (err) {
+//                     logger.error('', err);
+//                     res.status(400).send('failed');
+//                 }
+//                 else {
+//                     res.status(200).json(JSON.parse(JSON.stringify(result)))
+//                 }
+//             });
+//         }
+//     })
+// });
 module.exports = app;
