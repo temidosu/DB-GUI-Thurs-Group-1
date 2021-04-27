@@ -47,6 +47,14 @@ export class Search extends React.Component{
     //     console.log(searchTerms); 
     // }
 
+    // componentDidMount()
+    // {
+    //     if(props.params.location.state)
+    //     {
+    //         this.setState(props.params.location.state); 
+    //     }
+    // }
+
     search() {
         console.log(this.state.searchQuery); 
         // if(this.state.searchQuery != "")
@@ -152,6 +160,7 @@ export class Search extends React.Component{
                 })
             )); 
         }
+        //window.history.replaceState({ key: history.location.key, state: this.state})
     }
 
     render() 
@@ -162,8 +171,8 @@ export class Search extends React.Component{
             <div class = "container m-3 mx-auto">
             <br></br>
             <div class = "row">
-                 <div class = "col-2"></div>
-                 <div class = "col-5 m-0 p-0">
+                <div class = "col-2"></div>
+                <div class = "col-5 m-0 p-0">
                 <input class="form-control" 
                     type="text" 
                     placeholder="I'm looking for..." 
@@ -191,7 +200,7 @@ export class Search extends React.Component{
                   ></input>
                  </div>
                  <div class = "col-1 m-0 p-0">
-                 <button class="btn btn-outline-success my-2 my-sm-0 ml-0" 
+                 <button class="btn btn-success my-2 my-sm-0 ml-0" 
                  type="submit" 
                  onClick={ () => this.search()}>
                      Search
@@ -200,8 +209,8 @@ export class Search extends React.Component{
             </div>
             <br></br>
             <hr></hr>
-            <Workers workers = {this.state.workers} class = "background-image"/>
-            <Contractors contractors = {this.state.contractors} class = "background-image"/>
+            <Workers workers = {this.state.workers}/>
+            <Contractors contractors = {this.state.contractors}/>
             </div>
             </>
         }

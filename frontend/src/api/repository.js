@@ -148,4 +148,26 @@ export class Repository {
         });
     }
 
+    getReviewsByReviewed(id) {
+        return new Promise((resolve, reject) => {
+            axios.get(`${this.url}/reviewsByReviewedID/${id}`) 
+                .then(x => resolve(x.data))
+                .catch(error => {
+                    alert(error);
+                    reject(error);
+                });
+        });
+    }
+
+    // getReviewsByReviewed(id) {
+    //     return new Promise((resolve, reject) => {
+    //         axios.get(`${this.url}/reviews/reviewedID`) 
+    //             .then(x => resolve(x.data))
+    //             .catch(error => {
+    //                 alert(error);
+    //                 reject(error);
+    //             });
+    //     });
+    // }
+
 }

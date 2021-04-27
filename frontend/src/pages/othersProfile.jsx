@@ -2,6 +2,9 @@ import React from 'react';
 import axios from 'axios';
 import { Repository } from '../api/repository';
 import {Link, Redirect} from 'react-router-dom';
+import { Review } from '../models/review'; 
+import { ReviewForm } from './ReviewForm'; 
+import { ReviewList } from './ReviewList'; 
 
 
 export class OthersProfile extends React.Component {
@@ -15,7 +18,8 @@ export class OthersProfile extends React.Component {
       phone: "",
       role: "", 
       userName: "",  
-      zipCode: ""
+      zipCode: "",
+      reviews:[], 
     }
 
     componentDidMount () {
@@ -25,7 +29,11 @@ export class OthersProfile extends React.Component {
           data => {
               console.log(data); 
               this.setState( {firstName: data[0].firstName, lastName: data[0].lastName, email: data[0].userEmail,
-               phone: data[0].phoneNumber, role: data[0].role_id, userName: data[0].userName, zipCode: data[0].zipCode})
+              phone: data[0].phoneNumber, role: data[0].role_id, userName: data[0].userName, zipCode: data[0].zipCode})
+              if(this.state.role == 2)
+              {
+                  this.getReviews(this.props.match.params.userid); 
+              }
           }
           );
       }
@@ -44,6 +52,38 @@ export class OthersProfile extends React.Component {
         {
             return "Contractor"
         }
+    }
+
+    addReview(review)
+    {
+        var reviews = this.state.reviews; 
+        reviews.push(review);
+        this.setState({reviews}); 
+    }
+
+    //reviewerID, reviewerFirstName, reviewerLastName, reviewedID, rating, comment, date, projectID
+
+    // this.reviewerID = reviewerID;
+    // this.reviewerFirstName = reviewerFirstName;
+    // this.reviewerLastName = reviewerLastName; 
+    // this.reviewedID = reviewedID; 
+    // this.reviewedFirstName = reviewedFirstName;
+    // this.reviewedLastName = reviewedLastName; 
+    // this.rating = rating;
+    // this.comment = comment;
+    // this.date = date;
+    // this.projectID = projectID; 
+
+
+    getReviews(id) {
+        this.repo.getReviewsByReviewed(id).then(
+            data => ( 
+                console.log("data", data), 
+                data.map(x => {
+                    this.addReview (new Review(x.ReviewerID, x.firstName, x.lastName, x.ReviewedID, this.state.firstName, this.state.lastName, x.ReviewScore, x.ReviewText, x.Timestamp, x.ID)); 
+                })
+        )
+        )
     }
 
     displayPhone() {
@@ -99,8 +139,21 @@ export class OthersProfile extends React.Component {
                     <div class="card-header">
                         <h4>Reviews</h4>
                     </div>
-                    <div class = "card-body"> 
-                    </div>
+                    {/* <div class = "card-body">   
+                        {
+                            this.state.reviews.map((x)=> 
+                                // <h2>{x.comment}</h2> 
+                                <div class = "row">
+                                    <div class = "card">
+                                        <div class = "card-body">
+                                            <h2> {x.comment} </h2> 
+                                        </div> 
+                                    </div>
+                                </div>
+                            )
+                        }
+                    </div> */}
+                    <ReviewList reviews = {this.state.reviews}/>
                 </div> 
             </div> 
         )

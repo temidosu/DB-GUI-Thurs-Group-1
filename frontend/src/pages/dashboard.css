@@ -6,11 +6,22 @@
     background-color: #353a40 !important;
 }
 
-.cropped {
-    width: 200px; /* width of container */
-    height: 400px; /* height of container */
-    object-fit: cover;
-    object-position: 20% 90%;
+.stuff {
+    z-index: 2;
+    top: 20%; 
+    left: 10vw; 
+    position: absolute;   
+}
+.background-image {
+    background-image: url("https://www.rhumbix.com/wp-content/uploads/2018/07/shutterstock_772100623-1080x675.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    filter: blur(8px);
+    -webkit-filter: blur(8px); 
+    opacity: .9;
+    width: 100% !important;
+    height: 110% !important; 
 }
 
 
