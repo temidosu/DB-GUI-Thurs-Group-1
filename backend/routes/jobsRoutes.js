@@ -1,6 +1,6 @@
 
 // Get all jobs
-app.get('/jobs', (req, res) => {
+/*app.get('/jobs', (req, res) => {
 	pool.getConnection((err, connection) => {
 		if (err) {
 			console.log(connection);
@@ -82,4 +82,4 @@ app.get('/jobs/cancelled', (req, res) => {
 			});
 		}
 	})
-});
+});*/

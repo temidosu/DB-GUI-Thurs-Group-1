@@ -2,7 +2,7 @@
 
 //ROUTES FOR creating either client, Contractor, or worker
 
-app.post('/createcontractor', (req, res) => {
+/*app.post('/createcontractor', (req, res) => {
 	pool.getConnection((err, connection) => {
 		if (err) {
 			console.log(connection);
@@ -63,4 +63,4 @@ app.post('/createworker', (req, res) => {
 			})
 		}
 	})
-})
+})*/

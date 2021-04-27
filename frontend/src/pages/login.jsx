@@ -45,7 +45,11 @@ export class Login extends React.Component {
             localStorage.setItem("userID", data.user_id);
             localStorage.setItem("roleID", data.role_id); 
             localStorage.setItem("firstName", data.firstName); 
-            localStorage.setItem("lastName", data.lastName); 
+            localStorage.setItem("lastName", data.lastName);
+            localStorage.setItem("userName", data.userName);
+            localStorage.setItem("email", data.userEmail);
+            localStorage.setItem("phone", data.phoneNumber);
+            localStorage.setItem("zipCode", data.ZipCode);
         });
         
         //check if login failed
@@ -57,9 +61,9 @@ export class Login extends React.Component {
             return <Redirect to = "/dashboard"> </Redirect>
         }
         return <>
-        <div class = "card w-25 mx-auto mt-5 p-3 pb-5"> 
-            <h2 class="font-weight-bold"> Login </h2> 
-            <p class="text-muted">Login to an existing account </p> 
+        <div className = "card w-25 mx-auto mt-5 p-3 pb-5"> 
+            <h2 className="font-weight-bold"> Login </h2> 
+            <p className="text-muted">Login to an existing account </p> 
             <hr></hr> 
             <form className = "container"> 
                 <div className = "row"> 
@@ -84,8 +88,8 @@ export class Login extends React.Component {
                                 className = "form-control" />
                     </div> 
                 </div> 
-                <div class = "row"> 
-                        <div class = "col">
+                <div className = "row"> 
+                        <div className = "col">
                         <br></br>
                         <button
                             type="button"

@@ -15,12 +15,17 @@
     background-color: #353a40 !important;
 }
 
-figure {
-    display: table !important;
-    width: 100%;
+.small-img {
+    position: relative;
+    top: .1em;
+    width: 1.5%;
 }
-figcaption {
-    display: table-caption !important;
-    caption-side: top;
-    width: 30%;
+
+.w-fit {
+    width: fit-content;
+    width: -moz-fit-content;
+}
+
+.h-input {
+    height: 2.5em;;
 }
