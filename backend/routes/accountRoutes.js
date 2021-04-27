@@ -93,7 +93,7 @@ app.get('/workers', (req, res) => {
       logger.error('Problem obtaining MySQL connection', err)
       res.status(400).send('Problem obtaining MySQL connection');
     } else {
-      connection.query("SELECT * FROM Users WHERE role_id = 2", function (err, result, fields) {
+      connection.query("SELECT * FROM Users LEFT JOIN Workers ON Users.user_id = Workers.userID WHERE role_id = 2", function (err, result, fields) {
         connection.release();
         if (err) {
           logger.error('', err);
@@ -141,7 +141,7 @@ app.get('/workersQuery/:query', (req, res) => {
       res.status(400).send('Problem obtaining MySQL connection');
     } else {
       var query = req.params.query;  
-      connection.query("SELECT * FROM Users WHERE role_id = 2 AND firstName like ? OR lastName like ?", [query,query], function (err, result, fields) {
+      connection.query("SELECT * FROM Users LEFT JOIN Workers ON Users.user_id = Workers.userID WHERE Users.role_id = 2 AND Users.firstName like ? OR Users.lastName like ? OR Workers.skillTags like ?", [query,query,query], function (err, result, fields) {
         connection.release();
         if (err) {
           logger.error('', err);
@@ -166,7 +166,7 @@ app.get('/workersZipAndQuery/:zipcode/:query', (req, res) => {
     } else {
       var zipcode = req.params.zipcode; 
       var query = req.params.query;  
-      connection.query("SELECT * FROM Users WHERE role_id = 2 AND ZipCode = ? AND firstName like ? OR lastName like ?", [zipcode, query,query], function (err, result, fields) {
+      connection.query("SELECT * FROM Users LEFT JOIN Workers ON Users.user_id = Workers.userID WHERE role_id = 2 AND Users.ZipCode = ? AND Users.firstName like ? OR Users.lastName like ? OR Workers.skillTags like ?", [zipcode,query,query,query], function (err, result, fields) {
         connection.release();
         if (err) {
           logger.error('', err);

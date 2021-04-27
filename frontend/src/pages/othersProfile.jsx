@@ -98,6 +98,11 @@ export class OthersProfile extends React.Component {
 
     render() 
     {
+        if(this.state.role == "")
+        {
+            return <>
+            </>; 
+        }
         if(this.state.role == 1)
         {
             return (
@@ -139,21 +144,12 @@ export class OthersProfile extends React.Component {
                     <div class="card-header">
                         <h4>Reviews</h4>
                     </div>
-                    {/* <div class = "card-body">   
-                        {
-                            this.state.reviews.map((x)=> 
-                                // <h2>{x.comment}</h2> 
-                                <div class = "row">
-                                    <div class = "card">
-                                        <div class = "card-body">
-                                            <h2> {x.comment} </h2> 
-                                        </div> 
-                                    </div>
-                                </div>
-                            )
-                        }
-                    </div> */}
                     <ReviewList reviews = {this.state.reviews}/>
+                </div> 
+                <div class = "card mt-5"> 
+                    <div class="card-header">
+                        <h4>Work Experience</h4>
+                    </div>
                 </div> 
             </div> 
         )
@@ -178,8 +174,6 @@ export class OthersProfile extends React.Component {
             </div> 
         )
         }
-        return <>
-        </>;
         // if(this.state.role == "")
         // return <>
         //     <div class = "container text-center">

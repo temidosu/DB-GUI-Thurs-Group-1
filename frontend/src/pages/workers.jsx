@@ -4,6 +4,7 @@ import { Repository } from '../api/repository';
 import {Link, Redirect} from 'react-router-dom';
 import { Worker } from '../models/worker'; 
 import './workers.css';
+import { Rating } from './Rating'
 //import { OthersProfile } from './othersProfile'; 
 
 export const Workers = props => <> 
@@ -15,7 +16,10 @@ export const Workers = props => <>
                     <div class = "card border w-100 m-2"> 
                         <div class = "card-body">
                             <h2> {x.firstName} {x.lastName} </h2>
-                            <p class = "text-muted"> {x.ZipCode} </p>
+                            <h4> <span class="badge badge-dark">{x.skillTags}</span> </h4>
+                            {!x.skillTags && <h4> <span class="badge badge-dark">Worker</span> </h4>}
+                            <p> {x.ZipCode} </p>
+                            <Rating rating = {x.rating} /> 
                             <Link to = {`/user/${x.user_id}`} class = "stretched-link"></Link>
                             {/* <Link to = "/user/:userid">{x.firstName}</Link> */}
                         </div>

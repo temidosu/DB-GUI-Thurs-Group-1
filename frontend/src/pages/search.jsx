@@ -55,6 +55,14 @@ export class Search extends React.Component{
     //     }
     // }
 
+    float2int (value) {
+        if(value === null)
+        {
+            return -1; 
+        }
+        return value | 0;
+    }
+
     search() {
         console.log(this.state.searchQuery); 
         // if(this.state.searchQuery != "")
@@ -70,7 +78,7 @@ export class Search extends React.Component{
             {
                 this.repo.getWorkers().then(data => (
                 data.map(x => {
-                    this.addWorker(new Worker(x.user_id, x.ZipCode, x.userName, x.userEmail, x.firstName, x.lastName, x.phoneNumber))
+                    this.addWorker(new Worker(x.user_id, x.ZipCode, x.userName, x.userEmail, x.firstName, x.lastName, x.phoneNumber, x.part_or_full_time, x.skillTags, this.float2int(x.rating)))
                 })
             )); 
             }
@@ -80,7 +88,7 @@ export class Search extends React.Component{
                 this.repo.getWorkersByZip(this.state.zipCode).then(data => (
                     //console.log(data), 
                     data.map(x => {
-                        this.addWorker(new Worker(x.user_id, x.ZipCode, x.userName, x.userEmail, x.firstName, x.lastName, x.phoneNumber))
+                        this.addWorker(new Worker(x.user_id, x.ZipCode, x.userName, x.userEmail, x.firstName, x.lastName, x.phoneNumber, x.part_or_full_time, x.skillTags, this.float2int(x.rating)))
                     })
                 )); 
                 //this.setState( {zipCode: ""}); 
@@ -92,7 +100,7 @@ export class Search extends React.Component{
                 this.repo.getWorkersByQuery(this.state.searchQuery).then(data => (
                     //console.log(data),
                     data.map(x => {
-                        this.addWorker(new Worker(x.user_id, x.ZipCode, x.userName, x.userEmail, x.firstName, x.lastName, x.phoneNumber))
+                        this.addWorker(new Worker(x.user_id, x.ZipCode, x.userName, x.userEmail, x.firstName, x.lastName, x.phoneNumber, x.part_or_full_time, x.skillTags, this.float2int(x.rating)))
                     })
                 )); 
             }
@@ -101,7 +109,7 @@ export class Search extends React.Component{
                 this.repo.getWorkersByZipAndQuery(this.state.zipCode, this.state.searchQuery).then(data => (
                     //console.log(data),
                     data.map(x => {
-                        this.addWorker(new Worker(x.user_id, x.ZipCode, x.userName, x.userEmail, x.firstName, x.lastName, x.phoneNumber))
+                        this.addWorker(new Worker(x.user_id, x.ZipCode, x.userName, x.userEmail, x.firstName, x.lastName, x.phoneNumber, x.part_or_full_time, x.skillTags, this.float2int(x.rating)))
                     })
                 )); 
             }
