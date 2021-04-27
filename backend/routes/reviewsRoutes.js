@@ -27,16 +27,17 @@ app.get('/reviews', (req, res) => {
     })
 });
 
-//GET reviews by ClientID
-app.get('/reviewsby/:ClientID', (req, res) => {
+
+//GET REVIEW by reviewerID
+app.get('/reviews/reviewerID', (req, res) => {
     pool.getConnection((err, connection) => {
         if (err) {
             console.log(connection);
             logger.error('Problem obtaining MySQL connection', err)
             res.status(400).send('Problem obtaining MySQL connection');
         } else {
-            var ClientID = req.params.ClientID; 
-            connection.query("SELECT * FROM Reviews WHERE Reviews.ClientID = ? ",[ClientID], function (err, result, fields) {
+            var RvwerID = req.params.RvwerID; 
+            connection.query("SELECT * FROM Reviews WHERE ReviewerID = ? ",[RvwerID], function (err, result, fields) {
                 if (err) {
                     logger.error('', err);
                     res.status(400).send('failed');
@@ -49,16 +50,38 @@ app.get('/reviewsby/:ClientID', (req, res) => {
     })
 });
 
-//GET reviews for ContractorID
-app.get('/reviewsof/:ContractorID', (req, res) => {
+///GET REVIEW by reviewedID
+app.get('/reviews/reviewedID', (req, res) => {
     pool.getConnection((err, connection) => {
         if (err) {
             console.log(connection);
             logger.error('Problem obtaining MySQL connection', err)
             res.status(400).send('Problem obtaining MySQL connection');
         } else {
-            var ContractorID = req.params.ContractorID; 
-            connection.query("SELECT * FROM Reviews WHERE Reviews.ContractorID = ? ",[ContractorID], function (err, result, fields) {
+            var RvwedID = req.params.RvwedID; 
+            connection.query("SELECT * FROM Reviews WHERE ReviewedID = ? ",[RvwedID], function (err, result, fields) {
+                if (err) {
+                    logger.error('', err);
+                    res.status(400).send('failed');
+                }
+                else {
+                    res.status(200).json(JSON.parse(JSON.stringify(result))); 
+                }
+            });
+        }
+    })
+});
+
+///GET REVIEW by ProjectID
+app.get('/reviews/projectID', (req, res) => {
+    pool.getConnection((err, connection) => {
+        if (err) {
+            console.log(connection);
+            logger.error('Problem obtaining MySQL connection', err)
+            res.status(400).send('Problem obtaining MySQL connection');
+        } else {
+            var prjID = req.params.prjID; 
+            connection.query("SELECT * FROM Reviews WHERE ProjectID = ? ",[prjID], function (err, result, fields) {
                 if (err) {
                     logger.error('', err);
                     res.status(400).send('failed');
@@ -72,18 +95,21 @@ app.get('/reviewsof/:ContractorID', (req, res) => {
 });
 
 // POST /newreview
-app.post('/newreview', (req, res) => {
+app.post('/createreview', (req, res) => {
     pool.getConnection((err, connection) => {
       if (err) {
         console.log(connection);
         logger.error('Problem obtaining MySQL connection', err)
         res.status(400).send('Problem obtaining MySQL connection');
       } else {
-        var data = req.body
-        // for(const [key, value] of Object.entries(req.body)){
-        //   data[key] = value
-        // }
-        connection.query('INSERT INTO Reviews SET ?', data, (err, result) => {
+        var reviewer = req.params.reviewer; 
+        var reviewed = req.params.reviewed; 
+        var textreview = req.body.textreview;
+        var score = req.params.score;
+        var project = req.params.project;
+
+        
+        connection.query('INSERT INTO Reviews (ReviewerID, ReviewedID, ReviewText, ReviewScore, ProjectID) VALUES (?,?,?,?,?)', [reviewer, reviewed, textreview, score, project], (err, result) => {
             if (err) {
               logger.error("Problem creating review: ", err);
               res.status(400).send('review failed');
