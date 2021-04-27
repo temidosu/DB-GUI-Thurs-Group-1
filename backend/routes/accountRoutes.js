@@ -210,4 +210,31 @@ app.get('/userInfo/location/:zipCode', (req, res) => {
   })
 });
 
+// UPDATE ACCOUNT INFO
+// POST zip
+app.put('/userInfo/changezip', (req, res) => {
+  pool.getConnection((err, connection) => {
+    if (err) {
+      console.log(connection);
+      logger.error('Problem obtaining MySQL connection', err)
+      res.status(400).send('Problem obtaining MySQL connection');
+    } else {
+      var zip = req.body.zip;
+      var userID = req.body.userID;
+      // for(const [key, value] of Object.entries(req.body)){
+      //   data[key] = value
+      // }
+      connection.query('UPDATE Users SET Users.ZipCode = ? WHERE Users.user_id = ?', [zip, userID], (err, result) => {
+          if (err) {
+            logger.error("Problem changing: ", err);
+            res.status(400).send('change failed');
+          }
+          else {
+            res.status(200).end('change success')
+          }
+        })
+    }
+  })
+})
+
 module.exports = app;
