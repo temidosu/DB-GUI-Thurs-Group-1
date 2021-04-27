@@ -8,18 +8,18 @@ export class ReviewForm extends React.Component {
 
     state = {
         userName: "",
-        type: -1,
+        imageurl: "",
         rating: 0,
         comment: ""
     };
 
     onButtonClick() {
       // LEFT COMMENTED UNTIL ROUTES CONNECTED 
-      //  let newReview = new Review(this.state.userName, this.state.type, this.state.rating, this.state.comment, new Date())
+      //  let newReview = new Review(this.state.userName, this.state.imageurl, this.state.rating, this.state.comment, new Date())
       //  console.log(newReview)
       //  this.props.onReviewAdded(newReview);
       //  this.Repository.addReview(this.props.userId, newReview)
-        this.setState({ type: -1})
+        this.setState({ imageurl: ""})
         this.setState({ userName: "" });
         this.setState({ rating: 0 });
         this.setState({ comment: "" });
@@ -59,6 +59,10 @@ export class ReviewForm extends React.Component {
                 <div class="form-group">
                   <label htmlFor="comment">Comment</label>
                   <textarea class="form-control" id="comment" rows="3" comment={this.state.comment} onChange={(event) => this.setState({ comment: event.target.value })}></textarea>
+                </div>
+                <div class="form-group">
+                <label htmlFor="imageurl">Reference Image URL (Optional)</label>
+                  <input type="email" class="form-control" id="imageurl" onChange={(ev) => this.setState({ imageurl: ev.target.value })}/>
                 </div>
                 <button id="submit" class="btn btn-primary "onClick={() => this.onButtonClick()} type="button">
                 Submit

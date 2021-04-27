@@ -16,6 +16,7 @@ export const ReviewList = (props) => (
                             <div class="col"><p class="text-secondary">{new Date(Date.parse(review.date)).toDateString()}</p></div>
                         </div>
                         <div class="row"><p class="col text-dark">{review.comment}</p></div>
+                        {review.imageurl !== "" ? <div class="row"><img class="img-fluid" src={review.imageurl} alt={review.comment}/></div> : <></>}
                     </li>
                 ))}
             </ul>
