@@ -28,14 +28,6 @@ export class Dashboard extends React.Component{
             <Search />
             <br></br>
         </div>
-        {/* <Popup
-        title="titleHere"
-        openPopup={openPopup}
-        popupIsOpen={true}
-    >
-        child form goes here
-
-        </Popup> */} 
     </>; 
     }
 }

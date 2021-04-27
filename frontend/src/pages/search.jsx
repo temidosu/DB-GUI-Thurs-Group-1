@@ -114,7 +114,7 @@ export class Search extends React.Component{
                 )); 
             }
         }
-        if(this.state.searchFor == "contractors")
+        if(this.state.searchFor == "companies")
         {
             // this.repo.getContractors().then(data => (
             //     data.map(x => {
@@ -195,7 +195,7 @@ export class Search extends React.Component{
                                 onChange={ e => this.setState({ searchFor: e.target.value }) }>
                                 <option></option>
                                 {
-                                    ["workers", "contractors"].map(x => <option key={ x.index } value={ x }>{ x }</option>)
+                                    ["workers", "companies"].map(x => <option key={ x.index } value={ x }>{ x }</option>)
                                 }
                  </select>
                  </div>
@@ -245,7 +245,7 @@ export class Search extends React.Component{
                                 onChange={ e => this.setState({ searchFor: e.target.value }) }>
                                 <option></option>
                                 {
-                                    ["projects", "contractors"].map(x => <option key={ x.index } value={ x }>{ x }</option>)
+                                    ["projects", "companies"].map(x => <option key={ x.index } value={ x }>{ x }</option>)
                                 }
                  </select>
                  </div>

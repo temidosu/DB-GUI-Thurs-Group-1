@@ -2,7 +2,8 @@ import React from 'react';
 import axios from 'axios';
 import { Repository } from '../api/repository';
 import {Link, Redirect} from 'react-router-dom';
-import { Project } from '../models/project'; 
+import { Project } from '../models/project';
+import { ProjectButton } from '../buttons/projectButton';  
 
 //const months = [January, February, March, April, May, June, July, August, September, October, November, December];  
 
@@ -11,7 +12,7 @@ export class MyProjects extends React.Component {
     repo = new Repository(); 
     state = {
         projects: [], 
-        loggedIn: false
+        loggedIn: false, 
     }
 
     addProject(project){
@@ -131,9 +132,7 @@ export class MyProjects extends React.Component {
                     <div class = "row"> 
                         <div class = "col-5">
                         </div>
-                        <div class = "col-2 m-0 p-0">
-                            <button class="btn btn-success" type="button">Create New Project</button>
-                        </div>
+                        <ProjectButton />
                     </div>
                 </div>
             </div>

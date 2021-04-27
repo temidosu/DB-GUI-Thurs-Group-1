@@ -14,9 +14,32 @@ export class Repository {
         });
     }
 
+    companySignup(account) {
+        return new Promise((resolve, reject) => {
+            axios.post(`${this.url}/companySignup`, account)
+                .then(x => resolve(x.data))
+                .catch(error => {
+                    alert(error);
+                    reject(error);
+                });
+        });
+    }
+
+
     login(account) {
         return new Promise((resolve, reject) => {
             axios.post(`${this.url}/login`, account)
+                .then(x => resolve(x.data))
+                .catch(error => {
+                    alert(error);
+                    reject(error);
+                });
+        });
+    }
+
+    companyLogin(account) {
+        return new Promise((resolve, reject) => {
+            axios.post(`${this.url}/companyLogin`, account)
                 .then(x => resolve(x.data))
                 .catch(error => {
                     alert(error);
