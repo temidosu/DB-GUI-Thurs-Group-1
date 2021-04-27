@@ -93,7 +93,7 @@ export class Search extends React.Component{
                 <input class="form-control" 
                     type="text" 
                     placeholder="I'm looking for..." 
-                    onChange = { e => this.setState({ searchQuery: e.target.value })}
+                    onChange = {e => this.setState({ searchQuery: e.target.value})}
                     ></input>
                  </div>
                  <div class = "col-1.5 m-0 p-0">
