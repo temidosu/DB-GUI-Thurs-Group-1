@@ -27,7 +27,6 @@ app.get('/reviews', (req, res) => {
 	})
 });
 
-
 //GET REVIEW by reviewerID
 app.get('reviewsByReviewerID/:reviewerID', (req, res) => {
 	pool.getConnection((err, connection) => {
@@ -50,7 +49,7 @@ app.get('reviewsByReviewerID/:reviewerID', (req, res) => {
 	})
 });
 
-///GET REVIEW by reviewedID
+// GET REVIEW by reviewedID
 app.get('reviewsByReviewedID/:reviewedID', (req, res) => {
 	pool.getConnection((err, connection) => {
 		if (err) {
@@ -72,7 +71,7 @@ app.get('reviewsByReviewedID/:reviewedID', (req, res) => {
 	})
 });
 
-///GET REVIEW by ProjectID
+// GET REVIEW by ProjectID
 app.get('/reviews/projectID', (req, res) => {
 	pool.getConnection((err, connection) => {
 		if (err) {
@@ -80,8 +79,8 @@ app.get('/reviews/projectID', (req, res) => {
 			logger.error('Problem obtaining MySQL connection', err)
 			res.status(400).send('Problem obtaining MySQL connection');
 		} else {
-			var prjID = req.params.prjID;
-			connection.query("SELECT * FROM Reviews WHERE ProjectID = ? ", [prjID], function (err, result, fields) {
+			var projectID = req.params.prjID;
+			connection.query("SELECT * FROM Reviews WHERE ProjectID = ? ", [projectID], function (err, result, fields) {
 				if (err) {
 					logger.error('', err);
 					res.status(400).send('failed');
@@ -102,12 +101,12 @@ app.post('/createreview', (req, res) => {
 			logger.error('Problem obtaining MySQL connection', err)
 			res.status(400).send('Problem obtaining MySQL connection');
 		} else {
+
 			var reviewer = req.params.reviewer;
 			var reviewed = req.params.reviewed;
 			var textreview = req.body.textreview;
 			var score = req.params.score;
 			var project = req.params.project;
-
 
 			connection.query('INSERT INTO Reviews (ReviewerID, ReviewedID, ReviewText, ReviewScore, ProjectID) VALUES (?,?,?,?,?)', [reviewer, reviewed, textreview, score, project], (err, result) => {
 				if (err) {
