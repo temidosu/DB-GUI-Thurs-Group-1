@@ -89,4 +89,68 @@ app.get('/jobs/cancelled', (req, res) => {
 	})
 });
 
-// TODO: Frontend needs filtering for routes
+// GET: Filter by workerID
+app.get('/jobs/worker', (req, res) => {
+	pool.getConnection((err, connection) => {
+		if (err) {
+			console.log(connection);
+			logger.error('Problem obtaining MySQL connection', err)
+			res.status(400).send('Problem obtaining MySQL connection');
+		} else {
+			const userID = req.body.userID;
+			connection.query("SELECT * FROM Project_Requests WHERE userID = ?", [userID], function (err, result, fields) {
+				if (err) {
+					logger.error('', err);
+					res.status(400).send('failed');
+				}
+				else {
+					res.status(200).json(JSON.parse(JSON.stringify(result)))
+				}
+			});
+		}
+	})
+});
+
+// GET: Filter by contractorID
+app.get('/jobs/contractor', (req, res) => {
+	pool.getConnection((err, connection) => {
+		if (err) {
+			console.log(connection);
+			logger.error('Problem obtaining MySQL connection', err)
+			res.status(400).send('Problem obtaining MySQL connection');
+		} else {
+			const ContractorID = req.body.ContractorID;
+			connection.query("SELECT * FROM Project_Requests WHERE userID = ?", [ContractorID], function (err, result, fields) {
+				if (err) {
+					logger.error('', err);
+					res.status(400).send('failed');
+				}
+				else {
+					res.status(200).json(JSON.parse(JSON.stringify(result)))
+				}
+			});
+		}
+	})
+});
+
+// GET: Filter by projectID
+app.get('/jobs/project', (req, res) => {
+	pool.getConnection((err, connection) => {
+		if (err) {
+			console.log(connection);
+			logger.error('Problem obtaining MySQL connection', err)
+			res.status(400).send('Problem obtaining MySQL connection');
+		} else {
+			const jobID = req.body.jobID;
+			connection.query("SELECT * FROM Project_Requests WHERE job_id = ?", [jobID], function (err, result, fields) {
+				if (err) {
+					logger.error('', err);
+					res.status(400).send('failed');
+				}
+				else {
+					res.status(200).json(JSON.parse(JSON.stringify(result)))
+				}
+			});
+		}
+	})
+});
