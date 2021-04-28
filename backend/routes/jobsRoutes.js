@@ -68,7 +68,6 @@ app.get('/jobs/completed', (req, res) => {
 	})
 });
 
-
 // Get only cancelled jobs
 app.get('/jobs/cancelled', (req, res) => {
 	pool.getConnection((err, connection) => {
@@ -89,3 +88,5 @@ app.get('/jobs/cancelled', (req, res) => {
 		}
 	})
 });
+
+// TODO: Frontend needs filtering for routes
