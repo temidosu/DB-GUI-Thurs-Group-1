@@ -7,4 +7,4 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { ReviewForm } from './components/ReviewForm';
 
 
-ReactDOM.render(<ReviewForm />, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById('root'));

@@ -104,7 +104,7 @@ app.post('/createreview', (req, res) => {
       } else {
         var reviewer = req.params.reviewer; 
         var reviewed = req.params.reviewed; 
-        var textreview = req.body.textreview;
+        var textreview = req.params.textreview;
         var score = req.params.score;
         var project = req.params.project;
 

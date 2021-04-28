@@ -193,4 +193,15 @@ export class Repository {
     //     });
     // }
 
+    newReview(reviewer, reviewed, textreview, score, project) {
+        return new Promise((resolve, reject) => {
+            axios.post(`${this.url}/createreview`, reviewer, reviewed, textreview, score, project)
+                .then(x => resolve(x.data))
+                .catch(error => {
+                    alert(error);
+                    reject(error);
+                });
+        });
+    }
+
 }
