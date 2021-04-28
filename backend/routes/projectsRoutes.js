@@ -102,7 +102,7 @@ app.post('/project', (req, res) => {
 		} else {
 			var data = req.body;
 			connection.query('INSERT INTO Projects VALUES ?', data, (err, result) => {
-
+				res.status(200).end(JSON.stringify(result));
 			})
 		}
 	})
