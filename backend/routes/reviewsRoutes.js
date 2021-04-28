@@ -28,7 +28,7 @@ app.get('/reviews', (req, res) => {
 });
 
 //GET REVIEW by reviewerID
-app.get('reviewsByReviewerID/:reviewerID', (req, res) => {
+app.get('/reviewsByReviewerID/:reviewerID', (req, res) => {
 	pool.getConnection((err, connection) => {
 		if (err) {
 			console.log(connection);
@@ -50,7 +50,7 @@ app.get('reviewsByReviewerID/:reviewerID', (req, res) => {
 });
 
 // GET REVIEW by reviewedID
-app.get('reviewsByReviewedID/:reviewedID', (req, res) => {
+app.get('/reviewsByReviewedID/:reviewedID', (req, res) => {
 	pool.getConnection((err, connection) => {
 		if (err) {
 			console.log(connection);
