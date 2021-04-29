@@ -340,29 +340,6 @@ app.get('/contractors/available', (req, res) => {
   })
 });
 
-//Get user info for given ID
-app.get('/userInfo/:userID', (req, res) => {
-  pool.getConnection((err, connection) => {
-    if (err) {
-      console.log(connection);
-      logger.error('Problem obtaining MySQL connection', err)
-      res.status(400).send('Problem obtaining MySQL connection');
-    } else {
-      var userID = req.params.userID
-      connection.query("SELECT * FROM Users WHERE user_ID = ?", userID, function (err, result, fields) {
-        connection.release();
-        if (err) {
-          logger.error('', err);
-          res.status(400).send('failed');
-        }
-        else {
-          res.status(200).json(JSON.parse(JSON.stringify(result)))
-        }
-      });
-    }
-  })
-});
-
 app.put('/updateRating/:id', (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) {
