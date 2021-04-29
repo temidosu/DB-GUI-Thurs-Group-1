@@ -1,3 +1,4 @@
+
 import React from 'react'; 
 import { Repository } from '../api/repository';
 import { Workers } from './workers.jsx'; 
@@ -245,7 +246,7 @@ export class Search extends React.Component{
                                 onChange={ e => this.setState({ searchFor: e.target.value }) }>
                                 <option></option>
                                 {
-                                    ["projects", "companies"].map(x => <option key={ x.index } value={ x }>{ x }</option>)
+                                    ["companies"].map(x => <option key={ x.index } value={ x }>{ x }</option>)
                                 }
                  </select>
                  </div>
@@ -295,7 +296,7 @@ export class Search extends React.Component{
                                 onChange={ e => this.setState({ searchFor: e.target.value }) }>
                                 <option></option>
                                 {
-                                    ["projects", "workers"].map(x => <option key={ x.index } value={ x }>{ x }</option>)
+                                    ["workers"].map(x => <option key={ x.index } value={ x }>{ x }</option>)
                                 }
                  </select>
                  </div>
