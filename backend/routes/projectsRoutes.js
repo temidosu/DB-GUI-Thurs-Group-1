@@ -115,20 +115,21 @@ app.put('/accept/:id', (req, res) => {
 			logger.error('Problem obtaining MySQL connection', err)
 			res.status(400).send('Problem obtaining MySQL connection');
 		} else {
-			var id = req.params.id;
-			connection.query('UPDATE Projects SET Status = “In Progress” WHERE job_id = ?', id, (err, result) => {
-				connection.release();
+			var id = req.params.id; 
+			connection.query('UPDATE Projects SET Status = "In Progress" WHERE job_id = ?', id, (err, result) => {
+				connection.release(); 
 				if (err) {
-					logger.error('Problem accepting project ', err);
-					res.status(400).send('project acceptance failed');
+					logger.error("Problem accepting project ", err);
+                    res.status(400).send('project acceptance failed');
 				}
-				else {
+				else{
 					res.status(200).end('project accepted')
 				}
 			})
 		}
 	})
 })
+
 app.put('/decline/:id', (req, res) => {
 	pool.getConnection((err, connection) => {
 		if (err) {
@@ -136,14 +137,14 @@ app.put('/decline/:id', (req, res) => {
 			logger.error('Problem obtaining MySQL connection', err)
 			res.status(400).send('Problem obtaining MySQL connection');
 		} else {
-			var id = req.params.id;
-			connection.query('UPDATE Projects SET Status = “Denied” WHERE job_id = ?', id, (err, result) => {
-				connection.release();
+			var id = req.params.id; 
+			connection.query('UPDATE Projects SET Status = "Denied" WHERE job_id = ?', id, (err, result) => {
+				connection.release(); 
 				if (err) {
-					logger.error('Problem declining project', err);
-					res.status(400).send('project decline failed');
+					logger.error("Problem declining project ", err);
+                    res.status(400).send('project decline failed');
 				}
-				else {
+				else{
 					res.status(200).end('project decline')
 				}
 			})
