@@ -14,7 +14,7 @@ app.get('/reviews', (req, res) => {
             logger.error('Problem obtaining MySQL connection', err)
             res.status(400).send('Problem obtaining MySQL connection');
         } else {
-            connection.query("SELECT * FROM Reviews JOIN Users ON ", function (err, result, fields) {
+            connection.query("SELECT * FROM Reviews", function (err, result, fields) {
                 connection.release(); 
                 if (err) {
                     logger.error('', err);
@@ -98,31 +98,25 @@ app.get('/reviewsByProject/:projectID', (req, res) => {
 
 // POST /newreview
 app.post('/createreview', (req, res) => {
-    pool.getConnection((err, connection) => {
-      if (err) {
-        console.log(connection);
-        logger.error('Problem obtaining MySQL connection', err)
-        res.status(400).send('Problem obtaining MySQL connection');
-      } else {
-        var reviewer = req.params.reviewer; 
-        var reviewed = req.params.reviewed; 
-        var textreview = req.body.textreview;
-        var score = req.params.score;
-        var project = req.params.project;
-
-        
-        connection.query('INSERT INTO Reviews (ReviewerID, ReviewedID, ReviewText, ReviewScore, ProjectID) VALUES (?,?,?,?,?)', [reviewer, reviewed, textreview, score, project], (err, result) => {
-            connection.release(); 
-            if (err) {
-              logger.error("Problem creating review: ", err);
-              res.status(400).send('review failed');
-            }
-            else {
-              res.status(200).end('review posted')
-            }
-          })
-      }
-    })
-  });
+	pool.getConnection((err, connection) => {
+		if (err) {
+			console.log(connection);
+			logger.error('Problem obtaining MySQL connection', err)
+			res.status(400).send('Problem obtaining MySQL connection');
+		} else {
+			var data = req.body;
+            console.log("data",data); 
+			connection.query('INSERT INTO Reviews VALUES (default, ?, ?, ?, NOW(), ?, ?)', [data.ReviewerID, data.ReviewedID, data.ReviewText, data.ReviewScore, data.ProjectID], (err, result) => {
+				if (err) {
+					logger.error("Problem creating review: ", err);
+					res.status(400).send('review failed');
+				}
+				else {
+					res.status(200).end('review posted')
+				}
+			})
+		}
+	})
+});
 
 module.exports = app;

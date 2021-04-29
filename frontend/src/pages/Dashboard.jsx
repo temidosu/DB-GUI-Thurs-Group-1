@@ -20,22 +20,14 @@ export class Dashboard extends React.Component{
         return <Redirect to = "/"></Redirect>
     }
     return <>
+    <div class = "background-image"></div>
         <br></br> 
         <br></br> 
-        <div class = "container text-center">
+        <div class = "container text-center stuff">
             <h2> Welcome, {this.state.firstName} {this.state.lastName}</h2>
             <Search />
             <br></br>
         </div>
-
-        {/* <Popup
-        title="titleHere"
-        openPopup={openPopup}
-        popupIsOpen={true}
-    >
-        child form goes here
-
-        </Popup> */}
     </>; 
     }
 }

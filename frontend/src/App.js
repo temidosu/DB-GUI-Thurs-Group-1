@@ -13,6 +13,8 @@ import { MyProjects } from './pages/myProjects.jsx'
 import { Workers } from './pages/workers.jsx'
 import { Contractors } from './pages/contractors.jsx'
 import { Navbar } from './navbar/Navbar.jsx'
+import { OthersProfile } from './pages/othersProfile.jsx'
+import { ProjectRequests } from './pages/projectRequests.jsx'
 
 // React functional component
 function App () {
@@ -21,7 +23,7 @@ function App () {
   const [values, setValues] = useState([])
 
   // ENTER YOUR EC2 PUBLIC IP/URL HERE
-  const ec2_url = ''
+  const ec2_url = 'http://13.58.99.80'
   // CHANGE THIS TO TRUE IF HOSTING ON EC2, MAKE SURE TO ADD IP/URL ABOVE
   const ec2 = false;
   // USE localhost OR ec2_url ACCORDING TO ENVIRONMENT
@@ -82,11 +84,13 @@ function App () {
     <Router>
         <Navbar /> 
         <Switch>
+          <Route path = "/project requests" component = { ProjectRequests} /> 
+           <Route path = "/user/:userid" component = { OthersProfile }/>
            <Route path = "/home" component = { Dashboard } /> 
            <Route path = "/contractors" component = { Contractors } />  
            <Route path = "/workers" component = {Workers} /> 
            <Route path = "/my projects" component = {MyProjects} /> 
-           <Route path = "/profile" component = {Profile} />
+           <Route path = "/profile" component = { Profile} />
            <Route path = "/dashboard" component = {Dashboard}/>
            <Route path = "/login" component = {Login}/>
            <Route path = "/logout" component = {Logout}/>

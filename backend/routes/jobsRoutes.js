@@ -22,6 +22,7 @@ app.get('/jobs', (req, res) => {
 					res.status(200).json(JSON.parse(JSON.stringify(result)))
 				}
 			});
+			connection.release();
 		}
 	})
 });
@@ -43,6 +44,7 @@ app.get('/jobs/ongoing', (req, res) => {
 					res.status(200).json(JSON.parse(JSON.stringify(result)))
 				}
 			});
+			connection.release();
 		}
 	})
 });
@@ -64,6 +66,7 @@ app.get('/jobs/completed', (req, res) => {
 					res.status(200).json(JSON.parse(JSON.stringify(result)))
 				}
 			});
+			connection.release();
 		}
 	})
 });
@@ -85,6 +88,7 @@ app.get('/jobs/cancelled', (req, res) => {
 					res.status(200).json(JSON.parse(JSON.stringify(result)))
 				}
 			});
+			connection.release();
 		}
 	})
 });
@@ -107,6 +111,7 @@ app.get('/jobs/worker', (req, res) => {
 					res.status(200).json(JSON.parse(JSON.stringify(result)))
 				}
 			});
+			connection.release();
 		}
 	})
 });
@@ -129,6 +134,7 @@ app.get('/jobs/contractor', (req, res) => {
 					res.status(200).json(JSON.parse(JSON.stringify(result)))
 				}
 			});
+			connection.release();
 		}
 	})
 });
@@ -151,6 +157,8 @@ app.get('/jobs/project', (req, res) => {
 					res.status(200).json(JSON.parse(JSON.stringify(result)))
 				}
 			});
+			connection.release();
 		}
 	})
 });
+module.exports = app;

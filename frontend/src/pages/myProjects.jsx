@@ -2,14 +2,17 @@ import React from 'react';
 import axios from 'axios';
 import { Repository } from '../api/repository';
 import {Link, Redirect} from 'react-router-dom';
-import { Project } from '../models/project'; 
+import { Project } from '../models/project';
+import { ProjectButton } from '../buttons/projectButton';  
+
+//const months = [January, February, March, April, May, June, July, August, September, October, November, December];  
 
 export class MyProjects extends React.Component {
 
     repo = new Repository(); 
     state = {
         projects: [], 
-        loggedIn: false
+        loggedIn: false, 
     }
 
     addProject(project){
@@ -18,14 +21,83 @@ export class MyProjects extends React.Component {
         this.setState({ projects }); 
     }
  
+    statusColor(status){
+        if(status == "Pending")
+        {
+            return "text-warning"; 
+        } 
+        if(status == "Complete")
+        {
+            return "text-info"; 
+        }
+        if(status == "In Progress")
+        {
+            return "text-success"; 
+        }
+        if(status == "Denied")
+        {
+            return "text-danger"; 
+        }
+    }
 
-   //job_id, ContractorID, ClientID, ClientFirstName, ClientLastName, ClientPhoneNumber, ClientEmail, Status, ProjectName, ProjectDescription, Deadline
+    // getContractorInfo(contractorID)
+    // {
+    //     let contractor = { 
+    //         firstName: "",
+    //         lastName: "",
+    //         email: "",
+    //         phone: "",
+    //         zipCode: ""
+    //     }
+    //     this.repo.getUserInfo(contractorID).then(data => (
+    //         console.log(data), 
+    //         contractor.firstName = data.firstName,
+    //         contractor.lastName = data.lastName,
+    //         contractor.email = data.userEmail,
+    //         contractor.phone = data.phoneNumber, 
+    //         contractor.zipCode = data.ZipCode
+    //     ))
+    //     console.log(contractor); 
+    //     return contractor; 
+    // }
+
+    // deadlinePassed(deadline)
+    // {
+    //     if(deadline > Date.now())
+    //     {
+    //         return "<h2 class = 'text-danger'> Deadline has passed </h2>"
+    //     }
+    //     else 
+    //     {
+    //         return "";
+    //     }  
+    // }
+
+    // deadline(deadline){
+    //     var year = deadline.substr(0,4); 
+    //     //var month = months[deadline.substr()] 
+    // }
+
+    // this.job_id = job_id; 
+    // this.ContractorID = ContractorID; 
+    // this.ClientID = ClientID; 
+    // this.ClientFirstName = ClientFirstName; 
+    // this.ClientLastName = ClientLastName; 
+    // this.ClientPhoneNumber = ClientPhoneNumber; 
+    // this.ClientEmail = ClientEmail;
+    // this.ClientZipCode = ClientZipCode; 
+    // this.Status = Status; 
+    // this.ProjectName = ProjectName; 
+    // this.ProjectDescription = ProjectDescription; 
+    // this.Deadline = Deadline; 
+
     componentDidMount()
     {
         this.repo.getProjectsByClient(localStorage.getItem("userID")).then(
             data => (
                 data.map(x => {
-                    this.addProject(new Project(x.job_id, x.ContractorID, x.ClientID, x.firstName, x.lastName, x.phoneNumber, x.userEmail, x.ZipCode, x.Status, x.ProjectName, x.Description, x.Deadline))
+                    console.log(x); 
+                    this.addProject(new Project(x.job_id, x.ContractorID, x.ClientID, x.firstName, x.lastName, x.phoneNumber, x.userEmail, x.ZipCode, x.Status, x.ProjectName, x.Description, x.Deadline, x.PostedDate))
                 })
         ));
     }
@@ -40,48 +112,37 @@ export class MyProjects extends React.Component {
             <div class = "container mt-2">
                 <br></br>
                 <br></br>
-                <h1 class = 'display-4  text-center'> My Projects </h1>
+                <h1 class = 'display-4  text-center'> My Projects </h1> 
                 <br></br>
             </div> 
-            <div class = "container">
-            <div class = "card m-0 p-0 border-0">
-                <div class = "card-body">
-                    <div class = "row">
-                        <div class = "col-3"></div>
-                        <div class = "col-5 m-0 p-1">
-                            <input class="form-control" type="search" placeholder="Search Projects" aria-label="Search"></input>
-                        </div>
-                        <div class = "col-2 m-0 p-1">
-                            <button class="btn btn-primary my-2 my-sm-0 ml-0" type="submit">Search</button>
-                        </div>
-                        <div class = "col-2"></div>
-                    </div>
-                    <br></br>
-                    <div class = "row"> 
-                        <div class = "col-5">
-                        </div>
-                        <div class = "col-2 m-0 p-0">
-                            <button class="btn btn-success" type="button">Create New Project</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-                <br></br>
-                <br></br>
-            </div>
-            <div class = "container">
+            <table className="table table-condensed table-striped">
+                <thead className = "table-dark">
+                    <tr>
+                        <th width = "10%">Contractor</th>
+                        <th width = "12%">Project Name</th>
+                        <th width = "44%">Project Description</th>
+                        <th width = "10%">PostDate</th> 
+                        <th width = "10%">Deadline</th>
+                        <th width = "14%">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
                 {
-                    this.state.projects.map((x) =>
-                    <div class = "row">
-                        <div class = "card w-100 m-2 border-0"> 
-                            <div class = "card-body">
-                                <h2>{ x.ProjectName }</h2> 
-                            </div>
-                        </div>
-                    </div> 
+                    this.state.projects.map((x,i) =>
+                    <tr key = {i}>
+                        <>
+                        <td><Link to = {`/user/${x.ContractorID}`}>{x.ClientFirstName} {x.ClientLastName}</Link></td>
+                        <td>{x.ProjectName}</td>
+                        <td>{x.ProjectDescription}</td>
+                        <td>{x.PostedDate.substring(0,10)}</td>
+                        <td>{x.Deadline.substring(0,10)}</td>
+                        <td><span class = {this.statusColor(x.Status)}> { x.Status } </span> </td>
+                        </>
+                    </tr>
                     )
                 }
-            </div>
+                </tbody>
+            </table>
         </>
     }
 }

@@ -122,7 +122,6 @@ app.get('/workers', (req, res) => {
           res.status(200).json(JSON.parse(JSON.stringify(result)))
         }
       });
-      connection.release();
     }
   })
 });
@@ -146,7 +145,6 @@ app.get('/workersZip/:zipcode', (req, res) => {
           res.status(200).json(JSON.parse(JSON.stringify(result)))
         }
       });
-      connection.release();
     }
   })
 });
@@ -170,7 +168,6 @@ app.get('/workersQuery/:query', (req, res) => {
           res.status(200).json(JSON.parse(JSON.stringify(result)))
         }
       });
-      connection.release();
     }
   })
 });
@@ -195,7 +192,52 @@ app.get('/workersZipAndQuery/:zipcode/:query', (req, res) => {
           res.status(200).json(JSON.parse(JSON.stringify(result)))
         }
       });
-      connection.release();
+    }
+  })
+});
+
+//PUT Update Rating for a worker
+app.put('/updateRating/:id', (req, res) => {
+  pool.getConnection((err, connection) => {
+    if (err) {
+      console.log(connection);
+      logger.error('Problem obtaining MySQL connection', err)
+      res.status(400).send('Problem obtaining MySQL connection');
+    } else {
+      var id = req.params.id
+      connection.query("UPDATE Workers SET rating = (SELECT AVG(ReviewScore) FROM Reviews WHERE ReviewedID = ?) WHERE userID = ?", [id,id], (err, result) => {
+        connection.release();
+        if (err) {
+          logger.error('', err);
+          res.status(400).send('failed');
+        }
+        else {
+          res.status(200).end('update success')
+        }
+      })
+    }
+  })
+})
+
+//GET Rating of a worker
+app.get('/workerRating/:id', (req, res) => {
+  pool.getConnection((err, connection) => {
+    if (err) {
+      console.log(connection);
+      logger.error('Problem obtaining MySQL connection', err)
+      res.status(400).send('Problem obtaining MySQL connection');
+    } else {
+      var id = req.params.id; 
+      connection.query("SELECT rating FROM Workers WHERE userID = ?", id, function (err, result, fields) {
+        connection.release();
+        if (err) {
+          logger.error('', err);
+          res.status(400).send('failed');
+        }
+        else {
+          res.status(200).json(JSON.parse(JSON.stringify(result)))
+        }
+      });
     }
   })
 });
@@ -218,7 +260,6 @@ app.get('/contractors', (req, res) => {
           res.status(200).json(JSON.parse(JSON.stringify(result)))
         }
       });
-      connection.release();
     }
   })
 });
@@ -242,7 +283,6 @@ app.get('/contractorsZip/:zipcode', (req, res) => {
           res.status(200).json(JSON.parse(JSON.stringify(result)))
         }
       });
-      connection.release();
     }
   })
 });
@@ -266,7 +306,6 @@ app.get('/contractorsQuery/:query', (req, res) => {
           res.status(200).json(JSON.parse(JSON.stringify(result)))
         }
       });
-      connection.release();
     }
   })
 });
@@ -291,7 +330,6 @@ app.get('/contractorsZipAndQuery/:zipcode/:query', (req, res) => {
           res.status(200).json(JSON.parse(JSON.stringify(result)))
         }
       });
-      connection.release();
     }
   })
 });
@@ -314,7 +352,6 @@ app.get('/userInfo/:userID', (req, res) => {
           res.status(200).json(JSON.parse(JSON.stringify(result)))
         }
       });
-      connection.release();
     }
   })
 });

@@ -1,7 +1,26 @@
+
 .mb-20 {
     margin-bottom: 20em;
 }
 
 .bg-card-header {
     background-color: #353a40 !important;
+}
+
+.stuff {
+    z-index: 2;
+    top: 20%; 
+    left: 10vw; 
+    position: absolute;   
+}
+.background-image {
+    background-image: url("https://www.rhumbix.com/wp-content/uploads/2018/07/shutterstock_772100623-1080x675.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    filter: blur(8px);
+    -webkit-filter: blur(8px); 
+    opacity: .9;
+    width: 100% !important;
+    height: 100% !important; 
 }
