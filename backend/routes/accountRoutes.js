@@ -190,6 +190,7 @@ app.get('/workers/available', (req, res) => {
       res.status(400).send('Problem obtaining MySQL connection');
     } else {
       connection.query("SELECT * FROM Users JOIN Workers ON Users.user_id = Workers.userID WHERE role_id = 2 AND Workers.job_id IS NULL", function (err, result, fields) {
+        connection.release(); 
         if (err) {
           logger.error('', err);
           res.status(400).send('failed');
@@ -328,6 +329,7 @@ app.get('/contractors/available', (req, res) => {
       res.status(400).send('Problem obtaining MySQL connection');
     } else {
       connection.query("SELECT * FROM Users JOIN Projects ON Users.user_id = Projects.ContractorID WHERE role_id = 3", function (err, result, fields) {
+        connection.release(); 
         if (err) {
           logger.error('', err);
           res.status(400).send('failed');
