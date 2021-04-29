@@ -130,7 +130,7 @@ app.put('/accept/:id', (req, res) => {
 			res.status(400).send('Problem obtaining MySQL connection');
 		} else {
 			var id = req.params.id;
-			connection.query('UPDATE Projects SET Status = “In Progress” WHERE job_id = ?', id, (err, result) => {
+			connection.query('UPDATE Projects SET Status = "In Progress" WHERE job_id = ?', id, (err, result) => {
 				connection.release();
 				if (err) {
 					logger.error('Problem accepting project ', err);
@@ -151,7 +151,7 @@ app.put('/decline/:id', (req, res) => {
 			res.status(400).send('Problem obtaining MySQL connection');
 		} else {
 			var id = req.params.id;
-			connection.query('UPDATE Projects SET Status = “Denied” WHERE job_id = ?', id, (err, result) => {
+			connection.query('UPDATE Projects SET Status = "Denied" WHERE job_id = ?', id, (err, result) => {
 				connection.release();
 				if (err) {
 					logger.error('Problem declining project', err);
