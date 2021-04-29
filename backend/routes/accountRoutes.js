@@ -147,12 +147,12 @@ app.get('/userInfo/:userID', (req, res) => {
 	})
 });
 
-app.get(‘/workersZip/:zipcode’, (req, res) => {
+app.get('/workersZip/:zipcode', (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) {
       console.log(connection);
-      logger.error(‘Problem obtaining MySQL connection’, err)
-      res.status(400).send(‘Problem obtaining MySQL connection’);
+      logger.error('Problem obtaining MySQL connection', err)
+      res.status(400).send('Problem obtaining MySQL connection');
     } else {
       var zipcode = req.params.zipcode;
       connection.query(“SELECT * FROM Users WHERE role_id = 2 AND ZipCode = ?“, [zipcode], function (err, result, fields) {
