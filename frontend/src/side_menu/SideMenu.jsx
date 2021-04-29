@@ -6,9 +6,9 @@ export class SideMenu extends React.Component  {
 
     state = {
         role_id: localStorage.getItem("roleID"), 
-        client: ["Profile", "My Projects", "Logout"],
-        worker: ["Profile", "My Projects", "Logout"],
-        contractor: ["Profile", "My Projects", "Logout"]
+        client: ["Home", "Profile", "My Projects", "Logout"],
+        worker: ["Home", "Profile", "Project Requests", "Logout"],
+        contractor: ["Home", "Profile", "Project Requests", "My Projects", "Logout"]
     }
 
     render() {
@@ -22,7 +22,7 @@ export class SideMenu extends React.Component  {
                         {
                         this.state.client.map((x) => 
                             <div className="border-top border-bottom border-secondary">
-                            <Link to = {x} className="text-decoration-none text-white h3 text-right mb-5 mt-3"> {x} </Link>
+                            <Link to = {`/${x}`} className="text-decoration-none text-white h3 text-right mb-5 mt-3"> {x} </Link>
                             </div>
                         )
                         }   
@@ -42,7 +42,7 @@ export class SideMenu extends React.Component  {
                         {
                         this.state.worker.map((x) => 
                             <div className="border-top border-bottom border-secondary">
-                            <Link to = {x} className="text-decoration-none text-white h3 text-right mb-5 mt-3"> {x} </Link>
+                            <Link to = {`/${x}`} className="text-decoration-none text-white h3 text-right mb-5 mt-3"> {x} </Link>
                             </div>
                         )
                         }   
@@ -62,7 +62,7 @@ export class SideMenu extends React.Component  {
                         {
                         this.state.contractor.map((x) => 
                             <div className="border-top border-bottom border-secondary">
-                            <Link to = {x} className="text-decoration-none text-white h3 text-right mb-5 mt-3"> {x} </Link>
+                            <Link to = {`/${x}`} className="text-decoration-none text-white h3 text-right mb-5 mt-3"> {x} </Link>
                             </div>
                         )
                         }   

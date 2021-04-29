@@ -68,7 +68,7 @@ export class Homepage extends React.Component {
                         
                         <div className="row">
                             <div className="col-md-12">
-                                <Link to = { '/view projects' } className = "btn btn-warning m-2"> View Projects</Link> 
+                                <Link to = { '/login' } className = "btn btn-warning m-2"> View Projects</Link> 
                             </div>
 
                         </div>
