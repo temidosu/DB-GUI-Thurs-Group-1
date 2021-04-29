@@ -6,6 +6,7 @@ import { Contractors } from './contractors.jsx';
 import { Contractor } from '../models/contractor'; 
 import { Projects } from './Projects.jsx'; 
 import { Project } from '../models/project'; 
+import './search.css'; 
 
 export class Search extends React.Component{
 
@@ -16,7 +17,7 @@ export class Search extends React.Component{
         searchFor: "",
         zipCode: "",
         searchQuery: "", 
-        searchTerms: [],  
+        //searchTerms: [],  
         workers: [],
         contractors: [],
         projects: []
@@ -40,35 +41,124 @@ export class Search extends React.Component{
         this.setState( { projects });
     }
 
-    handleSearchQuery() {
-        var searchTerms = this.state.searchQuery.split(" "); 
-        this.setState({searchTerms}); 
-        console.log(searchTerms); 
+    // handleSearchQuery() {
+    //     var searchTerms = this.state.searchQuery.split(" "); 
+    //     this.setState({searchTerms}); 
+    //     console.log(searchTerms); 
+    // }
+
+    // componentDidMount()
+    // {
+    //     if(props.params.location.state)
+    //     {
+    //         this.setState(props.params.location.state); 
+    //     }
+    // }
+
+    float2int (value) {
+        if(value === null)
+        {
+            return -1; 
+        }
+        return value | 0;
     }
 
     search() {
         console.log(this.state.searchQuery); 
-        if(this.state.searchQuery != "")
-        {
-            this.handleSearchQuery(); 
-        }
+        // if(this.state.searchQuery != "")
+        // {
+        //     this.handleSearchQuery(); 
+        // }
         //console.log(this.state.searchFor);  
         this.setState( {contractors: [], workers: [], projects: []})
+        console.log("zipcode", this.state.zipCode); 
         if(this.state.searchFor == "workers")
         {
-            this.repo.getWorkers().then(data => (
+            if(this.state.zipCode == "" && this.state.searchQuery == "")
+            {
+                this.repo.getWorkers().then(data => (
                 data.map(x => {
-                    this.addWorker(new Worker(x.user_id, x.ZipCode, x.userName, x.userEmail, x.firstName, x.lastName, x.phoneNumber))
+                    this.addWorker(new Worker(x.user_id, x.ZipCode, x.userName, x.userEmail, x.firstName, x.lastName, x.phoneNumber, x.part_or_full_time, x.skillTags, this.float2int(x.rating)))
                 })
             )); 
+            }
+            else if(this.state.searchQuery == "")
+            {
+                console.log("getWorkersByZip", this.state.zipCode)
+                this.repo.getWorkersByZip(this.state.zipCode).then(data => (
+                    //console.log(data), 
+                    data.map(x => {
+                        this.addWorker(new Worker(x.user_id, x.ZipCode, x.userName, x.userEmail, x.firstName, x.lastName, x.phoneNumber, x.part_or_full_time, x.skillTags, this.float2int(x.rating)))
+                    })
+                )); 
+                //this.setState( {zipCode: ""}); 
+            }
+            else if (this.state.zipCode == "")
+            {
+                //console.log("here"); 
+                //console.log(this.state.searchQuery); 
+                this.repo.getWorkersByQuery(this.state.searchQuery).then(data => (
+                    //console.log(data),
+                    data.map(x => {
+                        this.addWorker(new Worker(x.user_id, x.ZipCode, x.userName, x.userEmail, x.firstName, x.lastName, x.phoneNumber, x.part_or_full_time, x.skillTags, this.float2int(x.rating)))
+                    })
+                )); 
+            }
+            else 
+            {
+                this.repo.getWorkersByZipAndQuery(this.state.zipCode, this.state.searchQuery).then(data => (
+                    //console.log(data),
+                    data.map(x => {
+                        this.addWorker(new Worker(x.user_id, x.ZipCode, x.userName, x.userEmail, x.firstName, x.lastName, x.phoneNumber, x.part_or_full_time, x.skillTags, this.float2int(x.rating)))
+                    })
+                )); 
+            }
         }
-        if(this.state.searchFor == "contractors")
+        if(this.state.searchFor == "companies")
         {
-            this.repo.getContractors().then(data => (
+            // this.repo.getContractors().then(data => (
+            //     data.map(x => {
+            //         this.addContractor(new Contractor(x.user_id, x.ZipCode, x.userName, x.userEmail, x.firstName, x.lastName, x.phoneNumber))
+            //     })
+            // )); 
+            if(this.state.zipCode == "" && this.state.searchQuery == "")
+            {
+                this.repo.getContractors().then(data => (
                 data.map(x => {
                     this.addContractor(new Contractor(x.user_id, x.ZipCode, x.userName, x.userEmail, x.firstName, x.lastName, x.phoneNumber))
                 })
             )); 
+            }
+            else if(this.state.searchQuery == "")
+            {
+                this.repo.getContractorsByZip(this.state.zipCode).then(data => (
+                    //console.log(data), 
+                    data.map(x => {
+                        this.addContractor(new Contractor(x.user_id, x.ZipCode, x.userName, x.userEmail, x.firstName, x.lastName, x.phoneNumber))
+                    })
+                )); 
+                //this.setState( {zipCode: ""}); 
+            }
+            else if (this.state.zipCode == "")
+            {
+                //console.log("here"); 
+                //console.log(this.state.searchQuery); 
+                this.repo.getContractorsByQuery(this.state.searchQuery).then(data => (
+                    //console.log(data),
+                    data.map(x => {
+                        this.addContractor(new Contractor(x.user_id, x.ZipCode, x.userName, x.userEmail, x.firstName, x.lastName, x.phoneNumber))
+                    })
+                )); 
+            }
+            else 
+            {
+                this.repo.getContractorsByZipAndQuery(this.state.zipCode, this.state.searchQuery).then(data => (
+                    //console.log(data),
+                    data.map(x => {
+                        this.addContractor(new Contractor(x.user_id, x.ZipCode, x.userName, x.userEmail, x.firstName, x.lastName, x.phoneNumber))
+                    })
+                )); 
+            }
         }
         if(this.state.searchFor == "projects")
         {
@@ -78,6 +168,7 @@ export class Search extends React.Component{
                 })
             )); 
         }
+        //window.history.replaceState({ key: history.location.key, state: this.state})
     }
 
     render() 
@@ -88,8 +179,8 @@ export class Search extends React.Component{
             <div class = "container m-3 mx-auto">
             <br></br>
             <div class = "row">
-                 <div class = "col-2"></div>
-                 <div class = "col-5 m-0 p-0">
+                <div class = "col-2"></div>
+                <div class = "col-5 m-0 p-0">
                 <input class="form-control" 
                     type="text" 
                     placeholder="I'm looking for..." 
@@ -104,7 +195,7 @@ export class Search extends React.Component{
                                 onChange={ e => this.setState({ searchFor: e.target.value }) }>
                                 <option></option>
                                 {
-                                    ["workers", "contractors"].map(x => <option key={ x.index } value={ x }>{ x }</option>)
+                                    ["workers", "companies"].map(x => <option key={ x.index } value={ x }>{ x }</option>)
                                 }
                  </select>
                  </div>
@@ -113,17 +204,19 @@ export class Search extends React.Component{
                   type="text" 
                   placeholder="ZipCode" 
                   aria-label="ZipCode"
-                  onChange = { e => this.setState({ ZipCode: e.target.value })}
+                  onChange = { e => this.setState({ zipCode: e.target.value })}
                   ></input>
                  </div>
                  <div class = "col-1 m-0 p-0">
-                 <button class="btn btn-outline-success my-2 my-sm-0 ml-0" 
+                 <button class="btn btn-success my-2 my-sm-0 ml-0" 
                  type="submit" 
                  onClick={ () => this.search()}>
                      Search
                  </button> 
                  </div>
             </div>
+            <br></br>
+            <hr></hr>
             <Workers workers = {this.state.workers}/>
             <Contractors contractors = {this.state.contractors}/>
             </div>
@@ -152,12 +245,17 @@ export class Search extends React.Component{
                                 onChange={ e => this.setState({ searchFor: e.target.value }) }>
                                 <option></option>
                                 {
-                                    ["projects", "contractors"].map(x => <option key={ x.index } value={ x }>{ x }</option>)
+                                    ["companies"].map(x => <option key={ x.index } value={ x }>{ x }</option>)
                                 }
                  </select>
                  </div>
                  <div class = "col-1 m-0 p-0">
-                 <input class="form-control" type="text" placeholder="ZipCode" aria-label="ZipCode"></input>
+                 <input class="form-control" 
+                  type="text" 
+                  placeholder="ZipCode" 
+                  aria-label="ZipCode"
+                  onChange = { e => this.setState({ zipCode: e.target.value })}
+                  ></input>
                  </div>
                  <div class = "col-1 m-0 p-0">
                  <button class="btn btn-outline-success my-2 my-sm-0 ml-0" 
@@ -167,6 +265,8 @@ export class Search extends React.Component{
                  </button> 
                  </div>
             </div>
+            <br></br>
+            <hr></hr>
             <Contractors contractors = {this.state.contractors}/>
             <Projects projects = {this.state.projects}/>
             </div>
@@ -195,12 +295,17 @@ export class Search extends React.Component{
                                 onChange={ e => this.setState({ searchFor: e.target.value }) }>
                                 <option></option>
                                 {
-                                    ["projects", "workers"].map(x => <option key={ x.index } value={ x }>{ x }</option>)
+                                    ["workers"].map(x => <option key={ x.index } value={ x }>{ x }</option>)
                                 }
                  </select>
                  </div>
                  <div class = "col-1 m-0 p-0">
-                 <input class="form-control" type="text" placeholder="ZipCode" aria-label="ZipCode"></input>
+                 <input class="form-control" 
+                  type="text" 
+                  placeholder="ZipCode" 
+                  aria-label="ZipCode"
+                  onChange = { e => this.setState({ zipCode: e.target.value })}
+                  ></input>
                  </div>
                  <div class = "col-1 m-0 p-0">
                  <button class="btn btn-outline-success my-2 my-sm-0 ml-0" 
@@ -210,6 +315,8 @@ export class Search extends React.Component{
                  </button> 
                  </div>
             </div>
+            <br></br>
+            <hr></hr>
             <Workers workers = {this.state.workers}/>
             <Projects projects = {this.state.projects}/>
             </div>

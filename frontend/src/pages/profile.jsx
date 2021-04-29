@@ -1,66 +1,77 @@
-import { useState, useEffect } from 'react';
+import React from 'react';
+import { ReviewList } from './ReviewList'; 
 import "./profile.css";
+import { Repository } from '../api/repository';
 
-export const Profile = props => {
+export class Profile extends React.Component{
 
-    const [firstName, setFirstName] = useState(localStorage.getItem("firstName"));
-    const [lastName, setLastName] = useState(localStorage.getItem("lastName"));
-    const [userName, setuserName] = useState(localStorage.getItem("userName"));
-    const [email, setEmail] = useState(localStorage.getItem("email"));
-    const [phone, setPhone] = useState(localStorage.getItem("phone"));
-    const [roleID, setUserID] = useState(localStorage.getItem("roleID"));
+    repo = new Repository(); 
 
-    return <>
+    state = {
+        firstName: "", 
+        lastName: "", 
+        userName: "", 
+        email: "", 
+        phone: "", 
+        zipCode: ""
+    }
+
+    displayPhone() {
+        var phoneNum = "("; 
+        phoneNum += this.state.phone.toString().substring(0,3); 
+        phoneNum += ")"; 
+        phoneNum += this.state.phone.toString().substring(3,6); 
+        phoneNum += "-"; 
+        phoneNum += this.state.phone.toString().substring(6,this.state.phone.length); 
+        return phoneNum; 
+    }
+
+    componentDidMount()
+    {
+        this.repo.getUserInfo(localStorage.getItem("userID")).then(
+            data=>{
+                this.setState({firstName: data[0].firstName, lastName: data[0].lastName, userName: data[0].userName, 
+                    email: data[0].userEmail, phone: data[0].phoneNumber, zipCode: data[0].ZipCode})
+            }
+        )
+    }
+
+    render()
+    {
+        return(
         <div className="constraint mx-auto">
-            <figure>
-                <img src="default_profile_pic.png" alt="profile_pic" className="img-resize" id="profile_pic"></img>
-                <figcaption className="text-center h3">Profile Picture</figcaption>
-            </figure>
             <div className="mb-5">
+                <br></br>
+                <br></br>
+                <h1 class = "display-4">Profile</h1>
+                <br></br>
+                <div className = "card">
+                    <div className = "card-header bg-card-header">
+                        <span className="h1 text-light">Account Info</span>
+                    </div>
+                </div>
                 <ul className="list-group">
                     <li className="list-group-item">
-                        <span>First Name </span>
-                        <span>Last Name</span>
+                       <p> First: {this.state.firstName} </p> 
                     </li>
                     <li className="list-group-item">
-                        <span>UserName</span>
+                       <p> Last: {this.state.lastName} </p> 
                     </li>
                     <li className="list-group-item">
-                        <span>Email</span>
+                       <p> Username: {this.state.userName} </p> 
                     </li>
                     <li className="list-group-item">
-                        <span>Phone</span>
+                       <p> Phone: {this.displayPhone(this.state.phone)} </p> 
                     </li>
                     <li className="list-group-item">
-                        <span>Role</span>
+                       <p> Email: {this.state.email} </p> 
+                    </li>
+                    <li className="list-group-item">
+                       <p> ZipCode: {this.state.zipCode} </p> 
                     </li>
                 </ul>
             </div>
-            <div className="mt-5 mb-5">
-                <div className="card">
-                    <div className="card-header bg-card-header">
-                        <span className="h1 text-light">Gallery</span>
-                    </div>
-                    <div className="card-body gallery">
-                        <img src="http://placehold.it/150x150" alt="img_1"></img>
-                        <img src="http://placehold.it/150x150" alt="img_2"></img>
-                        <img src="http://placehold.it/150x150" alt="img_3"></img>
-                        <img src="http://placehold.it/150x150" alt="img_4"></img>
-                        <img src="http://placehold.it/150x150" alt="img_5"></img>
-                    </div>
-                </div>
-            </div>
-            <div className="mt-5">
-                <div className="card">
-                    <div className="card-header bg-card-header">
-                        <span className="h1 text-light">Reviews</span>
-                    </div>
-                    <div className="card-body">
-
-                    </div>
-                </div>
-            </div>
         </div>
-    </>;
+        )
+    }
 }
-

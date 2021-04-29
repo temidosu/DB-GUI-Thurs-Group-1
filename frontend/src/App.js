@@ -13,6 +13,8 @@ import { MyProjects } from './pages/myProjects.jsx'
 import { Workers } from './pages/workers.jsx'
 import { Contractors } from './pages/contractors.jsx'
 import { Navbar } from './navbar/Navbar.jsx'
+import { OthersProfile } from './pages/othersProfile.jsx'
+import { ProjectRequests } from './pages/projectRequests.jsx'
 
 // React functional component
 function App () {
@@ -82,11 +84,13 @@ function App () {
     <Router>
         <Navbar /> 
         <Switch>
+           <Route path = "/project requests" component = { ProjectRequests} /> 
+           <Route path = "/user/:userid" component = { OthersProfile }/>
            <Route path = "/home" component = { Dashboard } /> 
            <Route path = "/contractors" component = { Contractors } />  
            <Route path = "/workers" component = {Workers} /> 
            <Route path = "/my projects" component = {MyProjects} /> 
-           <Route path = "/profile" component = {Profile} />
+           <Route path = "/profile" component = { Profile} />
            <Route path = "/dashboard" component = {Dashboard}/>
            <Route path = "/login" component = {Login}/>
            <Route path = "/logout" component = {Logout}/>
