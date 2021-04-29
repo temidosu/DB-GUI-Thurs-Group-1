@@ -102,9 +102,9 @@ app.post('/createreview', (req, res) => {
 			res.status(400).send('Problem obtaining MySQL connection');
 		} else {
 
-			var reviewer = req.body;
+			var data = req.body;
 
-			connection.query('INSERT INTO Reviews (ReviewerID, ReviewedID, ReviewText, ReviewScore, ProjectID) VALUES (default,?,?,?,NOW(),?,?)', [data.reviewer, data.reviewed, data.textreview, data.score, data.project], (err, result) => {
+			connection.query('INSERT INTO Reviews VALUES (default,?,?,?,NOW(),?,?)', [data.reviewer, data.reviewed, data.ReviewText, data.ReviewScore, data.projectID], (err, result) => {
 				if (err) {
 					logger.error("Problem creating review: ", err);
 					res.status(400).send('review failed');
