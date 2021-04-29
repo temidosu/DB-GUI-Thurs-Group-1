@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export class Repository {
-    url = 'http://localhost:8000/api';
+    url = 'http://13.58.99.80:8000/api';
 
     signup(account) {
         return new Promise((resolve, reject) => {
