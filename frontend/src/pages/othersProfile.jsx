@@ -37,6 +37,7 @@ export class OthersProfile extends React.Component {
               }
           }
           );
+          localStorage.setItem("contractorID", this.props.match.params.userid); 
       }
     }
 
@@ -163,11 +164,11 @@ export class OthersProfile extends React.Component {
                             </div>
                             <ReviewList reviews = {this.state.reviews}/>
                         </div> 
-                        <div class = "card mt-5"> 
+                        {/* <div class = "card mt-5"> 
                             <div class="card-header">
                                 <h4>Work Experience</h4>
                             </div>
-                        </div> 
+                        </div>  */}
                     </div> 
                 )
             }
@@ -192,11 +193,11 @@ export class OthersProfile extends React.Component {
                     </div>
                     <ReviewList reviews = {this.state.reviews}/>
                 </div> 
-                <div class = "card mt-5"> 
+                {/* <div class = "card mt-5"> 
                     <div class="card-header">
                         <h4>Work Experience</h4>
                     </div>
-                </div> 
+                </div>  */}
             </div> 
         )
         }
@@ -219,7 +220,13 @@ export class OthersProfile extends React.Component {
                                 <p> {this.state.firstName} {this.state.lastName} {this.state.email} {this.displayPhone()} </p>
                                 <ProjectRequestButton />  
                             </div>
-                        </div> 
+                        </div>
+                        <div class = "card mt-5"> 
+                            <div class="card-header">
+                                <h4>Reviews</h4>
+                            </div>
+                            <ReviewList reviews = {this.state.reviews}/>
+                        </div>
                     </div> 
                 )
             }
@@ -238,6 +245,13 @@ export class OthersProfile extends React.Component {
                         <p> {this.state.firstName} {this.state.lastName} {this.state.email} {this.displayPhone()} </p> 
                     </div>
                 </div> 
+
+                <div class = "card mt-5"> 
+                    <div class="card-header">
+                        <h4>Reviews</h4>
+                    </div>
+                    <ReviewList reviews = {this.state.reviews}/>
+                </div>
             </div> 
         )
         }

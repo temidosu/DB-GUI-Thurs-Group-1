@@ -18,30 +18,7 @@ app.post('/signup', (req, res) => {
       //   data[key] = value
       // }
       connection.query('INSERT INTO Users SET ?', data, (err, result) => {
-          if (err) {
-            logger.error("Problem signing up: ", err);
-            res.status(400).send('sign up failed');
-          }
-          else {
-            res.status(200).end('sign up success')
-          }
-        })
-    }
-  })
-})
-
-app.post('/companySignup', (req, res) => {
-  pool.getConnection((err, connection) => {
-    if (err) {
-      console.log(connection);
-      logger.error('Problem obtaining MySQL connection', err)
-      res.status(400).send('Problem obtaining MySQL connection');
-    } else {
-      var data = req.body
-      // for(const [key, value] of Object.entries(req.body)){
-      //   data[key] = value
-      // }
-      connection.query('INSERT INTO Users SET ?', data, (err, result) => {
+          connection.release(); 
           if (err) {
             logger.error("Problem signing up: ", err);
             res.status(400).send('sign up failed');
@@ -65,40 +42,6 @@ app.post('/login', (req, res) => {
       const email = req.body.email; 
       const password = req.body.password;
       connection.query('SELECT * from `db`.`Users` WHERE userEmail = ? AND userPassword = ?', [email, password], (err, result) => {
-        connection.release(); 
-        if (err) {
-          logger.error("Login failed", err);
-          res.status(501).send('Login failed:', err);
-        }
-        else {
-          if (result.length <= 0) {
-            res.status(502).end('No user with given email')
-          }
-          else {
-            if (password == result[0].userPassword) {
-              res.status(200).end(JSON.stringify(result[0]))
-            }
-            else {
-              res.status(503).end('Password incorrect')
-            }
-          }
-        }
-      })
-    }
-  })
-})
-
-//company Login 
-app.post('/companyLogin', (req, res) => {
-  pool.getConnection((err, connection) => {
-    if (err) {
-      console.log(connection);
-      logger.error('Problem obtaining MySQL connection', err)
-      res.status(400).send('Problem obtaining MySQL connection');
-    } else {
-      const email = req.body.email; 
-      const password = req.body.password;
-      connection.query('SELECT * from `db`.`Company` WHERE companyEmail = ? AND companyPass = ?', [email, password], (err, result) => {
         connection.release(); 
         if (err) {
           logger.error("Login failed", err);
@@ -356,5 +299,29 @@ app.get('/userInfo/:userID', (req, res) => {
     }
   })
 });
+
+app.get('/userInfo/:userID', (req, res) => {
+  pool.getConnection((err, connection) => {
+    if (err) {
+      console.log(connection);
+      logger.error('Problem obtaining MySQL connection', err)
+      res.status(400).send('Problem obtaining MySQL connection');
+    } else {
+      var userID = req.params.userID
+      connection.query("SELECT * FROM Users WHERE user_ID = ?", userID, function (err, result, fields) {
+        connection.release();
+        if (err) {
+          logger.error('', err);
+          res.status(400).send('failed');
+        }
+        else {
+          res.status(200).json(JSON.parse(JSON.stringify(result)))
+        }
+      });
+    }
+  })
+});
+
+
 
 module.exports = app;

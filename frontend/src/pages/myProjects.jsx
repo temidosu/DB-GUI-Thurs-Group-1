@@ -97,7 +97,7 @@ export class MyProjects extends React.Component {
             data => (
                 data.map(x => {
                     console.log(x); 
-                    this.addProject(new Project(x.job_id, x.ContractorID, x.ClientID, x.ClientFirstName, x.ClientLastName, x.ClientPhoneNumber, x.ClientEmail, x.ClientZipCode, x.Status, x.ProjectName, x.Description, x.Deadline))
+                    this.addProject(new Project(x.job_id, x.ContractorID, x.ClientID, x.firstName, x.lastName, x.phoneNumber, x.userEmail, x.ZipCode, x.Status, x.ProjectName, x.Description, x.Deadline, x.PostedDate))
                 })
         ));
     }
@@ -112,53 +112,37 @@ export class MyProjects extends React.Component {
             <div class = "container mt-2">
                 <br></br>
                 <br></br>
-                <h1 class = 'display-4  text-center'> My Projects </h1>
+                <h1 class = 'display-4  text-center'> My Projects </h1> 
                 <br></br>
             </div> 
-            <div class = "container">
-            <div class = "card m-0 p-0 border-0">
-                <div class = "card-body">
-                    <div class = "row">
-                        <div class = "col-3"></div>
-                        <div class = "col-5 m-0 p-1">
-                            <input class="form-control" type="search" placeholder="Search Projects" aria-label="Search"></input>
-                        </div>
-                        <div class = "col-2 m-0 p-1">
-                            <button class="btn btn-primary my-2 my-sm-0 ml-0" type="submit">Search</button>
-                        </div>
-                        <div class = "col-2"></div>
-                    </div>
-                    <br></br>
-                    <div class = "row"> 
-                        <div class = "col-5">
-                        </div>
-                        <ProjectButton />
-                    </div>
-                </div>
-            </div>
-                <br></br>
-                <br></br>
-            </div>
-            <div class = "container">
+            <table className="table table-condensed table-striped">
+                <thead className = "table-dark">
+                    <tr>
+                        <th width = "10%">Contractor</th>
+                        <th width = "12%">Project Name</th>
+                        <th width = "44%">Project Description</th>
+                        <th width = "10%">PostDate</th> 
+                        <th width = "10%">Deadline</th>
+                        <th width = "14%">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
                 {
-                    this.state.projects.map((x, i) =>
-                    <div class = "row" key = {i}>
-                        <div class = "card w-100 m-2 border-0"> 
-                            <div class = "card-body">
-                                <h2>{ x.ProjectName }</h2> 
-                                <p> Status: <span class = {this.statusColor(x.Status)}> { x.Status } </span> </p> 
-                                <p> Description: { x.ProjectDescription } </p>
-                                <p> Deadline: { x.Deadline.substr(0,10) } </p> 
-                                {/* <p> {x.ContractorID} </p>  */}
-                                {/* <p> Contractor: { this.getContractorInfo(x.ContractorID).firstName } </p> */}
-                                {/* <p> { this.deadlinePassed(x.Deadline) } </p>  */}
-
-                            </div>
-                        </div>
-                    </div> 
+                    this.state.projects.map((x,i) =>
+                    <tr key = {i}>
+                        <>
+                        <td><Link to = {`/user/${x.ContractorID}`}>{x.ClientFirstName} {x.ClientLastName}</Link></td>
+                        <td>{x.ProjectName}</td>
+                        <td>{x.ProjectDescription}</td>
+                        <td>{x.PostedDate.substring(0,10)}</td>
+                        <td>{x.Deadline.substring(0,10)}</td>
+                        <td><span class = {this.statusColor(x.Status)}> { x.Status } </span> </td>
+                        </>
+                    </tr>
                     )
                 }
-            </div>
+                </tbody>
+            </table>
         </>
     }
 }

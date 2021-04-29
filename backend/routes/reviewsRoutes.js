@@ -15,6 +15,7 @@ app.get('/reviews', (req, res) => {
             res.status(400).send('Problem obtaining MySQL connection');
         } else {
             connection.query("SELECT * FROM Reviews JOIN Users ON ", function (err, result, fields) {
+                connection.release(); 
                 if (err) {
                     logger.error('', err);
                     res.status(400).send('failed');
@@ -38,6 +39,7 @@ app.get('/reviewsByReviewerID/:reviewerID', (req, res) => {
         } else {
             var ReviewerID = req.params.ReviewerID; 
             connection.query("SELECT * FROM Reviews WHERE ReviewerID = ? ",[ReviewerID], function (err, result, fields) {
+                connection.release(); 
                 if (err) {
                     logger.error('', err);
                     res.status(400).send('failed');
@@ -60,6 +62,7 @@ app.get('/reviewsByReviewedID/:reviewedID', (req, res) => {
         } else {
             var ReviewedID = req.params.reviewedID; 
             connection.query("SELECT * FROM Reviews JOIN Users ON Reviews.ReviewerID = Users.user_id WHERE ReviewedID = ? ",[ReviewedID], function (err, result, fields) {
+                connection.release(); 
                 if (err) {
                     logger.error('', err);
                     res.status(400).send('failed');
@@ -82,6 +85,7 @@ app.get('/reviewsByProject/:projectID', (req, res) => {
         } else {
             var prjID = req.params.projectID; 
             connection.query("SELECT * FROM Reviews WHERE ProjectID = ? ",[projectID], function (err, result, fields) {
+                connection.release(); 
                 if (err) {
                     logger.error('', err);
                     res.status(400).send('failed');
@@ -110,6 +114,7 @@ app.post('/createreview', (req, res) => {
 
         
         connection.query('INSERT INTO Reviews (ReviewerID, ReviewedID, ReviewText, ReviewScore, ProjectID) VALUES (?,?,?,?,?)', [reviewer, reviewed, textreview, score, project], (err, result) => {
+            connection.release(); 
             if (err) {
               logger.error("Problem creating review: ", err);
               res.status(400).send('review failed');

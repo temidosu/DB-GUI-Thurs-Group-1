@@ -1,20 +1,31 @@
 import React from 'react'; 
+import { Repository } from '../api/repository';
 
 export class ProjectButton extends React.Component{
+    
+    repo = new Repository(); 
 
     state = {
-        job_id: "",
-        ContractorID: "",
+        ContractorID: localStorage.getItem("contractorID"),
         ClientID: localStorage.getItem("userID"),
-        ClientFirstName: "",
-        ClientLastName: "",
-        ClientPhoneNumber: "",
-        ClientEmail: "",
-        ClientZipCode: "",
-        Status: "",
+        Status: "Pending",
         ProjectName: "",
         ProjectDescription: "",
         Deadline: "",
+    }
+
+    createProject()
+    {
+        let json = { 
+            ContractorID: this.state.ContractorID, 
+            ClientID: this.state.ClientID, 
+            Status: this.state.Status,
+            ProjectName: this.state.ProjectName, 
+            Description: this.state.ProjectDescription, 
+            Deadline: this.state.Deadline, 
+        }
+        console.log(json);
+        this.repo.createProject(json);
     }
 
     render()
@@ -33,55 +44,6 @@ export class ProjectButton extends React.Component{
                     </div>
                 <div class="modal-body">
                     <form className = "container"> 
-                        <div className = "row"> 
-                            <div className = "col">
-                                <label htmlFor="ClientFirstName">First Name</label> 
-                                    <input type = "text"
-                                        id = "ClientFirstName"
-                                        name = "ClientFirstName"
-                                        value = {this.state.ClientFirstName}
-                                        onChange = {e => this.setState({ClientFirstName: e.target.value})}
-                                        className = "form-control" />
-                            </div>
-                            <div className = "col">
-                                <label htmlFor="ClientLastName">Last Name</label> 
-                                    <input type = "text"
-                                        id = "ClientLastName"
-                                        name = "ClientLastName"
-                                        value = {this.state.ClientLastName}
-                                        onChange = {e => this.setState({ClientLastName: e.target.value})}
-                                        className = "form-control" />
-                            </div>
-                            <div className = "col">
-                                            <label htmlFor="ClientEmail">Email</label> 
-                                    <input type = "text"
-                                        id = "ClientEmail"
-                                        name = "ClientEmail"
-                                        value = {this.state.ClientEmail}
-                                        onChange = {e => this.setState({ClientEmail: e.target.value})}
-                                        className = "form-control" />
-                            </div>
-                        </div> 
-                        <div className = "row"> 
-                            <div className = "col"> 
-                                <label htmlFor="ClientPhoneNumber">Phone Number</label> 
-                                    <input type = "text"
-                                        id = "ClientPhoneNumber"
-                                        name = "ClientPhoneNumber"
-                                        value = {this.state.ClientPhoneNumber}
-                                        onChange = { e => this.setState({ClientPhoneNumber: e.target.value})}
-                                        className = "form-control" />
-                            </div>
-                            <div className = "col"> 
-                                <label htmlFor="ClientZipCode">Zip Code</label> 
-                                    <input type = "text"
-                                        id = "ClientZipCode"
-                                        name = "ClientZipCode"
-                                        value = {this.state.ClientZipCode}
-                                        onChange = { e => this.setState({ClientZipCode: e.target.value})}
-                                        className = "form-control" />
-                            </div>  
-                        </div> 
                         <div className = "row"> 
                             <div className = "col"> 
                                 <label htmlFor="ProjectName">Project Name</label> 
@@ -111,7 +73,6 @@ export class ProjectButton extends React.Component{
                                     <input type = "date"
                                         id = "Deadline"
                                         name = "Deadline"
-                                        type = "month"
                                         value = {this.state.Deadline}
                                         onChange = {e => this.setState({Deadline: e.target.value})}
                                         className = "form-control" />
@@ -121,7 +82,7 @@ export class ProjectButton extends React.Component{
                 </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-success" onClick={ () => this.onSubmitClick()}>Submit</button>
+                        <button type="button" class="btn btn-success" data-dismiss="modal" onClick={ () => this.createProject()}>Submit</button>
                     </div>
                 </div>
             </div>

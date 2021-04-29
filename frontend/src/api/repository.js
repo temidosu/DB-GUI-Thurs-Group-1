@@ -14,32 +14,9 @@ export class Repository {
         });
     }
 
-    companySignup(account) {
-        return new Promise((resolve, reject) => {
-            axios.post(`${this.url}/companySignup`, account)
-                .then(x => resolve(x.data))
-                .catch(error => {
-                    alert(error);
-                    reject(error);
-                });
-        });
-    }
-
-
     login(account) {
         return new Promise((resolve, reject) => {
             axios.post(`${this.url}/login`, account)
-                .then(x => resolve(x.data))
-                .catch(error => {
-                    alert(error);
-                    reject(error);
-                });
-        });
-    }
-
-    companyLogin(account) {
-        return new Promise((resolve, reject) => {
-            axios.post(`${this.url}/companyLogin`, account)
                 .then(x => resolve(x.data))
                 .catch(error => {
                     alert(error);
@@ -151,7 +128,7 @@ export class Repository {
 
     getProjects() {
         return new Promise((resolve, reject) => {
-            axios.get(`${this.url}/projects`)
+            axios.get(`${this.url}/projects/all`)
                 .then(x => resolve(x.data))
                 .catch(error => {
                     alert(error);
@@ -162,13 +139,25 @@ export class Repository {
 
     getProjectsByClient(id) { 
         return new Promise((resolve, reject) => {
-            axios.get(`${this.url}/projects/${id}`)
+            axios.get(`${this.url}/projects/clients/${id}`)
                 .then(x => resolve(x.data))
                 .catch(error => {
                     alert(error);
                     reject(error);
                 });
         });
+    }
+
+    getProjectsByContractor(id) {
+        return new Promise((resolve, reject) => {
+            axios.get(`${this.url}/projects/contractors/${id}`)
+                .then(x => resolve(x.data))
+                .catch(error => {
+                    alert(error);
+                    reject(error);
+                });
+        });
+        
     }
 
     getReviewsByReviewed(id) {
@@ -181,6 +170,44 @@ export class Repository {
                 });
         });
     }
+
+    createProject(project) {
+        return new Promise((resolve, reject) => {
+            axios.post(`${this.url}/project`, project)
+                .then(x => resolve(x.data))
+                .catch(error => {
+                    alert(error);
+                    reject(error);
+                });
+        });
+    }
+
+    acceptProject(id) {
+        return new Promise((resolve, reject) => {
+            axios.put(`${this.url}/accept/${id}`)
+                .then(x => resolve(x.data))
+                .catch(error => {
+                    alert(error);
+                    reject(error);
+                });
+        });
+    }
+
+    declineProject(id) {
+        return new Promise((resolve, reject) => {
+            axios.put(`${this.url}/decline/${id}`)
+                .then(x => resolve(x.data))
+                .catch(error => {
+                    alert(error);
+                    reject(error);
+                });
+        });
+    }
+
+
+    
+
+
 
     // getReviewsByReviewed(id) {
     //     return new Promise((resolve, reject) => {
