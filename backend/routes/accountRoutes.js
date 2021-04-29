@@ -14,18 +14,37 @@ app.post('/signup', (req, res) => {
 			res.status(400).send('Problem obtaining MySQL connection');
 		} else {
 			var data = req.body
-			// for(const [key, value] of Object.entries(req.body)){
-			//   data[key] = value
-			// }
-			connection.query('INSERT INTO Users SET ?', data, (err, result) => {
-				if (err) {
-					logger.error("Problem signing up: ", err);
-					res.status(400).send('sign up failed');
-				}
-				else {
-					res.status(200).end('sign up success')
-				}
-			})
+			connection.query('SELECT * FROM Users WHERE userName = ' + "'" + data['userName'] + "'",(err,result) => {
+        if(err){
+          logger.error("Problem signing up: ", err);
+          res.status(400).send('Sign up failed');
+        }else{
+          if(result.length > 0) {
+            res.status(400).send('Account already exists with given userName')
+          }else{
+            connection.query('SELECT * FROM Users WHERE userEmail = '+"'"+ data['userEmail']+"'",(err,result) => {
+              if(err){
+                logger.error("Problem signing up: ", err);
+                res.status(400).send('Sign up failed');
+              }else{
+                if(result.length > 0){
+                  res.status(400).send("Account already exists with give email address")
+                }else{
+                  connection.query('INSERT INTO Users SET ?',data,(err,result) =>{
+                    if(err){
+                      logger.error("Problem signing up: ", err);
+                      res.status(400).send('Sign up failed');
+                    }else{
+                      res.status(200).end('Success\nUsername: ' + data['userName']+'\n'+'Email Address:'+data['userEmail'])
+                    }
+                  })
+                }
+              }
+            })
+          }
+        }
+      })
+      connection.release();
 		}
 	})
 })
