@@ -15,6 +15,7 @@ app.post('/createcontractor', (req, res) => {
 			res.status(400).send('Problem obtaining MySQL connection');
 		} else {
 			connection.query('INSERT INTO Contractor VALUES ?', accountType, (err, result) => {
+				connection.release();
 				if (err) {
 					logger.error("Error creating contractor: ", err);
 					res.status(400).send('Error creating contractor');
@@ -35,6 +36,7 @@ app.post('/createclient', (req, res) => {
 			res.status(400).send('Problem obtaining MySQL connection');
 		} else {
 			connection.query('INSERT INTO Contractor VALUES ?', accountType, (err, result) => {
+				connection.release();
 				if (err) {
 					logger.error("Error creating contractor: ", err);
 					res.status(400).send('Error creating contractor');
@@ -58,6 +60,7 @@ app.post('/createworker', (req, res) => {
 			const part_or_full_time = req.body.part_or_full_time;
 
 			connection.query('INSERT INTO worker VALUES ?', workType, part_or_full_time, (err, result) => {
+				connection.release();
 				if (err) {
 					logger.error("Error creating worker: ", err);
 					res.status(400).send('Error creating worker');

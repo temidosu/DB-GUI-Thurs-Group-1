@@ -14,6 +14,7 @@ app.get('/projects/all/', (req, res) => {
 			res.status(400).send('Problem obtaining MySQL connection');
 		} else {
 			connection.query("SELECT * FROM Projects JOIN Users ON Projects.clientID = Users.user_id", function (err, result, fields) {
+				connection.release();
 				if (err) {
 					logger.error('', err);
 					res.status(400).send('failed');
@@ -36,6 +37,7 @@ app.get('/projects/clients/:ClientID', (req, res) => {
 		} else {
 			var ClientID = req.params.ClientID;
 			connection.query("SELECT * FROM Projects JOIN Users ON Projects.clientID = Users.user_id WHERE Projects.ClientID = ? ", [ClientID], function (err, result, fields) {
+				connection.release();
 				if (err) {
 					logger.error('', err);
 					res.status(400).send('failed');
@@ -58,6 +60,7 @@ app.get('/projects/contractors/:ContractorID', (req, res) => {
 		} else {
 			var ContractorID = req.params.ContractorID;
 			connection.query("SELECT * FROM Projects JOIN Users ON Projects.contractorID = Users.user_id WHERE Projects.ContractorID = ? ", [ContractorID], function (err, result, fields) {
+				connection.release();
 				if (err) {
 					logger.error('', err);
 					res.status(400).send('failed');
@@ -66,6 +69,7 @@ app.get('/projects/contractors/:ContractorID', (req, res) => {
 					res.status(200).json(JSON.parse(JSON.stringify(result)));
 				}
 			});
+
 		}
 	})
 });
@@ -80,6 +84,7 @@ app.get('/projects/:job_id', (req, res) => {
 		} else {
 			var job_id = req.params.job_id;
 			connection.query("SELECT * FROM Projects WHERE Projects.job_id = ? ", [job_id], function (err, result, fields) {
+				connection.release();
 				if (err) {
 					logger.error('', err);
 					res.status(400).send('failed');
@@ -88,6 +93,7 @@ app.get('/projects/:job_id', (req, res) => {
 					res.status(200).json(JSON.parse(JSON.stringify(result)));
 				}
 			});
+
 		}
 	})
 });
@@ -101,8 +107,16 @@ app.post('/project', (req, res) => {
 			res.status(400).send('Problem obtaining MySQL connection');
 		} else {
 			var data = req.body;
-			connection.query('INSERT INTO Projects VALUES ?', data, (err, result) => {
-				res.status(200).end(JSON.stringify(result));
+            console.log("data",data); 
+			connection.query('INSERT INTO Projects VALUES(default, ?, ?, ?, ?, ?, ?, NOW())', [data.ContractorID,data.ClientID,data.Status,data.ProjectName,data.Description,data.Deadline], (err, result) => {
+                connection.release(); 
+                if (err) {
+                    logger.error("Problem creating project: ", err);
+                    res.status(400).send('project request failed');
+                }
+                else{
+                    res.status(200).end('created new project')
+                }
 			})
 		}
 	})
@@ -151,28 +165,6 @@ app.put('/decline/:id', (req, res) => {
 	})
 })
 
-app.post('/project', (req, res) => {
-	pool.getConnection((err, connection) => {
-		if (err) {
-			console.log(connection);
-			logger.error('Problem obtaining MySQL connection', err)
-			res.status(400).send('Problem obtaining MySQL connection');
-		} else {
-			var data = req.body;
-			console.log("data", data);
-			connection.query('INSERT INTO Projects VALUES(default, ?, ?, ?, ?, ?, ?, NOW())', [data.ContractorID, data.ClientID, data.Status, data.ProjectName, data.Description, data.Deadline], (err, result) => {
-				connection.release();
-				if (err) {
-					logger.error("Problem creating project: ", err);
-					res.status(400).send('project request failed');
-				}
-				else {
-					res.status(200).end('created new project')
-				}
-			})
-		}
-	})
-})
 
 
 module.exports = app;

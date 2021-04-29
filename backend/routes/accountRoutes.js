@@ -77,6 +77,7 @@ app.post('/login', (req, res) => {
 					}
 				}
 			})
+      connection.release();
 		}
 	})
 })
@@ -97,6 +98,7 @@ app.get('/users', (req, res) => {
 					res.status(200).json(JSON.parse(JSON.stringify(result)))
 				}
 			});
+      connection.release();
 		}
 	})
 });
@@ -120,6 +122,7 @@ app.get('/workers', (req, res) => {
           res.status(200).json(JSON.parse(JSON.stringify(result)))
         }
       });
+      connection.release();
     }
   })
 });
@@ -143,6 +146,7 @@ app.get('/workersZip/:zipcode', (req, res) => {
           res.status(200).json(JSON.parse(JSON.stringify(result)))
         }
       });
+      connection.release();
     }
   })
 });
@@ -166,6 +170,7 @@ app.get('/workersQuery/:query', (req, res) => {
           res.status(200).json(JSON.parse(JSON.stringify(result)))
         }
       });
+      connection.release();
     }
   })
 });
@@ -190,6 +195,7 @@ app.get('/workersZipAndQuery/:zipcode/:query', (req, res) => {
           res.status(200).json(JSON.parse(JSON.stringify(result)))
         }
       });
+      connection.release();
     }
   })
 });
@@ -212,6 +218,7 @@ app.get('/contractors', (req, res) => {
           res.status(200).json(JSON.parse(JSON.stringify(result)))
         }
       });
+      connection.release();
     }
   })
 });
@@ -235,6 +242,7 @@ app.get('/contractorsZip/:zipcode', (req, res) => {
           res.status(200).json(JSON.parse(JSON.stringify(result)))
         }
       });
+      connection.release();
     }
   })
 });
@@ -258,6 +266,7 @@ app.get('/contractorsQuery/:query', (req, res) => {
           res.status(200).json(JSON.parse(JSON.stringify(result)))
         }
       });
+      connection.release();
     }
   })
 });
@@ -282,6 +291,7 @@ app.get('/contractorsZipAndQuery/:zipcode/:query', (req, res) => {
           res.status(200).json(JSON.parse(JSON.stringify(result)))
         }
       });
+      connection.release();
     }
   })
 });
@@ -304,6 +314,7 @@ app.get('/userInfo/:userID', (req, res) => {
           res.status(200).json(JSON.parse(JSON.stringify(result)))
         }
       });
+      connection.release();
     }
   })
 });

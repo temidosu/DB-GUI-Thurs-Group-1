@@ -40,6 +40,7 @@ app.post('/init_dummies',(req,res) => {
       } else {
         // if there is no issue obtaining a connection, execute query
         connection.query('drop table if exists test_table', function (err, rows, fields) {
+          connection.release(); 
           if (err) { 
             // if there is an error with the query, release the connection instance and log the error
             connection.release()
@@ -48,6 +49,7 @@ app.post('/init_dummies',(req,res) => {
           } else {
             // if there is no error with the query, execute the next query and do not release the connection yet
             connection.query('CREATE TABLE `db`.`test_table` (`id` INT NOT NULL AUTO_INCREMENT, `value` VARCHAR(45), PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE);', function (err, rows, fields) {
+              connection.release(); 
               if (err) { 
                 // if there is an error with the query, release the connection instance and log the error
                 connection.release()
