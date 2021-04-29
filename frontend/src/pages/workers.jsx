@@ -11,7 +11,6 @@ export const Workers = props => <>
     <div class = "container mt-2 results">
         <div class = "row">
            {
-           
            props.workers.map((x) =>
                 <div class = "col-4">
                     <div class = "card border w-100 m-2"> 

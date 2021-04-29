@@ -204,6 +204,41 @@ export class Repository {
         });
     }
 
+    newReview(review) {
+        return new Promise((resolve, reject) => {
+            axios.post(`${this.url}/createreview`, review)
+                .then(x => resolve(x.data))
+                .catch(error => {
+                    alert(error);
+                    reject(error);
+                });
+        });
+    }
+
+    updateRating(id) {
+        return new Promise((resolve, reject) => {
+            axios.put(`${this.url}/updateRating/${id}`)
+                .then(x => resolve(x.data))
+                .catch(error => {
+                    alert(error);
+                    reject(error);
+                });
+        });
+    }
+
+    workerRating(id) {
+        return new Promise((resolve, reject) => {
+        axios.get(`${this.url}/workerRating/${id}`)
+            .then(x => resolve(x.data))
+            .catch(error => {
+                alert(error);
+                reject(error);
+            });
+    });
+}
+    
+
+
 
     
 

@@ -16,7 +16,6 @@ export const Projects = props => <>
                     <div class = "card-body">
                         <h2> {x.ProjectName} </h2> 
                         <h2>  {x.status} </h2> 
-                        <ApplyButton /> 
                     </div>
                 </div>
                 </div> 

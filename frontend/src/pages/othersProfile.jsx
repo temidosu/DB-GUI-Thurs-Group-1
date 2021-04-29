@@ -7,6 +7,7 @@ import { ReviewForm } from './ReviewForm';
 import { ReviewList } from './ReviewList'; 
 import { ProjectRequestButton } from '../buttons/projectRequestButton'; 
 import { HireButton } from '../buttons/hireButton'; 
+import { Rating } from './Rating'; 
 
 export class OthersProfile extends React.Component {
 
@@ -21,6 +22,7 @@ export class OthersProfile extends React.Component {
       userName: "",  
       zipCode: "",
       reviews:[], 
+      rating: ""
     }
 
     componentDidMount () {
@@ -33,12 +35,21 @@ export class OthersProfile extends React.Component {
               phone: data[0].phoneNumber, role: data[0].role_id, userName: data[0].userName, zipCode: data[0].zipCode})
               if(this.state.role == 2)
               {
-                  this.getReviews(this.props.match.params.userid); 
+                  this.getReviews(this.props.match.params.userid);
+                  this.getRating(this.props.match.params.userid);
               }
-          }
+            }
           );
           localStorage.setItem("contractorID", this.props.match.params.userid); 
       }
+    }
+
+    getRating(id)
+    {
+        this.repo.workerRating(id).then(data=> 
+        {
+            this.setState({rating: data[0].rating})
+        })
     }
 
     getRole(role) {
@@ -88,6 +99,13 @@ export class OthersProfile extends React.Component {
         )
     }
 
+    addNewReview(newReview) {
+        this.setState((prevState) => {
+          prevState.reviews.push(newReview);
+          return prevState;
+        });
+    }
+
     displayPhone() {
         var phoneNum = "("; 
         phoneNum += this.state.phone.toString().substring(0,3); 
@@ -131,7 +149,8 @@ export class OthersProfile extends React.Component {
                     <div class = "card-body"> 
                         <img src = "https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png" class = "w-10 h-10 float-left mr-3"></img>
                         <h1> {this.state.userName} </h1>
-                        <p> {this.state.firstName} {this.state.lastName} {this.state.email} {this.displayPhone()} </p> 
+                        <h2> {this.state.firstName} {this.state.lastName} </h2>
+                        <p> Email: {this.state.email} Phone: {this.displayPhone()} </p> 
                     </div>
                 </div> 
             </div> 
@@ -148,12 +167,14 @@ export class OthersProfile extends React.Component {
                         <br></br>
                         <div class = "card mt-5"> 
                             <div class="card-header">
-                                <h4>{this.getRole(this.state.role)}</h4>
+                                <h4 class = "float-left mr-3">{this.getRole(this.state.role)}</h4> 
+                                <Rating rating = {this.state.rating}/>
                             </div>
                             <div class = "card-body"> 
                                 <img src = "https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png" class = "w-10 h-10 float-left mr-3"></img>
                                 <h1> {this.state.userName} </h1>
-                                <p> {this.state.firstName} {this.state.lastName} {this.state.email} {this.displayPhone()} </p>
+                                <h2> {this.state.firstName} {this.state.lastName} </h2>
+                                <p> Email: {this.state.email} Phone: {this.displayPhone()} </p> 
                                 <HireButton/> 
                             </div>
 
@@ -163,6 +184,7 @@ export class OthersProfile extends React.Component {
                                 <h4>Reviews</h4>
                             </div>
                             <ReviewList reviews = {this.state.reviews}/>
+                            <ReviewForm reviewedID = {this.props.match.params.userid} reviewedFirstName = {this.state.firstName} reviewedLastName = {this.state.lastName} onReviewAdded={(newReview) => this.addNewReview(newReview)}/>
                         </div> 
                         {/* <div class = "card mt-5"> 
                             <div class="card-header">
@@ -179,12 +201,14 @@ export class OthersProfile extends React.Component {
                 <br></br>
                 <div class = "card mt-5"> 
                     <div class="card-header">
-                        <h4>{this.getRole(this.state.role)}</h4>
+                        <h4 class = "float-left mr-3">{this.getRole(this.state.role)}</h4> 
+                        <Rating rating = {this.state.rating}/>
                     </div>
                     <div class = "card-body"> 
                         <img src = "https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png" class = "w-10 h-10 float-left mr-3"></img>
                         <h1> {this.state.userName} </h1>
-                        <p> {this.state.firstName} {this.state.lastName} {this.state.email} {this.displayPhone()} </p> 
+                        <h2> {this.state.firstName} {this.state.lastName} </h2>
+                        <p> Email: {this.state.email} Phone: {this.displayPhone()} </p> 
                     </div>
                 </div> 
                 <div class = "card mt-5"> 
@@ -217,7 +241,8 @@ export class OthersProfile extends React.Component {
                             <div class = "card-body"> 
                                 <img src = "https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png" class = "w-10 h-10 float-left mr-3"></img>
                                 <h1> {this.state.userName} </h1>
-                                <p> {this.state.firstName} {this.state.lastName} {this.state.email} {this.displayPhone()} </p>
+                                <h2> {this.state.firstName} {this.state.lastName} </h2>
+                                <p> Email: {this.state.email} Phone: {this.displayPhone()} </p>  
                                 <ProjectRequestButton />  
                             </div>
                         </div>
@@ -242,7 +267,8 @@ export class OthersProfile extends React.Component {
                     <div class = "card-body"> 
                         <img src = "https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png" class = "w-10 h-10 float-left mr-3"></img>
                         <h1> {this.state.userName} </h1>
-                        <p> {this.state.firstName} {this.state.lastName} {this.state.email} {this.displayPhone()} </p> 
+                        <h2> {this.state.firstName} {this.state.lastName} </h2>
+                        <p> Email: {this.state.email} Phone: {this.displayPhone()} </p> 
                     </div>
                 </div> 
 

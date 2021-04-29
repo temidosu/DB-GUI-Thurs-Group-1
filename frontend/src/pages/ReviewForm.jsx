@@ -7,20 +7,30 @@ export class ReviewForm extends React.Component {
     repository = new Repository()
 
     state = {
-        userName: "",
-        type: -1,
         rating: 0,
         comment: ""
     };
 
     onButtonClick() {
       // LEFT COMMENTED UNTIL ROUTES CONNECTED 
-      //  let newReview = new Review(this.state.userName, this.state.type, this.state.rating, this.state.comment, new Date())
-      //  console.log(newReview)
-      //  this.props.onReviewAdded(newReview);
-      //  this.Repository.addReview(this.props.userId, newReview)
-        this.setState({ type: -1})
-        this.setState({ userName: "" });
+        let newReview = new Review(localStorage.getItem("userID"), localStorage.getItem("firstName"), localStorage.getItem("lastName"), this.props.reviewedID, this.props.reviewedFirstName, this.props.reviewedLastName, this.state.rating, this.state.comment, new Date(), 1)
+        // console.log(newReview)
+        // console.log(this.props)
+        this.props.onReviewAdded(newReview);
+        //[data.reviewer, data.reviewed, data.ReviewText, data.ReviewScore, data.projectID]
+        let json = {
+            ReviewerID: parseInt(localStorage.getItem("userID")), 
+            ReviewedID: parseInt(this.props.reviewedID), 
+            ReviewText: this.state.comment, 
+            ReviewScore: parseInt(this.state.rating),
+            ProjectID: 1 
+        }
+        //console.log("json", json); 
+        // route call is not working "cannot use in operator to search for validatestatus"
+        // this.repository.newReview(localStorage.getItem("userID"), this.props.reviewedID, this.state.comment, this.state.rating, 1)
+        this.repository.newReview(json);  
+        //console.log(this.props.reviewedID); 
+        this.repository.updateRating(parseInt(this.props.reviewedID)); 
         this.setState({ rating: 0 });
         this.setState({ comment: "" });
     }
@@ -32,13 +42,7 @@ export class ReviewForm extends React.Component {
           <div class="jumbotron bg-secondary p-2 mt-3 mb-0 mx-5"><h5 class="p-1 m-1 ml-2 text-white">Add Review</h5></div>
           <div class="col pt-2 mx-5">
             <div class="row">
-              <div class="col-8">
-                <div class="form-group">
-                <label htmlFor="yourName">Your Name</label>
-                  <input type="email" class="form-control" id="yourName" onChange={(ev) => this.setState({ userName: ev.target.value })}/>
-                </div>
-              </div>
-              <div class="col">
+              <div class="col-2">
                 <div class="form-group">
                   <label htmlFor="rating">Rating</label>
                   <select name="rating" id="rating" class="form-control" value={this.state.rating} onChange={(event) => this.setState({ rating: event.target.value })}>
@@ -51,7 +55,7 @@ export class ReviewForm extends React.Component {
                 </div>
               </div>
               <div class="col d-flex align-items-center">
-                <Rating value={this.state.rating} onChange={e => this.setState({ rating: e.target.value })}/>
+                <Rating rating={this.state.rating} onChange={e => this.setState({ rating: e.target.value })}/>
               </div>
             </div>
             <div class="row">
