@@ -123,27 +123,6 @@ app.get('/workers', (req, res) => {
 	})
 });
 
-//Get Contractors
-
-app.get('/contractors', (req, res) => {
-	pool.getConnection((err, connection) => {
-		if (err) {
-			console.log(connection);
-			logger.error('Problem obtaining MySQL connection', err)
-			res.status(400).send('Problem obtaining MySQL connection');
-		} else {
-			connection.query("SELECT * FROM Users WHERE role_id = 3", function (err, result, fields) {
-				if (err) {
-					logger.error('', err);
-					res.status(400).send('failed');
-				}
-				else {
-					res.status(200).json(JSON.parse(JSON.stringify(result)))
-				}
-			});
-		}
-	})
-});
 
 app.get('/userInfo/:userID', (req, res) => {
 	pool.getConnection((err, connection) => {
