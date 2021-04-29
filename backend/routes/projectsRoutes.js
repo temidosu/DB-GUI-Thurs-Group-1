@@ -151,4 +151,28 @@ app.put('/decline/:id', (req, res) => {
 	})
 })
 
+app.post('/project', (req, res) => {
+    pool.getConnection((err, connection) => {
+        if (err) {
+            console.log(connection);
+            logger.error('Problem obtaining MySQL connection', err)
+            res.status(400).send('Problem obtaining MySQL connection');
+        } else {
+            var data = req.body;
+            console.log(“data”,data);
+            connection.query('INSERT INTO Projects VALUES(default, ?, ?, ?, ?, ?, ?, NOW())', [data.ContractorID,data.ClientID,data.Status,data.ProjectName,data.Description,data.Deadline], (err, result) => {
+                connection.release();
+                if (err) {
+                    logger.error("Problem creating project: ", err);
+                    res.status(400).send('project request failed');
+                }
+                else{
+                    res.status(200).end('created new project')
+                }
+            })
+        }
+    })
+})
+
+
 module.exports = app;
