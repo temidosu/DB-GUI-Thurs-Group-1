@@ -216,6 +216,7 @@ export class OthersProfile extends React.Component {
                         <h4>Reviews</h4>
                     </div>
                     <ReviewList reviews = {this.state.reviews}/>
+                    <ReviewForm reviewedID = {this.props.match.params.userid} reviewedFirstName = {this.state.firstName} reviewedLastName = {this.state.lastName} onReviewAdded={(newReview) => this.addNewReview(newReview)}/>
                 </div> 
                 {/* <div class = "card mt-5"> 
                     <div class="card-header">
@@ -251,6 +252,7 @@ export class OthersProfile extends React.Component {
                                 <h4>Reviews</h4>
                             </div>
                             <ReviewList reviews = {this.state.reviews}/>
+                            <ReviewForm reviewedID = {this.props.match.params.userid} reviewedFirstName = {this.state.firstName} reviewedLastName = {this.state.lastName} onReviewAdded={(newReview) => this.addNewReview(newReview)}/>
                         </div>
                     </div> 
                 )
@@ -277,6 +279,7 @@ export class OthersProfile extends React.Component {
                         <h4>Reviews</h4>
                     </div>
                     <ReviewList reviews = {this.state.reviews}/>
+                    <ReviewForm reviewedID = {this.props.match.params.userid} reviewedFirstName = {this.state.firstName} reviewedLastName = {this.state.lastName} onReviewAdded={(newReview) => this.addNewReview(newReview)}/>
                 </div>
             </div> 
         )
