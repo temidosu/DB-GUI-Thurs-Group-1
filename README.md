@@ -1,5 +1,5 @@
 # Construct Work S21 Repository
-Live example: http://http://13.58.99.80/
+Live example: http://13.58.99.80/
 # Sample docker-compose Project With MySQL DBaaS
 #### A sample project using docker-compose with Node and React.JS containers.
 #### Also uses a MySQL DBaaS like AWS RDS or GCloud CloudSQL.
